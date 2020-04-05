@@ -7,7 +7,7 @@
 
 ## Intro
 This is a project of Airline Reservation System(ARS) - software application to assist an airline with transactions related to :
-* ticket reservations
+* making ticket reservations
 * canceling and rescheduling tickets.
 
 It has been  implemented for educational purposes using techniques derived from the domain of DDD.
@@ -25,28 +25,11 @@ The main purpose of the application is to support an airline customer with proce
 
 **Checking availability**
 
-At this stage, the customer enters basic information about their preferences and receives information about 
-flight options.
-
-The customer should set his preferences :
-* departure date/time (one value or range)
-* origin city
-* arrival city
-* class
-* one-way or round trip
-* departure date 
-* number of passangers (adult/children/senior)
-
-And should get list of flights that meet the criteria. 
-
-Single flight information should have:
-* the flight number
-* departure time in origin city
-* arrival time in destination city
-* the duration of the flight (taking into account the possibility of a change of time zone) 
-* the number of seats available on that flight.
-
-This list can be the basis for making a ticket reservation.
+The ticket reservation process begins with checking information on available flights.   
+The customer sets his preferences (departure date/time,origin city,arrival city,class,one-way or two-way trip, departure date, 
+number and type (adult/senior/children) of passangers) and gives information about available fligths
+(like: the flight number,departure time in origin city,arrival time in destination city,the duration of the flight  
+,the number of seats available on that flight).
 
  **Ticket reservation**
  
