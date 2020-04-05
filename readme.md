@@ -25,17 +25,22 @@ The main purpose of the application is to support an airline customer with proce
 
 **Checking availability**
 
-The ticket reservation process begins with checking information on available flights.   
-The customer sets his preferences (departure date/time,origin city,arrival city,class,one-way or two-way trip, departure date, 
-number and type (adult/senior/children) of passangers) and gives information about available fligths
-(like: the flight number,departure time in origin city,arrival time in destination city,the duration of the flight  
-,the number of seats available on that flight).
+The ticket reservation process begins with checking information on available flights. The customer sets his preferences (departure date/time,origin city
+,arrival city, class,one-way or two-way trip, departure date, number and type (adult/senior/children) of passangers) and gives information about available
+fligths (the flight number,departure time in origin city,arrival time in destination city,the duration of the flight, the number of seats available on
+that flight).
 
  **Ticket reservation**
- 
- //todo
- 
 
+It is necessary to provide flight number and seat number to reserve a seat. 
+If the difference between the departure date and system date is more than 2 weeks, the ticket is blocked without no cost. 
+Customer should make a make the final purchase of the ticket before 2 weeks of the departure date. 3 weeks before the date of departure, system should
+send to the customer reminder message.
+
+If the difference between today's date and departure date is less than 2 weeks, there is no possibility to block the ticket, it must be bought. 
+
+After purchasing the ticket,the customer's credit card is charged. The customer receives a mail message with his confirmation number. The ticket has been
+reserved.
 
 ## Domain exploration
 ### Big Picture Event Storming
