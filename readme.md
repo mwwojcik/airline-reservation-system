@@ -23,6 +23,10 @@ The main purpose of the application is to support an airline customer with proce
 * cancelling tickets  
 * rescheduling reservations.
 
+**Loyality programs**
+
+Using airline services involves granting the user bonus points. Each dollar spent adds up 10 bonus points. 
+
 **Checking availability**
 
 The ticket reservation process begins with checking information on available flights. The customer sets his preferences (departure date/time,origin city
@@ -43,10 +47,11 @@ While the ticket is blocked, its price may change. After purchasing a ticket, it
 
 If at the time of purchase the user has 7000 bonus points, he has the right to choose a place in business class (if available). 
 
-If at the time of purchase, the customer has 500 bonus points he is entitled to take 1 piece of luggage
+If at the time of purchase, the customer has 500 bonus points he is entitled to take 1 piece of luggage.
 
-After purchasing the ticket,the customer's credit card is charged. The customer receives a mail message with his confirmation number. The ticket has been
-reserved.
+After purchasing the ticket,the customer's credit card is charged. The customer receives a mail message with his confirmation number. 
+
+The number of bonus points will be increased.
 
 **Ticket price calculation**
 
@@ -65,7 +70,7 @@ Discounts can accumulate but they can be up to 70% initial price.
 
 **Rescheduling ticket**
 
-Ticket rescheduling based on confirmation numer. It is possible only for confirmed tickets. Blocked ticket can't be rescheduled.
+Ticket rescheduling based on confirmation number. It is possible only for confirmed tickets. Blocked ticket can't be rescheduled.
 If there is any difference in the prices of the tickets, it is returned to the credit card account. New confirmation number is sent to the customer via email.
 
 **Cancelling ticket**
@@ -73,10 +78,7 @@ If there is any difference in the prices of the tickets, it is returned to the c
 Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is required to provide the blocking id or confirmation id.  If the ticket has
  been confirmed, cancellation will result in a reduction of 25% of the price. 
 
-**Loyality programs**
-
-Using airline services involves granting the user bonus points. Each dollar spent adds up 10 bonus points. 
-
+If a canceled ticket has already been bought, the number of bonus points should be decreased.
 
 
 
