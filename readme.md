@@ -30,7 +30,7 @@ The ticket reservation process begins with checking information on available fli
 fligths (the flight number,departure time in origin city,arrival time in destination city,the duration of the flight, the number of seats available on
 that flight).
 
- **Ticket reservation**
+**Ticket reservation**
 
 It is necessary to provide flight number and seat number to reserve a seat. 
 If the difference between the departure date and system date is more than 2 weeks, the ticket is blocked without no cost. 
@@ -41,6 +41,24 @@ If the difference between today's date and departure date is less than 2 weeks, 
 
 After purchasing the ticket,the customer's credit card is charged. The customer receives a mail message with his confirmation number. The ticket has been
 reserved.
+
+
+**Rescheduling ticket**
+
+Ticket rescheduling based on confirmation numer. It is possible only for confirmed tickets. Blocked ticket can't be rescheduled.
+If there is any difference in the prices of the tickets, it is returned to the credit card account. New confirmation number is sent to the customer via email.
+
+**Cancelling ticket**
+
+Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is required to provide the blocking id or confirmation id. 
+//todo refundation rules
+
+**Loyality programs**
+
+
+
+
+
 
 ## Domain exploration
 ### Big Picture Event Storming
