@@ -41,6 +41,10 @@ If the difference between today's date and departure date is less than 2 weeks, 
 
 While the ticket is blocked, its price may change. After purchasing a ticket, its price cannot change.
 
+If at the time of purchase the user has 7000 bonus points, he has the right to choose a place in business class (if available). 
+
+If at the time of purchase, the customer has 500 bonus points he is entitled to take 1 piece of luggage
+
 After purchasing the ticket,the customer's credit card is charged. The customer receives a mail message with his confirmation number. The ticket has been
 reserved.
 
@@ -66,11 +70,12 @@ If there is any difference in the prices of the tickets, it is returned to the c
 
 **Cancelling ticket**
 
-Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is required to provide the blocking id or confirmation id. 
-//todo refundation rules
+Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is required to provide the blocking id or confirmation id.  If the ticket has
+ been confirmed, cancellation will result in a reduction of 25% of the price. 
 
 **Loyality programs**
 
+Using airline services involves granting the user bonus points. Each dollar spent adds up 10 bonus points. 
 
 
 
