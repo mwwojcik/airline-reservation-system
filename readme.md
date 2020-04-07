@@ -91,9 +91,11 @@ This nice picture comes from [Introducing EventStorming-Alberto Brandolini](http
 
 ![Introducing EventStorming-Alberto Brandolini](img/process-modeling-events.png) 
 
-
 ##### Sticky notes
 ![](img/event-storming-symbols.png) 
 
 #### First domain exploration 
-##### Step one - unordered events (under construction)
+
+##### Step one - unordered events
+
+![](img/ars-big-picture-unordered-events.jpg){:height="36px" width="36px"}
