@@ -110,5 +110,6 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 ##### Step three - subdomains
 
 
-![](img/ars-big-picture-subdomains.jpg)
+![](img/ars-big-picture-subdomains-1.jpg)
+![](img/ars-big-picture-subdomains-2.jpg)
 
