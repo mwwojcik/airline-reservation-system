@@ -80,11 +80,17 @@ Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is 
 
 If a canceled ticket has already been bought, the number of bonus points should be decreased.
 
-
-
-
 ## Domain exploration
 ### Big Picture Event Storming
+The main goal of this stage of domain exploration process is to divide the problem into smaller independent parts. To find them, we can use few main
+ heuristics:
+ 
+* organization structure
+* domain experts
+* ubiquitous language
+* bussiness value
+* business process 
+
 #### Event Storming Grammar
 ##### The picture that explains everything
 This nice picture comes from [Introducing EventStorming-Alberto Brandolini](https://leanpub.com/introducing_eventstorming).
@@ -94,13 +100,7 @@ This nice picture comes from [Introducing EventStorming-Alberto Brandolini](http
 ##### Sticky notes
 ![](img/event-storming-symbols.png) 
 
-#### Domain exploration - Big Picture 
-The main goal of first stage of domain exploration process is to divide the problem into smaller independent parts. To find them, you can use heuristics:
-* organization structure
-* domain experts
-* ubiquitous language
-* bussiness value
-* business process 
+#### Airline Reservation System - domain exploration - Big Picture 
 
 ##### Step one - unordered events
 
@@ -114,7 +114,6 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 ![](img/ars-big-picture-events-timeline.jpg)
 
 ##### Step three - subdomains
-
 
 ![](img/ars-big-picture-subdomains-1.jpg)
 ![](img/ars-big-picture-subdomains-2.jpg)
