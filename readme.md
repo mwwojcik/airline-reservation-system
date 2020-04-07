@@ -106,3 +106,9 @@ This nice picture comes from [Introducing EventStorming-Alberto Brandolini](http
 At this stage, the events have been arranged in a timeline and ordered. Some of them have been refined and replaced with several new ones.
 
 ![](img/ars-big-picture-events-timeline.jpg)
+
+##### Step three - subdomains
+
+
+![](img/ars-big-picture-subdomains.jpg)
+
