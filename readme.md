@@ -98,4 +98,11 @@ This nice picture comes from [Introducing EventStorming-Alberto Brandolini](http
 
 ##### Step one - unordered events
 
-![](img/ars-big-picture-unordered-events.jpg){:height="36px" width="36px"}
+![](img/ars-big-picture-unordered-events.jpg)
+
+
+##### Step two - events arranged on timeline
+
+At this stage, the events have been arranged in a timeline and ordered. Some of them have been refined and replaced with several new ones.
+
+![](img/ars-big-picture-events-timeline.jpg)
