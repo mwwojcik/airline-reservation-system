@@ -94,7 +94,13 @@ This nice picture comes from [Introducing EventStorming-Alberto Brandolini](http
 ##### Sticky notes
 ![](img/event-storming-symbols.png) 
 
-#### First domain exploration 
+#### Domain exploration - Big Picture 
+The main goal of first stage of domain exploration process is to divide the problem into smaller independent parts. To find them, you can use heuristics:
+* organization structure
+* domain experts
+* ubiquitous language
+* bussiness value
+* business process 
 
 ##### Step one - unordered events
 
