@@ -82,8 +82,9 @@ If a canceled ticket has already been bought, the number of bonus points should 
 
 ## Domain exploration
 ### Big Picture Event Storming
-The main goal of this stage of domain exploration process is to divide the problem into smaller independent parts. To find them, we can use few main
- heuristics:
+The main goal of Big Picture Event Storming is to divide the problem into smaller parts that can be analyzed independently.
+
+To identify them, we can use few heuristics:
  
 * organization structure
 * domain experts
