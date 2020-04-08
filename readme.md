@@ -3,7 +3,14 @@
 - [Intro](#intro)
 - [Domain description](#domain-description)
 - [Domain exploration](#domain-exploration)
-  - [Big Picture Event Storming](#big-picture-event-storming)
+  - [Event Storming Grammar](#event-storming-grammar)
+    - [The picture that explains everything](#the-picture-that-explains-everything)
+    - [Sticky notes](#sticky-notes)
+  - [Airline Reservation System - domain exploration - Big Picture](#airline-reservation-system---domain-exploration---big-picture)
+    - [Step one - unordered events](#step-one---unordered-events)
+    - [Step two - events arranged on timeline](#step-two---events-arranged-on-timeline)
+    - [Step three - subdomains](#step-three---subdomains)
+  - [Airline Reservation System - domain exploration - Design Level Event Storming](#airline-reservation-system---domain-exploration---design-level-event-storming)
 
 ## Intro
 This is a project of Airline Reservation System(ARS) - software application to assist an airline with transactions related to :
@@ -81,41 +88,53 @@ Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is 
 If a canceled ticket has already been bought, the number of bonus points should be decreased.
 
 ## Domain exploration
-### Big Picture Event Storming
-The main goal of Big Picture Event Storming is to divide the problem into smaller parts that can be analyzed independently.
 
-To identify them, we can use few heuristics:
- 
-* organization structure
-* domain experts
-* ubiquitous language
-* bussiness value
-* business process 
-
-#### Event Storming Grammar
-##### The picture that explains everything
+### Event Storming Grammar
+#### The picture that explains everything
 This nice picture comes from [Introducing EventStorming-Alberto Brandolini](https://leanpub.com/introducing_eventstorming).
 
 ![Introducing EventStorming-Alberto Brandolini](img/process-modeling-events.png) 
 
-##### Sticky notes
+#### Sticky notes
 ![](img/event-storming-symbols.png) 
 
-#### Airline Reservation System - domain exploration - Big Picture 
 
-##### Step one - unordered events
+### Airline Reservation System - domain exploration - Big Picture 
 
+The main goal of Big Picture Event Storming is to divide the problem into smaller parts that can be analyzed independently.
+
+To identify them, we can use few heuristics:
+ 
+* **Organization Structure** - The first approximation in the process of extracting subdomains is to look at organizational boundaries .  We can try to mark
+ process steps and assign them to the units in which they take place.
+* **Domain Experts** - Sometimes in one organizational unit there are people who deal with different kind of problems.  This can affect the creation of separate
+ subdomains.
+* **Domain Expert Language** - We must pay attention to the meaning of the words used by experts. For different experts,  different behaviors of the same
+ thing matter.
+* **Bussiness Value** - If part of the system has a higher business value than others, a separate subdomain should be separated for it. 
+* **Business Process** -  Sometimes, at some point in the process, other business rules come into effect. This may be the basis for separating a separate
+  subdomain for this step.
+
+#### Step one - unordered events
 ![](img/ars-big-picture-unordered-events.jpg)
 
-
-##### Step two - events arranged on timeline
-
+#### Step two - events arranged on timeline
 At this stage, the events have been arranged in a timeline and ordered. Some of them have been refined and replaced with several new ones.
-
 ![](img/ars-big-picture-events-timeline.jpg)
 
-##### Step three - subdomains
+#### Step three - subdomains
+![](img/ars-big-picture-subdomains-poster.jpg)
 
-![](img/ars-big-picture-subdomains-1.jpg)
-![](img/ars-big-picture-subdomains-2.jpg)
+
+### Airline Reservation System - domain exploration - Design Level Event Storming 
+
+* **Context Autonomy** - The most important question is whether our context is completely independent of others.
+* **Number of contexts in the business process**
+* **Shared information**
+* **Context responsibility**
+* **The only one source of information**
+* **How context integrates with others**
+* **Is the context not schizophrenic**
+
+
 
