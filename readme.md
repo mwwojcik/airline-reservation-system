@@ -101,7 +101,7 @@ This nice picture comes from [Introducing EventStorming-Alberto Brandolini](http
 
 ### Airline Reservation System - domain exploration - Big Picture 
 
-The main goal of Big Picture Event Storming is to divide the problem into smaller parts that can be analyzed independently.
+The main goal of Big Picture Event Storming is to divide the problem into smaller business parts, that can be analyzed independently.
 
 To identify them, we can use few heuristics:
  
@@ -114,6 +114,8 @@ To identify them, we can use few heuristics:
 * **Bussiness Value** - If part of the system has a higher business value than others, a separate subdomain should be separated for it. 
 * **Business Process** -  Sometimes, at some point in the process, other business rules come into effect. This may be the basis for separating a separate
   subdomain for this step.
+
+At this stage we describe the current state of the process and try to identify its weaknesses. We are not optimizing yet.
 
 #### Step one - unordered events
 ![](img/ars-big-picture-unordered-events.jpg)
@@ -129,16 +131,34 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 
 
 
-### Airline Reservation System - domain exploration - Design Level Event Storming 
+### Airline Reservation System - domain exploration - Process Level Event Storming 
+
+Process Level is the next stage of Event Storming.  As a result, previously discovered subdomains are mapped to the solution space. 
+The result of this mapping are Bounded Contexts.  Subdomain is a part of the domain, and a bounded context is a part of the solution. 
+
+At this stage a new process flow is designed and optimizations are introduced. 
+
+The main heuristics determining number and the scope of the separated Bounded Context are:
 
 * **Context Autonomy** - The most important question is whether our context is completely independent of others.
 * **Number of contexts in the business process** - Processes should be designed in such a way that they intersect as few bounded as possible. Fewer
  contexts result in less need for integration. This gives more autonomy for contexts.
 * **Shared information** - If any data needs to change immediately in more than one bounded context, it means that the boundaries were set incorrectly.
-* **Context responsibility**
-* **The only one source of information**
-* **How context integrates with others**
-* **Is the context not schizophrenic**
+* **Communication with others** - Context should contain most of the data he needs. Communication with other contexts should be kept to a minimum. We have to
+ ask ourselves why integration has occurred. Integration with external systems is very expensive. We must be sure it is necessary.  
+* **Context responsibility** - Each context should have a well defined range scope. If this description is complicated and consists of many sentences,
+ it is very likely that the context boundaries are too wide.
+* **The only one source of information** - Every important information should have one context which is the source of its value. If it is shared, maybe one
+ more dedicated context should be created.
+* **Is the context not schizophrenic** - It is a situation when the context needs to find out what part of the process it is currently implementing. 
+In this case, the code appears:
+```
+if(isSingleUserProcess()){
+    //do something
+} else {
+    //do something else
+}
+```
 
 
 
