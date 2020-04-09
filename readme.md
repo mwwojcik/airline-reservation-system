@@ -132,9 +132,9 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 ### Airline Reservation System - domain exploration - Design Level Event Storming 
 
 * **Context Autonomy** - The most important question is whether our context is completely independent of others.
-* **Number of contexts in the business process** - Processes should be designed in such a way that they intersect as few bounded numbers as possible. Fewer
+* **Number of contexts in the business process** - Processes should be designed in such a way that they intersect as few bounded as possible. Fewer
  contexts result in less need for integration. This gives more autonomy for contexts.
-* **Shared information** 
+* **Shared information** - If any data needs to change immediately in more than one bounded context, it means that the boundaries were set incorrectly.
 * **Context responsibility**
 * **The only one source of information**
 * **How context integrates with others**
