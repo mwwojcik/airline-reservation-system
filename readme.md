@@ -123,14 +123,18 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 ![](img/ars-big-picture-events-timeline.jpg)
 
 #### Step three - subdomains
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show picture
+</a>
 ![](img/ars-big-picture-subdomains-poster.jpg)
+
 
 
 ### Airline Reservation System - domain exploration - Design Level Event Storming 
 
 * **Context Autonomy** - The most important question is whether our context is completely independent of others.
-* **Number of contexts in the business process**
-* **Shared information**
+* **Number of contexts in the business process** - Processes should be designed in such a way that they intersect as few bounded numbers as possible. Fewer
+ contexts result in less need for integration. This gives more autonomy for contexts.
+* **Shared information** 
 * **Context responsibility**
 * **The only one source of information**
 * **How context integrates with others**
