@@ -134,7 +134,14 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 ### Airline Reservation System - domain exploration - Process Level Event Storming 
 
 Process Level is the next stage of Event Storming.  As a result, previously discovered subdomains are mapped to the solution space. 
-The result of this mapping are Bounded Contexts.  Subdomain is a part of the domain, and a bounded context is a part of the solution. 
+The result of this mapping are Bounded Contexts.  
+
+ 
+
+| *Subdomain is a part of the domain, and a bounded context is a part of the solution.*      |
+| ----------- |
+
+ 
 
 At this stage a new process flow is designed and optimizations are introduced. 
 
