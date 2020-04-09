@@ -1,16 +1,17 @@
 ## Table of contents
-- [Table of contents](#table-of-contents)
-- [Intro](#intro)
-- [Domain description](#domain-description)
-- [Domain exploration](#domain-exploration)
-  - [Event Storming Grammar](#event-storming-grammar)
-    - [The picture that explains everything](#the-picture-that-explains-everything)
-    - [Sticky notes](#sticky-notes)
-  - [Airline Reservation System - domain exploration - Big Picture](#airline-reservation-system---domain-exploration---big-picture)
-    - [Step one - unordered events](#step-one---unordered-events)
-    - [Step two - events arranged on timeline](#step-two---events-arranged-on-timeline)
-    - [Step three - subdomains](#step-three---subdomains)
-  - [Airline Reservation System - domain exploration - Design Level Event Storming](#airline-reservation-system---domain-exploration---design-level-event-storming)
+-  [Table of contents](#table-of-contents)
+ - [Intro](#intro)
+ - [Domain description](#domain-description)
+ - [Domain exploration](#domain-exploration)
+   - [Event Storming Grammar](#event-storming-grammar)
+     - [The picture that explains everything](#the-picture-that-explains-everything)
+     - [Sticky notes](#sticky-notes)
+   - [Airline Reservation System - domain exploration - Big Picture](#airline-reservation-system---domain-exploration---big-picture)
+     - [Unordered events](#unordered-events)
+     - [Events arranged on timeline](#events-arranged-on-timeline)
+     - [Subdomains](#subdomains)
+   - [Airline Reservation System - domain exploration - Process Level Event Storming](#airline-reservation-system---domain-exploration---process-level-event-storming)
+     - [Bounded Contexts](#bounded-contexts)
 
 ## Intro
 This is a project of Airline Reservation System(ARS) - software application to assist an airline with transactions related to :
@@ -117,14 +118,14 @@ To identify them, we can use few heuristics:
 
 At this stage we describe the current state of the process and try to identify its weaknesses. We are not optimizing yet.
 
-#### Step one - unordered events
+#### Unordered events
 ![](img/ars-big-picture-unordered-events.jpg)
 
-#### Step two - events arranged on timeline
+#### Events arranged on timeline
 At this stage, the events have been arranged in a timeline and ordered. Some of them have been refined and replaced with several new ones.
 ![](img/ars-big-picture-events-timeline.jpg)
 
-#### Step three - subdomains
+#### Subdomains
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show picture
 </a>
 ![](img/ars-big-picture-subdomains-poster.jpg)
@@ -167,5 +168,10 @@ if(isSingleUserProcess()){
 }
 ```
 
+#### Bounded Contexts
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-bc-poster.jpg" target="_blank">Show picture
+</a>
+![](img/ars-big-picture-subdomains-bc-poster.jpg)
 
 
