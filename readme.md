@@ -34,6 +34,15 @@ The main purpose of the application is to support an airline customer with proce
 **Loyality programs**
 
 Using airline services involves granting the user bonus points. Each dollar spent adds up 10 bonus points. 
+The user can exchange the accumulated bonus points for the indicated discounts and privileges. They will be included in the next booking. 
+
+If the user has 500 to 1000 points, he can use a more extensive menu.
+If the user has 1000 to 3000 points, he is entitled to take 1 piece of luggage.
+If the user has 3000 to 5000 points,, he has the right to choose a place in business class (if available). 
+
+Each of the privileges can be exchanged for a cash discount (2% from the base ticket price for every 1000 points)
+
+The special offers catalog is managed by the Sales Department. 
 
 **Checking availability**
 
@@ -41,6 +50,8 @@ The ticket reservation process begins with checking information on available fli
 ,arrival city, class,one-way or two-way trip, departure date, number and type (adult/senior/children) of passangers) and gives information about available
 fligths (the flight number,departure time in origin city,arrival time in destination city,the duration of the flight, the number of seats available on
 that flight).
+
+Flight catalog is managed by the Sales Department via special dedicated system. 
 
 **Ticket reservation**
 
@@ -52,10 +63,6 @@ send to the customer reminder message.
 If the difference between today's date and departure date is less than 2 weeks, there is no possibility to block the ticket, it must be bought. 
 
 While the ticket is blocked, its price may change. After purchasing a ticket, its price cannot change.
-
-If at the time of purchase the user has 7000 bonus points, he has the right to choose a place in business class (if available). 
-
-If at the time of purchase, the customer has 500 bonus points he is entitled to take 1 piece of luggage.
 
 After purchasing the ticket,the customer's credit card is charged. The customer receives a mail message with his confirmation number. 
 
@@ -87,6 +94,28 @@ Both blocked and confirmed tickets can be cancelled. To cancel the ticket it is 
  been confirmed, cancellation will result in a reduction of 25% of the price. 
 
 If a canceled ticket has already been bought, the number of bonus points should be decreased.
+
+**Check in**
+
+ The user can perform an automatic check-in. It is possible not earlier than 10 hours before the departure time . 
+ This option is available in a customer profile.
+ //todo
+
+**Customer Satisfaction Surveys**
+
+After each flight, the user receives an e-mail with information that he can complete the survey satisfied and write a review.  This results in additional
+ bonus points (500 - survey, 1000 review). List of flights to evaluate is presented in the user's profile. 
+
+**Special offers** 
+
+The Marketing Department sends information about special offers prepared for customers. List of recipients of the offer is
+ prepared is by dedicated machine learning software (in Sales Department). Customers are matched based on an analysis of their previous activity in the
+  system gathered in the Reporting Department .
+                                                                                                                     
+**Reporting system**
+
+Information on all important events is collected in the reporting department. They allow to recreate the entire activity history for each user.
+//todo
 
 ## Domain exploration
 
