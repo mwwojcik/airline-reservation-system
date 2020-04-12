@@ -98,22 +98,22 @@ If a canceled ticket has already been bought, the number of bonus points should 
 **Check in**
 
  The user can perform an automatic check-in. It is possible not earlier than 10 hours before the departure time . 
- This option is available in a customer profile.
- //todo
+ This option is available in a Customer Profile.
 
 **Customer Satisfaction Surveys**
 
 After each flight, the user receives an e-mail with information that he can complete the survey satisfied and write a review.  This results in additional
- bonus points (500 - survey, 1000 review). List of flights to evaluate is presented in the user's profile. 
+ bonus points (500 - survey, 1000 review). Flights to evaluate are presented in the user's profile. 
 
 **Special offers** 
 
-The Marketing Department sends information about special offers prepared for customers.
+The Marketing Department sends information about special offers prepared for customers. The selection of users to whom the offer goes, is carried out in a
+ separate software. It is based on user activity reports. 
                                                                                                                      
 **Reporting system**
 
-Information on all important events is collected in the reporting department. They allow to recreate the entire activity history for each user.
-//todo
+Reporting Department collects all activity events. They allow to recreate the entire activity history for each user.
+
 
 ## Domain exploration
 
