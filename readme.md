@@ -108,9 +108,7 @@ After each flight, the user receives an e-mail with information that he can comp
 
 **Special offers** 
 
-The Marketing Department sends information about special offers prepared for customers. List of recipients of the offer is
- prepared is by dedicated machine learning software (in Sales Department). Customers are matched based on an analysis of their previous activity in the
-  system gathered in the Reporting Department .
+The Marketing Department sends information about special offers prepared for customers.
                                                                                                                      
 **Reporting system**
 
