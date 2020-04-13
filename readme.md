@@ -42,7 +42,7 @@ The user can exchange the accumulated bonus points for the indicated discounts a
 
 Each of the privileges can be exchanged for a cash discount (2% from the base ticket price for every 1000 points)
 
-The special offers catalog is managed by the Sales Department. 
+The gifts catalog is managed by the Sales Department. 
 
 **Checking availability**
 
@@ -50,8 +50,6 @@ The ticket reservation process begins with checking information on available fli
 ,arrival city, class,one-way or two-way trip, departure date, number and type (adult/senior/children) of passangers) and gives information about available
 fligths (the flight number,departure time in origin city,arrival time in destination city,the duration of the flight, the number of seats available on
 that flight).
-
-Flight catalog is managed by the Sales Department via special dedicated system. 
 
 **Ticket reservation**
 
@@ -98,7 +96,8 @@ If a canceled ticket has already been bought, the number of bonus points should 
 **Check in**
 
  The user can perform an automatic check-in. It is possible not earlier than 10 hours before the departure time . 
- This option is available in a Customer Profile.
+ This option is available in a Customer Profile. During the check-in process a boarding card is generated. After generating it is available from Customer
+  Profile.
 
 **Customer Satisfaction Surveys**
 
@@ -107,12 +106,12 @@ After each flight, the user receives an e-mail with information that he can comp
 
 **Special offers** 
 
-The Marketing Department sends information about special offers prepared for customers. The selection of users to whom the offer goes, is carried out in a
- separate software. It is based on user activity reports. 
+The Marketing Department sends information about special offers prepared for customers. After entering the offer, it is published by email.
                                                                                                                      
 **Reporting system**
 
-Reporting Department collects all activity events. They allow to recreate the entire activity history for each user.
+Reporting Department collects all activity events. They allow to recreate the entire activity history for each user.Each user can request to prepare such a
+ report.
 
 
 ## Domain exploration
