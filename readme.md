@@ -149,12 +149,16 @@ At this stage we describe the current state of the process and try to identify i
 
 #### Events arranged on timeline
 At this stage, the events have been arranged in a timeline and ordered. Some of them have been refined and replaced with several new ones.
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-events-timeline.jpg" target="_blank">Show picture
+</a>
 ![](img/ars-big-picture-events-timeline.jpg)
 
 #### Subdomains
-<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show picture
+<!--<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show
+ picture
 </a>
-todo img/ars-big-picture-subdomains-poster.jpg
+todo img/ars-big-picture-subdomains-poster.jpg-->
 
 
 
@@ -195,9 +199,9 @@ if(isSingleUserProcess()){
 ```
 
 #### Bounded Contexts
-
+<!--
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-bc-poster.jpg" target="_blank">Show picture
 </a>
 todo/ img/ars-big-picture-subdomains-bc-poster.jpg
-
+-->
 
