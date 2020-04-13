@@ -106,7 +106,7 @@ After each flight, the user receives an e-mail with information that he can comp
 
 **Special offers** 
 
-The Marketing Department sends information about special offers prepared for customers. After entering the offer, it is published by email.
+The Sales Department sends information about special offers prepared for customers. After entering the offer, it is published by email.
                                                                                                                      
 **Reporting system**
 
@@ -154,7 +154,7 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 #### Subdomains
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show picture
 </a>
-![](img/ars-big-picture-subdomains-poster.jpg)
+todo img/ars-big-picture-subdomains-poster.jpg
 
 
 
@@ -198,6 +198,6 @@ if(isSingleUserProcess()){
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-bc-poster.jpg" target="_blank">Show picture
 </a>
-![](img/ars-big-picture-subdomains-bc-poster.jpg)
+todo/ img/ars-big-picture-subdomains-bc-poster.jpg
 
 
