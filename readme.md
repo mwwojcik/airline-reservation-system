@@ -31,14 +31,14 @@ The main purpose of the application is to support an airline customer with proce
 * cancelling tickets  
 * rescheduling reservations.
 
-**Loyality programs**
+**Loyality program**
 
 Using airline services involves granting the user bonus points. Each dollar spent adds up 10 bonus points. 
 The user can exchange the accumulated bonus points for the indicated discounts and privileges. They will be included in the next booking. 
 
-If the user has 500 to 1000 points, he can use a more extensive menu.
-If the user has 1000 to 3000 points, he is entitled to take 1 piece of luggage.
-If the user has 3000 to 5000 points,, he has the right to choose a place in business class (if available). 
+* If the user has 500 to 1000 points, he can use a more extensive menu.
+* If the user has 1000 to 3000 points, he is entitled to take 1 piece of luggage.
+* If the user has 3000 to 5000 points, he has the right to choose a place in business class (if available). 
 
 Each of the privileges can be exchanged for a cash discount (2% from the base ticket price for every 1000 points)
 
