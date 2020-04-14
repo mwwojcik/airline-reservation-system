@@ -155,10 +155,11 @@ At this stage, the events have been arranged in a timeline and ordered. Some of 
 ![](img/ars-big-picture-events-timeline.jpg)
 
 #### Subdomains
-<!--<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show
- picture
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-poster.jpg" target="_blank">Show picture
 </a>
-todo img/ars-big-picture-subdomains-poster.jpg-->
+
+![](img/ars-big-picture-subdomains-poster.jpg)
 
 
 
