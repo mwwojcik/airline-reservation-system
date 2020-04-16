@@ -200,9 +200,9 @@ if(isSingleUserProcess()){
 ```
 
 #### Bounded Contexts
-<!--
+
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-big-picture-subdomains-bc-poster.jpg" target="_blank">Show picture
 </a>
-todo/ img/ars-big-picture-subdomains-bc-poster.jpg
--->
+![](img/img/ars-big-picture-subdomains-bc-poster.jpg)
+
 
