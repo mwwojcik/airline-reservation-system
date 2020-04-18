@@ -206,3 +206,24 @@ if(isSingleUserProcess()){
 ![](img/ars-big-picture-subdomains-bc-poster.jpg)
 
 
+## Architecture
+
+### Overview
+
+### C4 Architecture diagrams 
+
+#### C1- Software System Perspective
+
+![](img/architecture/structurizr-52510-SystemLandscape-001.png)
+![](img/architecture/structurizr-52510-SystemLandscape-key.png)
+
+#### C2- Container Perspective
+
+![](img/architecture/structurizr-52510-Containers-001.png)
+![](img/architecture/structurizr-52510-Containers-key.png)
+
+#### C3- Component Perspective
+
+![](img/architecture/structurizr-52510-Components-001.png)
+![](img/architecture/structurizr-52510-Components-key.png)
+
