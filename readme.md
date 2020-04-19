@@ -227,13 +227,13 @@ if(isSingleUserProcess()){
 
 #### C2- Container Perspective
 
-<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Containers-001.png" target="_blank">Show picture</a>
-![](img/architecture/structurizr-52510-Containers-001.png)
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Containers.png" target="_blank">Show picture</a>
+![](img/architecture/structurizr-52510-Containers.png)
 <!--![](img/architecture/structurizr-52510-Containers-key.png)-->
 
 #### C3- Component Perspective
 
-<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components-001.png" target="_blank">Show picture</a>
-![](img/architecture/structurizr-52510-Components-001.png)
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components.png" target="_blank">Show picture</a>
+![](img/architecture/structurizr-52510-Components.png)
 <!--![](img/architecture/structurizr-52510-Components-key.png)-->
 
