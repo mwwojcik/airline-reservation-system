@@ -230,16 +230,14 @@ if(isSingleUserProcess()){
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-SystemLandscape-001.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-SystemLandscape-001.png)
-<!--![](img/architecture/structurizr-52510-SystemLandscape-key.png)-->
 
 #### C2- Container Perspective
 
-*The natural consequence of choosing architecture is that all modules will be located in one container (API Application).*
-*The diagram shows the other internal containers used in the system (DB/SPA/WebServer/Mobile App). *
+*The natural consequence of choosing modular monolith architecture is that all modules will be located in one container (API Application).*
+*The diagram shows the other internal used containers (DB/SPA/WebServer/Mobile App). All of them are part of one system.*
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Containers.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Containers.png)
-<!--![](img/architecture/structurizr-52510-Containers-key.png)-->
 
 #### C3- Component Perspective
 
@@ -247,5 +245,4 @@ if(isSingleUserProcess()){
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Components.png)
-<!--![](img/architecture/structurizr-52510-Components-key.png)-->
 
