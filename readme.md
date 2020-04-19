@@ -213,6 +213,16 @@ if(isSingleUserProcess()){
 ![](img/ars-big-picture-subdomains-bc-poster.jpg)
 
 
+#### Commands / Read Model
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-process-level-finish-1.jpg" target="_blank">Show picture
+</a>
+![](img/ars-process-level-finish-1.jpg)
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-process-level-finish-2.jpg" target="_blank">Show picture
+</a>
+![](img/ars-process-level-finish-2.jpg)
+
 ## Architecture
 
 ### Architectural Decision Log
