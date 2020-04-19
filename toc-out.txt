@@ -12,7 +12,7 @@
   - [Airline Reservation System - domain exploration - Process Level Event Storming](#airline-reservation-system---domain-exploration---process-level-event-storming)
     - [Bounded Contexts](#bounded-contexts)
 - [Architecture](#architecture)
-  - [Overview](#overview)
+  - [Architectural Decision Log](#architectural-decision-log)
   - [C4 Architecture diagrams](#c4-architecture-diagrams)
     - [C1- Software System Perspective](#c1--software-system-perspective)
     - [C2- Container Perspective](#c2--container-perspective)
