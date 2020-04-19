@@ -34,7 +34,13 @@ Drivers:
 
 ## Decision
 
-Option no 3.
+Option no 2 - Modular Monolith. 
+
+Architecture suitable for teams with little experience in implementing distributed systems. 
+It gives the possibility of gradual migration to distributed. Suitable for  greenfield systems, where high variation in requirements is expected.
+                                                              
+
+ architecture.
 
 ## Consequences
 
