@@ -224,9 +224,9 @@ if(isSingleUserProcess()){
 ### C4 Architecture diagrams 
 
 #### C1- Software System Perspective
-
+|__The perspective shows the surroundings of the created system . This diagram shows External systems and actors discovered during the session ES.__|
 |:-:|
-|*The perspective shows the surroundings of the created system . This diagram shows External systems and actors discovered during the session ES.*|
+
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-SystemLandscape-001.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-SystemLandscape-001.png)
