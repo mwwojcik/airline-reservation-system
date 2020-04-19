@@ -224,9 +224,9 @@ if(isSingleUserProcess()){
 ### C4 Architecture diagrams 
 
 #### C1- Software System Perspective
-|*The perspective shows the surroundings of the created system . This diagram shows External systems and actors discovered during the session ES.*|
-|:-:|
 
+*The perspective shows the surroundings of the created system . This diagram shows external systems and actors discovered during the session ES.*
+*Internal actors are part of the organization. Externals Actors only use the system.*
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-SystemLandscape-001.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-SystemLandscape-001.png)
@@ -234,11 +234,16 @@ if(isSingleUserProcess()){
 
 #### C2- Container Perspective
 
+*The natural consequence of choosing architecture is that all modules will be located in one container (API Application).*
+*The diagram shows the other internal containers used in the system (DB/SPA/WebServer/Mobile App). *
+
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Containers.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Containers.png)
 <!--![](img/architecture/structurizr-52510-Containers-key.png)-->
 
 #### C3- Component Perspective
+
+*At this level of visualization we can see all modules based on bounded context extracted during the session ES.*
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Components.png)
