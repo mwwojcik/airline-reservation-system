@@ -215,7 +215,11 @@ if(isSingleUserProcess()){
 
 ## Architecture
 
-### Overview
+### Architectural Decision Log
+
+|Number|Date|Type|Title|Status|
+|:-|:-|:-|:-|:-|
+|0001|2020-04-19|SYS|[Use Modular Monolith](0001-sys-use-modular-monolith.md)|Accepted|
 
 ### C4 Architecture diagrams 
 
