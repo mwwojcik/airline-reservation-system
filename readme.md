@@ -224,7 +224,7 @@ if(isSingleUserProcess()){
 ### C4 Architecture diagrams 
 
 #### C1- Software System Perspective
-|__The perspective shows the surroundings of the created system . This diagram shows External systems and actors discovered during the session ES.__|
+|*The perspective shows the surroundings of the created system . This diagram shows External systems and actors discovered during the session ES.*|
 |:-:|
 
 
