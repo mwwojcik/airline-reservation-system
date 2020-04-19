@@ -1,17 +1,24 @@
 ## Table of contents
--  [Table of contents](#table-of-contents)
- - [Intro](#intro)
- - [Domain description](#domain-description)
- - [Domain exploration](#domain-exploration)
-   - [Event Storming Grammar](#event-storming-grammar)
-     - [The picture that explains everything](#the-picture-that-explains-everything)
-     - [Sticky notes](#sticky-notes)
-   - [Airline Reservation System - domain exploration - Big Picture](#airline-reservation-system---domain-exploration---big-picture)
-     - [Unordered events](#unordered-events)
-     - [Events arranged on timeline](#events-arranged-on-timeline)
-     - [Subdomains](#subdomains)
-   - [Airline Reservation System - domain exploration - Process Level Event Storming](#airline-reservation-system---domain-exploration---process-level-event-storming)
-     - [Bounded Contexts](#bounded-contexts)
+- [Table of contents](#table-of-contents)
+- [Intro](#intro)
+- [Domain description](#domain-description)
+- [Domain exploration](#domain-exploration)
+  - [Event Storming Grammar](#event-storming-grammar)
+    - [The picture that explains everything](#the-picture-that-explains-everything)
+    - [Sticky notes](#sticky-notes)
+  - [Airline Reservation System - domain exploration - Big Picture](#airline-reservation-system---domain-exploration---big-picture)
+    - [Unordered events](#unordered-events)
+    - [Events arranged on timeline](#events-arranged-on-timeline)
+    - [Subdomains](#subdomains)
+  - [Airline Reservation System - domain exploration - Process Level Event Storming](#airline-reservation-system---domain-exploration---process-level-event-storming)
+    - [Bounded Contexts](#bounded-contexts)
+- [Architecture](#architecture)
+  - [Overview](#overview)
+  - [C4 Architecture diagrams](#c4-architecture-diagrams)
+    - [C1- Software System Perspective](#c1--software-system-perspective)
+    - [C2- Container Perspective](#c2--container-perspective)
+    - [C3- Component Perspective](#c3--component-perspective)
+
 
 ## Intro
 This is a project of Airline Reservation System(ARS) - software application to assist an airline with transactions related to :
@@ -216,17 +223,17 @@ if(isSingleUserProcess()){
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-SystemLandscape-001.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-SystemLandscape-001.png)
-![](img/architecture/structurizr-52510-SystemLandscape-key.png)
+<!--![](img/architecture/structurizr-52510-SystemLandscape-key.png)-->
 
 #### C2- Container Perspective
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Containers-001.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Containers-001.png)
-![](img/architecture/structurizr-52510-Containers-key.png)
+<!--![](img/architecture/structurizr-52510-Containers-key.png)-->
 
 #### C3- Component Perspective
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components-001.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Components-001.png)
-![](img/architecture/structurizr-52510-Components-key.png)
+<!--![](img/architecture/structurizr-52510-Components-key.png)-->
 
