@@ -268,7 +268,7 @@ This process focused on vertical exploration of the area. Its purpose is to disc
 
 This technique should be applied to bounded contexts with complex business logic .  
 
-In the case of Airline Reservation System this process will be carried out for Core Domain business context - Ticket Management. This is the place where we
+In the case of Airline Reservation System this process will be carried out for core domain business context - ticket management. This is the place where we
  expect complex business rules. 
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-init.jpg" target="_blank">Show picture</a>
