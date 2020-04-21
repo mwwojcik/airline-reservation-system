@@ -266,9 +266,10 @@ if(isSingleUserProcess()){
 Design Level Event Storming is a technique for discovering the complexity of a closed business area - a single bounded context. 
 This process focused on vertical exploration of the area. Its purpose is to discover existing business rules. 
 
-This technique applies to bounded contexts with complex business logic .  
+This technique should be applied to bounded contexts with complex business logic .  
 
-In the case of Airline Reservation System this process will be carried out for Core Domain Business Context - Ticket Management.
+In the case of Airline Reservation System this process will be carried out for Core Domain business context - Ticket Management. This is the place where we
+ expect complex business rules. 
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-init.jpg" target="_blank">Show picture</a>
 ![](img/air-design-level-ticket-management-init.jpg)  
