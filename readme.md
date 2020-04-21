@@ -256,3 +256,16 @@ if(isSingleUserProcess()){
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components.png" target="_blank">Show picture</a>
 ![](img/architecture/structurizr-52510-Components.png)
 
+## Bounded context exploration
+ 
+### Airline Reservation System - bounded context exploration - Design Level Event Storming
+
+Design Level Event Storming is a technique for discovering the complexity of a closed business area - a single bounded context. 
+This process focused on vertical exploration of the area. Its purpose is to discover existing business rules. 
+
+This technique applies to bounded contexts with complex business logic .  
+
+In the case of Airline Reservation System this process will be carried out for Core Domain Business Context - Ticket Management.
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-init.jpg" target="_blank">Show picture</a>
+![](img/air-design-level-ticket-management-init.jpg)  
