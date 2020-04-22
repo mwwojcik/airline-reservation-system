@@ -273,3 +273,11 @@ In the case of Airline Reservation System this process will be carried out for c
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-init.jpg" target="_blank">Show picture</a>
 ![](img/air-design-level-ticket-management-init.jpg)  
+
+During the session it turned out that it is necessary to redefine Gifts Bounded Context boundaries. Information about the exchange of a gift for a cash
+ equivalent must be immediately transferred to the booking module. The equivalent amount must be known at the time the price is calculated. This rule
+  enforces a combination of both areas. 
+  
+  <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-designlevel.jpg" target="_blank">Show
+   picture</a>
+  ![](img/air-design-level-ticket-management-designlevel.jpg)  
