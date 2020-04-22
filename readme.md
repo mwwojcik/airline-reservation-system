@@ -281,3 +281,5 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
   <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-designlevel.jpg" target="_blank">Show
    picture</a>
   ![](img/air-design-level-ticket-management-designlevel.jpg)  
+  
+ This level of detail is sufficient to start implementation.
