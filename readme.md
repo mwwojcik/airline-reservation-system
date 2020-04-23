@@ -63,8 +63,13 @@ that flight).
 
 **Ticket reservation**
 
+Via the online booking system, the customer can reserve a maximum of 10 individual tickets per month. Before making the reservation, the system checks whether
+ the user has exceeded the limit .
+
 It is necessary to provide flight number and seat number to reserve a seat. 
 If the difference between the departure date and system date is more than 2 weeks, the ticket is blocked without no cost. 
+Each customer can have only 3 blocked reservations at a time. Each subsequent ticket must be confirmed immediately.
+
 Customer should make a make the final purchase of the ticket before 2 weeks of the departure date. 3 weeks before the date of departure, system should
 send to the customer reminder message.
 
@@ -95,6 +100,7 @@ Discounts can accumulate but they can be up to 70% initial price.
 
 Ticket rescheduling based on confirmation number. It is possible only for confirmed tickets. Blocked ticket can't be rescheduled.
 If there is any difference in the prices of the tickets, it is returned to the credit card account. New confirmation number is sent to the customer via email.
+Changing the reservation date can be done only twice. After the limit has been used, the reservation must be canceled.
 
 **Cancelling ticket**
 
