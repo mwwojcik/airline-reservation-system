@@ -298,14 +298,11 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
  
  |****A DDD aggregate is a cluster of domain objects that can be treated as a single unit.****|
  |-----|
- |*Aggregates are the basic element of transfer of data storage - you request to load or save whole aggregates. Transactions should not cross aggregate boundaries.*|
- 
-It isn't a data container, it concerns rules and behavior.
-  
-Extracting aggregates begins by finding commands, events, and rules describe the same object. We are interested only in behavior, we do not worry
- about the data.
-  
+ |***Aggregates are the basic element of transfer of data storage - you request to load or save whole aggregates. Transactions should not cross aggregate
+  boundaries.***|
 
- 
+Extracting aggregates begins by grouping commands, events, and rules describe the same object. We are interested only in behavior, we don't worry
+ about the data.
+
   ![](img/air-aggregate-reservation.jpg)
  
