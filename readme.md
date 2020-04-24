@@ -292,5 +292,15 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
  
  #### Aggregates
  
+ Quoting [Martin Fowler](https://martinfowler.com/bliki/DDD_Aggregate.html) 
+ 
+ |*A DDD aggregate is a cluster of domain objects that can be treated as a single unit.*|
+ |----|
+ 
+ |*Aggregates are the basic element of transfer of data storage - you request to load or save whole aggregates. Transactions should not cross aggregate boundaries.*|
+ |-----|
+ 
+ 
+ 
   ![](img/air-aggregate-reservation.jpg)
  
