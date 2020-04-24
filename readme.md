@@ -289,3 +289,8 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
   ![](img/air-design-level-ticket-management-designlevel.jpg)  
   
  This level of detail is sufficient to start implementation.
+ 
+ #### Aggregates
+ 
+  ![](img/air-aggregate-reservation.jpg)
+ 
