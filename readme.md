@@ -300,7 +300,7 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
  |:-----:|
  |***Aggregates are the basic element of transfer of data storage - you request to load or save whole aggregates. Transactions should not cross aggregateboundaries.***|
 
-Extracting aggregates begins by grouping commands, events, and rules describe the same object. We are interested only in behavior, we don't worry
+Extracting aggregates begins by grouping commands, events, and rules describe the same object. We are interested only in behavior, and don't worry
  about the data.
 
   ![](img/air-aggregate-reservation.jpg)
