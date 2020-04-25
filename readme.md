@@ -367,26 +367,62 @@ class ReservationTest {
 
   @DisplayName("Should create new reservation")
   @Test
-  void shouldCreateNewReservation() {
-    
-  }
+  void shouldCreateNewReservation() {}
 
-  @DisplayName("Should not create reservation limit exceeded")
+  @DisplayName("Should not create when reservations limit exceeded")
   @Test
-  void shouldNotCreateReservationLimitExceeded() {
-    
-  }
+  void shouldNotCreateReservationLimitExceeded() {}
 
-  @DisplayName("Should lock created reservation")
+  @DisplayName("Should lock reservation when it is new")
   @Test
-  void shouldLockCreatedReservation() {
-   
-  }
+  void shouldLockCreatedReservation() {}
 
-  @DisplayName("Should not lock confirmed reservation")
+  @DisplayName("Should not lock when reservation is confirmed")
   @Test
-  void shouldNotLockConfirmedReservation() {
-   
-  }
+  void shouldNotLockConfirmedReservation() {}
+
+  @DisplayName("Should lock when number of locked reservations equals 2")
+  @Test
+  void shouldLockWhenNumberOfLockedReservationsEquals2() {}
+
+  @DisplayName("Should not lock when number of locked reservations eqals 3")
+  @Test
+  void shouldNotLockWhenNumberOfLockedReservationsEqals3() {}
+
+  @DisplayName("Should lock when departure date more than 2 weeks")
+  @Test
+  void shouldLockWhenDepartureDateMoreThan2Weeks() {}
+
+  @DisplayName("Should not lock when departure date less than 2 weeks")
+  @Test
+  void shouldNotLockWhenDepartureDateLessThan2Weeks() {}
+
+  @DisplayName("Should reschedule reservation when it is confirmed")
+  @Test
+  void shouldRescheduleReservationWhenItIsConfirmed() {}
+
+  @DisplayName("Should not reschedule reservation when it is locked")
+  @Test
+  void shouldNotRescheduleReservationWhenItIsLocked() {}
+
+  @DisplayName("Should reschedule reservation when reschedule first time")
+  @Test
+  void shouldRescheduleReservationWhenRescheduleFirstTime() {}
+
+  @DisplayName("Should not reschedule when rescheduled two times")
+  @Test
+  void shouldNotRescheduleWhenRescheduledTwoTimes() {}
+
+  @DisplayName("Should cancel when reservation is confirmed")
+  @Test
+  void shouldCancelWhenReservationIsConfirmed() {}
+
+  @DisplayName("Should cancel when reservation is locked")
+  @Test
+  void shouldCancelWhenReservationIsLocked() {}
+
+  @DisplayName("Shoould not cancel when reservation is new")
+  @Test
+  void shoouldNotCancelWhenReservationIsNew() {}
 }
 ```
