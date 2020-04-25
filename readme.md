@@ -300,8 +300,58 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
  |:-----:|
  |***Aggregates are the basic element of transfer of data storage - you request to load or save whole aggregates. Transactions should not cross aggregateboundaries.***|
 
-Extracting aggregates begins by grouping commands, events, and rules describe the same object. We are interested only in behavior, and don't worry
- about the data.
+Extracting aggregates begins by grouping commands, events, and rules for the same object. 
 
   ![](img/air-aggregate-reservation.jpg)
  
+Based on the design, it is possible to prepare an implementation skeleton. Eeach command is represented by a separate method, and each rule by its logic.
+
+```java
+public class Reservation {
+  //BLUE CARD
+  public Result create() {
+    //YELLOW CARD
+    if(limitReservationPerMonthReached()){
+      return Result.failure();
+    }
+    return Result.success();
+  }
+
+  //BLUE CARD
+  public Result confirm() {
+    
+    //YELLOW CARD
+    if(!(isCreated()||isLocked())){
+      return Result.failure();
+    }
+    return Result.success();
+  }
+  //BLUE CARD
+  public Result lock() {
+    //YELLOW CARD
+    if(!isCreated()||departureDateLessThan()||limitLockedReservationReached()){
+        return Result.failure();
+    }
+    return Result.success();
+  }
+  
+  //BLUE CARD
+  public Result reschedule() {
+    //YELLOW CARD
+    if(!isConfirmed()||limitReschedulingReached()){
+      return Result.failure();
+    }
+    return Result.success();
+  }
+
+  //BLUE CARD
+  public Result cancel() {
+    //YELLOW CARD
+    if(!(isLocked()||isConfirmed())){
+      return Result.failure();
+    }
+    return Result.success();
+  }
+//private methods
+}
+``` 
