@@ -304,7 +304,8 @@ Extracting aggregates begins by grouping commands, events, and rules for the sam
 
   ![](img/air-aggregate-reservation.jpg)
  
-Based on the design, it is possible to prepare an implementation skeleton. Eeach command is represented by a separate method, and each rule by its logic.
+Based on this project, it is possible to prepare an aggregate implementation skeleton. In the implementation, each command is represented by a
+ separate method, and each rule by its logic.
 
 ```java
 public class Reservation {
@@ -354,4 +355,38 @@ public class Reservation {
   }
 //private methods
 }
+
+
 ``` 
+In this way it revealed itself a simple api that can be tested using unit tests. Unit tests are a carrier of user intensions.  They are based on the rules
+ discovered during the Event Storming session.
+ 
+ 
+ ```java
+class ReservationTest {
+
+  @DisplayName("Should create new reservation")
+  @Test
+  void shouldCreateNewReservation() {
+    
+  }
+
+  @DisplayName("Should not create reservation limit exceeded")
+  @Test
+  void shouldNotCreateReservationLimitExceeded() {
+    
+  }
+
+  @DisplayName("Should lock created reservation")
+  @Test
+  void shouldLockCreatedReservation() {
+   
+  }
+
+  @DisplayName("Should not lock confirmed reservation")
+  @Test
+  void shouldNotLockConfirmedReservation() {
+   
+  }
+}
+```
