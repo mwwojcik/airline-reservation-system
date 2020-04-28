@@ -27,4 +27,7 @@ class ReservationFixture {
 
   }
 
+  public static Reservation withMaxReservationPerMonth() {
+    return reservation(0,10,0);
+  }
 }

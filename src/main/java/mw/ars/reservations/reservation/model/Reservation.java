@@ -72,7 +72,7 @@ public class Reservation {
 
   // BLUE CARD
   public Result confirm() {
-    if (!(isCreated() || isLocked())) {
+    if (!(isActive() || isLocked())) {
       return Result.failure();
     }
     currentStatus = Status.CONFIRMED;
@@ -80,7 +80,7 @@ public class Reservation {
   }
   // BLUE CARD
   public Result lock() {
-    if (!isCreated() || departureDateLessThan() || currentlyLocked.limitReached()) {
+    if (!isActive() || departureDateLessThan() || currentlyLocked.limitReached()) {
       return Result.failure();
     }
     currentStatus = Status.LOCKED;
@@ -111,8 +111,8 @@ public class Reservation {
     return currentStatus == Status.CONFIRMED;
   }
 
-  private boolean isCreated() {
-    return currentStatus == Status.NEW;
+  private boolean isActive() {
+    return currentStatus == Status.ACTIVE;
   }
 
   private boolean isLocked() {

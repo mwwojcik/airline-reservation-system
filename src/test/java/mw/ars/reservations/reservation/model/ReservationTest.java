@@ -1,5 +1,7 @@
 package mw.ars.reservations.reservation.model;
 
+import mw.ars.commons.model.Result;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,22 +11,28 @@ class ReservationTest {
   @Test
   void shouldCreateNewReservation() {
     // given
+    var reservation = ReservationFixture.simple();
     // when
+    var res = reservation.activate();
     // then
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
   }
 
   @DisplayName("Should not create when reservations limit exceeded")
   @Test
   void shouldNotCreateReservationLimitExceeded() {
     // given
+    var reservation = ReservationFixture.withMaxReservationPerMonth();
     // when
+    var res = reservation.activate();
     // then
+    Assertions.assertThat(res.isFailure()).isEqualTo(true);
     // Fail.fail("Write your test");
   }
 
-  @DisplayName("Should lock reservation when it is new")
+  @DisplayName("Should lock reservation when it is active")
   @Test
-  void shouldLockCreatedReservation() {
+  void shouldLockActiveReservation() {
     // given
     // when
     // then
