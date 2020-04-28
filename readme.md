@@ -328,7 +328,7 @@ public class Reservation {
     return Result.success();
   }
   //BLUE CARD
-  public Result lock() {
+  public Result currentlyLocked() {
     //YELLOW CARD
     if(!isCreated()||departureDateLessThan()||limitLockedReservationReached()){
         return Result.failure();
@@ -373,27 +373,27 @@ class ReservationTest {
   @Test
   void shouldNotCreateReservationLimitExceeded() {}
 
-  @DisplayName("Should lock reservation when it is new")
+  @DisplayName("Should currentlyLocked reservation when it is new")
   @Test
   void shouldLockCreatedReservation() {}
 
-  @DisplayName("Should not lock when reservation is confirmed")
+  @DisplayName("Should not currentlyLocked when reservation is confirmed")
   @Test
   void shouldNotLockConfirmedReservation() {}
 
-  @DisplayName("Should lock when number of locked reservations equals 2")
+  @DisplayName("Should currentlyLocked when number of locked reservations equals 2")
   @Test
   void shouldLockWhenNumberOfLockedReservationsEquals2() {}
 
-  @DisplayName("Should not lock when number of locked reservations eqals 3")
+  @DisplayName("Should not currentlyLocked when number of locked reservations eqals 3")
   @Test
   void shouldNotLockWhenNumberOfLockedReservationsEqals3() {}
 
-  @DisplayName("Should lock when departure date more than 2 weeks")
+  @DisplayName("Should currentlyLocked when departure date more than 2 weeks")
   @Test
   void shouldLockWhenDepartureDateMoreThan2Weeks() {}
 
-  @DisplayName("Should not lock when departure date less than 2 weeks")
+  @DisplayName("Should not currentlyLocked when departure date less than 2 weeks")
   @Test
   void shouldNotLockWhenDepartureDateLessThan2Weeks() {}
 

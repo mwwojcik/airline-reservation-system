@@ -1,28 +1,72 @@
 package mw.ars.reservations.reservation.model;
 
+import lombok.AllArgsConstructor;
 import mw.ars.commons.model.Result;
+import mw.ars.reservations.reservation.common.model.CustomerId;
+import mw.ars.reservations.reservation.common.model.FligtId;
+import mw.ars.reservations.reservation.common.model.ReservationId;
+import org.javamoney.moneta.Money;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.UUID;
 
+@AllArgsConstructor
 public class Reservation {
-
-  private LockedReservation lockedReservation;
-  private MonthlyReservation monthlyReservation;
-  private RescheduledReservation rescheduledReservation;
-
-  private Status currentStatus;
+  private static int TWO_WEEKS_DAYS = 14;
+  private ReservationId id;
+  private CustomerId customerId;
+  private FligtId flightId;
   private LocalDateTime departureDate;
+  private Money price;
+
+  private CurrentlyLocked currentlyLocked;
+  private ReservedThisMonth reservedThisMonth;
+  private RescheduledSoFar rescheduledSoFar;
+  private Status currentStatus;
+
+  private Reservation(
+      CustomerId customerId,
+      FligtId flightId,
+      LocalDateTime departureDate,
+      Money price,
+      CurrentlyLocked currentlyLocked,
+      ReservedThisMonth reservedThisMonth,
+      RescheduledSoFar rescheduledSoFar) {
+
+    this.id = ReservationId.of(UUID.randomUUID());
+    this.currentStatus = Status.NEW;
+
+    this.customerId = customerId;
+    this.flightId = flightId;
+    this.departureDate = departureDate;
+    this.price = price;
+    this.currentlyLocked = currentlyLocked;
+    this.reservedThisMonth = reservedThisMonth;
+    this.rescheduledSoFar = rescheduledSoFar;
+  }
+
+  public static Reservation of(
+      CustomerId customerId,
+      FligtId flightId,
+      LocalDateTime departureDate,
+      Money price,
+      CurrentlyLocked currentlyLocked,
+      ReservedThisMonth reservedThisMonth,
+      RescheduledSoFar rescheduledSoFar) {
+
+    return new Reservation(
+        customerId, flightId, departureDate, price, currentlyLocked, reservedThisMonth, rescheduledSoFar);
+  }
 
   // BLUE CARD
-
-  public Result create() {
-    if (monthlyReservation.limitReached()) {
+  public Result activate() {
+    if (reservedThisMonth.limitReached()) {
       return Result.failure();
     }
-    currentStatus = Status.NEW;
-    monthlyReservation.create();
+    currentStatus = Status.ACTIVE;
+    reservedThisMonth.create();
     return Result.success();
   }
 
@@ -36,20 +80,20 @@ public class Reservation {
   }
   // BLUE CARD
   public Result lock() {
-    if (!isCreated() || departureDateLessThan() || lockedReservation.limitReached()) {
+    if (!isCreated() || departureDateLessThan() || currentlyLocked.limitReached()) {
       return Result.failure();
     }
     currentStatus = Status.LOCKED;
-    lockedReservation.lock();
+    currentlyLocked.add();
     return Result.success();
   }
   // BLUE CARD
 
   public Result reschedule() {
-    if (!isConfirmed() || rescheduledReservation.limitReached()) {
+    if (!isConfirmed() || rescheduledSoFar.limitReached()) {
       return Result.failure();
     }
-    rescheduledReservation.reschedule();
+    rescheduledSoFar.add();
     currentStatus = Status.RESCHEDULED;
     return Result.success();
   }
@@ -76,8 +120,7 @@ public class Reservation {
   }
 
   private boolean departureDateLessThan() {
-    return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays()
-        < LockedReservation.TWO_WEEKS_DAYS;
+    return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
   }
 
   enum Status {
@@ -85,49 +128,61 @@ public class Reservation {
     LOCKED,
     CONFIRMED,
     CANCELED,
-    RESCHEDULED;
+    RESCHEDULED,
+    ACTIVE
   }
 
-  public static class MonthlyReservation {
-
+  @AllArgsConstructor
+  public static class ReservedThisMonth {
     private static int RESERVATIONS_PER_MONTH_LIMIT = 10;
-    private int reservedInThisMonth;
+    private int bookedThisMonth;
+
+    public static ReservedThisMonth of(int reservedInMonth) {
+      return new ReservedThisMonth(reservedInMonth);
+    }
 
     boolean limitReached() {
-      return reservedInThisMonth == RESERVATIONS_PER_MONTH_LIMIT;
+      return bookedThisMonth == RESERVATIONS_PER_MONTH_LIMIT;
     }
 
     void create() {
-      reservedInThisMonth++;
+      bookedThisMonth++;
     }
   }
 
-  public static class RescheduledReservation {
+  @AllArgsConstructor
+  public static class RescheduledSoFar {
 
     static int RESCHEDULING_LIMIT = 3;
     int rescheduledSoFar;
+
+    public static RescheduledSoFar of(int rescheduledSoFar) {
+      return new RescheduledSoFar(rescheduledSoFar);
+    }
 
     boolean limitReached() {
       return rescheduledSoFar == RESCHEDULING_LIMIT;
     }
 
-    void reschedule() {
+    void add() {
       rescheduledSoFar++;
     }
   }
 
-  public static class LockedReservation {
-
+  @AllArgsConstructor
+  public static class CurrentlyLocked {
     private static int LOCKED_RESERVATION_LIMIT = 3;
-
-    private static int TWO_WEEKS_DAYS = 14;
     private int lockedSoFar;
+
+    public static CurrentlyLocked of(int lockedSoFar) {
+      return new CurrentlyLocked(lockedSoFar);
+    }
 
     boolean limitReached() {
       return lockedSoFar == LOCKED_RESERVATION_LIMIT;
     }
 
-    void lock() {
+    void add() {
       lockedSoFar++;
     }
   }
