@@ -2,11 +2,11 @@ package mw.ars.commons.model;
 
 public class Result {
   private boolean res;
-  private String cause;
+  private String message;
 
-  public Result(boolean res, String cause) {
+  public Result(boolean res, String message) {
     this.res = res;
-    this.cause = cause;
+    this.message = message;
   }
 
   public static Result success() {
