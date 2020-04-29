@@ -309,50 +309,57 @@ Based on this project, it is possible to prepare an aggregate implementation ske
 
 ```java
 public class Reservation {
-  //BLUE CARD
-  public Result create() {
-    //YELLOW CARD
-    if(limitReservationPerMonthReached()){
-      return Result.failure();
-    }
-    return Result.success();
-  }
 
-  //BLUE CARD
-  public Result confirm() {
+    private static int TWO_WEEKS_DAYS = 14;
+      private ReservationId id;
+      private CustomerId customerId;
+      private FligtId flightId;
+      private LocalDateTime departureDate;
+      private Money price;
     
-    //YELLOW CARD
-    if(!(isCreated()||isLocked())){
-      return Result.failure();
-    }
-    return Result.success();
-  }
-  //BLUE CARD
-  public Result currentlyLocked() {
-    //YELLOW CARD
-    if(!isCreated()||departureDateLessThan()||limitLockedReservationReached()){
-        return Result.failure();
-    }
-    return Result.success();
-  }
-  
-  //BLUE CARD
-  public Result reschedule() {
-    //YELLOW CARD
-    if(!isConfirmed()||limitReschedulingReached()){
-      return Result.failure();
-    }
-    return Result.success();
-  }
+      private CurrentlyLocked currentlyLocked;
+      private ReservedThisMonth reservedThisMonth;
+      private RescheduledSoFar rescheduledSoFar;
+      private Status currentStatus;
 
-  //BLUE CARD
-  public Result cancel() {
-    //YELLOW CARD
-    if(!(isLocked()||isConfirmed())){
-      return Result.failure();
+   // BLUE CARD
+    public Result activate() {
+      if (reservedThisMonth.limitReached()) {
+        return Result.failure();
+      }      
+      return Result.success();
     }
-    return Result.success();
-  }
+  
+    // BLUE CARD
+    public Result confirm() {
+      if (!(isActive() || isLocked())) {
+        return Result.failure();
+      }      
+      return Result.success();
+    }
+    // BLUE CARD
+    public Result lock() {
+      if (!isActive() || departureDateLessThan() || currentlyLocked.limitReached()) {
+        return Result.failure();
+      }      
+      return Result.success();
+    }
+    // BLUE CARD
+  
+    public Result reschedule() {
+      if (!isConfirmed() || rescheduledSoFar.limitReached()) {
+        return Result.failure();
+      }      
+      return Result.success();
+    }
+    // BLUE CARD
+  
+    public Result cancel() {
+      if (!(isLocked() || isConfirmed())) {
+        return Result.failure();
+      }      
+      return Result.success();
+    }
 //private methods
 }
 
