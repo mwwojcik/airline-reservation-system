@@ -34,117 +34,143 @@ class ReservationTest {
   @Test
   void shouldLockActiveReservation() {
     // given
+    var reservation = ReservationFixture.departureDateMoreThanTwoWeeks();
     // when
+    var result = reservation.lock();
     // then
-    //    Fail.fail("Write your test");
+    Assertions.assertThat(result.isSuccess()).isEqualTo(true);
   }
 
   @DisplayName("Should not lock when reservation is confirmed")
   @Test
   void shouldNotLockConfirmedReservation() {
     // given
+    var reservation = ReservationFixture.inConfirmedState();
     // when
+    var res = reservation.lock();
     // then
-    //     Fail.fail("Write your test");
+    Assertions.assertThat(res.isFailure()).isEqualTo(true);
   }
 
   @DisplayName("Should lock when number of locked reservations equals 2")
   @Test
   void shouldLockWhenNumberOfLockedReservationsEquals2() {
     // given
+    var reservation = ReservationFixture.withTwoLocksWithDateMoreThan2Weeks();
     // when
+    var result = reservation.lock();
     // then
-    //   Fail.fail("Write your test");
+    Assertions.assertThat(result.isSuccess()).isEqualTo(true);
   }
 
-  @DisplayName("Should not lock when number of locked reservations eqals 3")
+  @DisplayName("Should not lock when number of locked reservations equals 3")
   @Test
-  void shouldNotLockWhenNumberOfLockedReservationsEqals3() {
+  void shouldNotLockWhenNumberOfLockedReservationsEquals3() {
     // given
+    var reservation = ReservationFixture.withThreeLocks();
     // when
+    var result = reservation.lock();
     // then
-    //    Fail.fail("Write your test");
+    Assertions.assertThat(result.isFailure()).isTrue();
   }
 
   @DisplayName("Should lock when departure date more than 2 weeks")
   @Test
   void shouldLockWhenDepartureDateMoreThan2Weeks() {
     // given
-    // when
+    var reservation = ReservationFixture.departureDateMoreThanTwoWeeks();
+    //when
+    var result = reservation.lock();
     // then
-    //     Fail.fail("Write your test");
+    Assertions.assertThat(result.isSuccess()).isTrue();
   }
 
   @DisplayName("Should not lock when departure date less than 2 weeks")
   @Test
   void shouldNotLockWhenDepartureDateLessThan2Weeks() {
     // given
-    // when
+    var reservation = ReservationFixture.departureDateLessThanTwoWeeks();
+    //when
+    var result = reservation.lock();
     // then
-    //      Fail.fail("Write your test");
+    Assertions.assertThat(result.isFailure()).isTrue();
   }
 
   @DisplayName("Should reschedule reservation when it is confirmed")
   @Test
   void shouldRescheduleReservationWhenItIsConfirmed() {
     // given
-    // when
+    var reservation = ReservationFixture.inConfirmedState();
+    //when
+    var result = reservation.reschedule();
     // then
-    //       Fail.fail("Write your test");
+    Assertions.assertThat(result.isSuccess()).isTrue();
   }
 
   @DisplayName("Should not reschedule reservation when it is locked")
   @Test
   void shouldNotRescheduleReservationWhenItIsLocked() {
     // given
-    // when
+    var reservation = ReservationFixture.inLockedState();
+    //when
+    var result = reservation.reschedule();
     // then
-    //        Fail.fail("Write your test");
+    Assertions.assertThat(result.isFailure()).isTrue();
   }
 
   @DisplayName("Should reschedule reservation when reschedule first time")
   @Test
   void shouldRescheduleReservationWhenRescheduleFirstTime() {
     // given
-    // when
+    var reservation = ReservationFixture.inConfirmedState();
+    //when
+    var result = reservation.reschedule();
     // then
-    //         Fail.fail("Write your test");
+    Assertions.assertThat(result.isSuccess()).isTrue();
   }
 
-  @DisplayName("Should not reschedule when rescheduled two times")
+  @DisplayName("Should not reschedule when rescheduled three times")
   @Test
-  void shouldNotRescheduleWhenRescheduledTwoTimes() {
+  void shouldNotRescheduleWhenRescheduledThreeTimes() {
     // given
-    // when
+    var reservation = ReservationFixture.inConfirmedStateRescheduledThreeTimes();
+    //when
+    var result = reservation.reschedule();
     // then
-    //          Fail.fail("Write your test");
+    Assertions.assertThat(result.isFailure()).isTrue();
   }
 
   @DisplayName("Should cancel when reservation is confirmed")
   @Test
   void shouldCancelWhenReservationIsConfirmed() {
     // given
-    // when
+    var reservation = ReservationFixture.inConfirmedState();
+    //when
+    var result = reservation.cancel();
     // then
-    //           Fail.fail("Write your test");
+    Assertions.assertThat(result.isSuccess()).isTrue();
   }
 
-  @DisplayName("Should cancel when reservation is locked")
+  @DisplayName("Should not cancel when reservation is locked")
   @Test
-  void shouldCancelWhenReservationIsLocked() {
+  void shouldNotCancelWhenReservationIsLocked() {
     // given
-    // when
+    var reservation = ReservationFixture.inLockedState();
+    //when
+    var result = reservation.cancel();
     // then
-    //            Fail.fail("Write your test");
+    Assertions.assertThat(result.isFailure()).isTrue();
   }
 
-  @DisplayName("Shoould not cancel when reservation is new")
+  @DisplayName("Should not cancel when reservation is activated")
   @Test
-  void shoouldNotCancelWhenReservationIsNew() {
+  void shouldNotCancelWhenReservationIsActivated() {
     // given
-    // when
+    var reservation = ReservationFixture.inActiveState();
+    //when
+    var result = reservation.cancel();
     // then
-    //             Fail.fail("Write your test");
+    Assertions.assertThat(result.isFailure()).isTrue();
 
   }
 }
