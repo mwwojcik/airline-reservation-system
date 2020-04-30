@@ -2,6 +2,7 @@ package mw.ars.reservations.reservation.model;
 
 import mw.ars.reservations.reservation.common.model.CustomerId;
 import mw.ars.reservations.reservation.common.model.FligtId;
+import mw.ars.reservations.reservation.common.model.SeatNumber;
 import org.javamoney.moneta.Money;
 
 import javax.money.Monetary;
@@ -21,6 +22,7 @@ class ReservationFixture {
             FligtId.of(UUID.randomUUID()),
             LocalDateTime.now(),
             Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
+            SeatNumber.of(2),
             Reservation.CurrentlyLocked.of(lockedSoFar),
             Reservation.ReservedThisMonth.of(reservedThisMonth),
             Reservation.RescheduledSoFar.of(rescheduledSoFar));
@@ -33,6 +35,7 @@ class ReservationFixture {
             FligtId.of(UUID.randomUUID()),
            departureDate,
             Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
+            SeatNumber.of(2),
             Reservation.CurrentlyLocked.of(lockedSoFar),
             Reservation.ReservedThisMonth.of(reservedThisMonth),
             Reservation.RescheduledSoFar.of(rescheduledSoFar));
@@ -45,6 +48,7 @@ class ReservationFixture {
             FligtId.of(UUID.randomUUID()),
             departureDate,
             Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
+            SeatNumber.of(2),
             Reservation.CurrentlyLocked.of(0),
             Reservation.ReservedThisMonth.of(0),
             Reservation.RescheduledSoFar.of(0));

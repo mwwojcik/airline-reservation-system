@@ -365,7 +365,7 @@ public class Reservation {
 
 
 ``` 
-In this way it revealed itself a simple api that can be tested using unit tests. Unit tests are a carrier of user intensions.  They are based on the rules
+In this way it revealed itself a simple api that can be tested using unit tests. Unit tests are a carrier of user intentions.  They are based on the rules
  discovered during the Event Storming session.
  
  
@@ -536,6 +536,96 @@ class ReservationTest {
     var result = reservation.cancel();
     // then
     Assertions.assertThat(result.isFailure()).isTrue();
+
+  }
+}
+```
+
+##### Rescheduling
+
+The rescheduling functionality requires many changes to the Reservation object. Both the status of the object and a lot of data specifying the flight,  place
+ and time are changing.  
+ 
+The method Reservation.reschedule() returns not only the status of the operation, but also the ReservationBuilder object. 
+
+```java
+class Reservation{
+ //...
+  public Result reschedule() {
+    if (!isConfirmed() || rescheduledSoFar.limitReached()) {
+      return Result.failure();
+    }
+    rescheduledSoFar.add();
+    currentStatus = Status.RESCHEDULED;
+
+    return Result.successWithReturn(
+        new ReservationBuilder()
+            .customerId(customerId)
+            .rescheduledSoFar(rescheduledSoFar)
+            .currentlyLocked(currentlyLocked)
+            .reservedThisMonth(reservedThisMonth)
+            .currentStatus(Status.CONFIRMED)
+            .parentResId(ReservationId.of(id.getId())));
+  }
+//...
+}
+```
+ReservationBuilder object allows the service to set new reservation data:
+
+ ```java
+class RescheduleService {
+
+  Reservation reschedule(
+      Reservation original,
+      FligtId newFlightId,
+      SeatNumber newSeatNumber,
+      LocalDateTime newDepartureDate,
+      Money newPrice) {
+
+    var result = original.reschedule();
+
+    if (result.isFailure()) {
+      // throw exception
+    }
+
+    var rescheduled = (Reservation.ReservationBuilder) result.returned();
+
+    return rescheduled
+        .departureDate(newDepartureDate)
+        .flightId(newFlightId)
+        .price(newPrice)
+        .seat(newSeatNumber)
+        .build();
+  }
+}
+```
+
+Finally, this domain service creates a new Reservation object. Some data is copied from the original object and some set in the service.
+
+It should be remembered that both the original and copied object must be saved in the database.
+
+The functionality can be tested via unit test: 
+
+```java
+class RescheduleServiceTest {
+  private RescheduleService service = new RescheduleService();
+
+  @DisplayName("Should reschedule reservation")
+  @Test
+  void shouldRescheduleReservation() {
+    // given
+    var original = ReservationFixture.inConfirmedState();
+    // when
+    var rescheduled =
+        service.reschedule(
+            original,
+            FligtId.of(UUID.randomUUID()),
+            SeatNumber.of(5),
+            LocalDateTime.now().plusDays(5),
+            Money.of(19, "USD"));
+
+    Assertions.assertThat(rescheduled.getId()).isNotEqualTo(original.getId());
+    Assertions.assertThat(rescheduled.getParentResId()).isEqualTo(original.getId());
 
   }
 }
