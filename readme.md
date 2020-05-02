@@ -637,6 +637,8 @@ class RescheduleServiceTest {
 
 ### Ports and Adapters (Hexagonal Architecture)
 
+![](img/hexagonal_architecture.jpg)
+
 ### Application testing
 
 ### Spring Boot Configuration
