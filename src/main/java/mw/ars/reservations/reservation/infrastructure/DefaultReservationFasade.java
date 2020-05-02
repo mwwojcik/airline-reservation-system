@@ -3,7 +3,7 @@ package mw.ars.reservations.reservation.infrastructure;
 import mw.ars.reservations.reservation.ReservationFasade;
 import mw.ars.reservations.reservation.ReservationService;
 
-class DefaultReservationFasade implements ReservationFasade {
+public class DefaultReservationFasade implements ReservationFasade {
 
     private ReservationService service;
 

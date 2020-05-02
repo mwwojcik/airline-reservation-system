@@ -4,36 +4,34 @@ import mw.ars.reservations.reservation.ReservationFasade;
 import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.ReservationService;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 
 public class ReservationConfiguration {
- @Bean
- public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {
+  @Bean
+  public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {
     return new DefaultReservationRepository(repoDB);
   }
 
   @Bean
- public ReservationService createService(ReservationRepository repo) {
+  public ReservationService createService(ReservationRepository repo) {
     return new DefaultReservationService(repo);
   }
 
   @Bean
- public ReservationFasade createFacade(ReservationService service) {
+  public ReservationFasade createFacade(ReservationService service) {
     return new DefaultReservationFasade(service);
   }
 
-    @Bean
-    DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder()
-                .generateUniqueName(true)
-                .setType(EmbeddedDatabaseType.HSQL)
-                .addScript("reservation_create_schema.sql")
-                .build();
-    }
+  @Bean
+  DataSource dataSource() {
+    return new EmbeddedDatabaseBuilder()
+        .generateUniqueName(true)
+        .setType(EmbeddedDatabaseType.HSQL)
+        .addScript("reservation_create_schema.sql")
+        .build();
+  }
 }
