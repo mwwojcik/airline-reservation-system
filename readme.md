@@ -239,9 +239,13 @@ if(isSingleUserProcess()){
 
 ### Architectural Decision Log
 
-|Number|Date|Type|Title|Status|
-|:-|:-|:-|:-|:-|
-|0001|2020-04-19|SYS|[Use Modular Monolith](ars/0001-sys-use-modular-monolith.md)|Accepted|
+|Number|Type|Date|Title
+|:-|:-|:-|:-|
+|0002|TCH-RES|2020-05-02|[Use modular monolith](ars/0002-TCH-RES-use-modular-monolith.md)|
+|0003|TCH-RES|2020-05-02|[Use Ports and Adapters architecture](ars/0003-TCH-RES-use-ports-and-adapters-architecture.md)|
+|0004|TCH-RES|2020-05-02|[Use relational database as a aggregate data repository](ars/0004-TCH-RES-use-relational-database-as-a-aggregate-data-repository.md)|
+|0005|TCH-RES|2020-05-02|[Use Spring Repository](ars/0005-TCH-RES-use-spring-repository.md)|
+
 
 ### C4 Architecture diagrams 
 
@@ -636,7 +640,9 @@ class RescheduleServiceTest {
 ## Implementation (Reservation module)
 
 The Reservation module is an example of a deep module. It has a large number of business rules. 
-Some of them are quite complicated. It will be implemented in architecture Ports and Adapters (Hexagonal Architecture).
+Some of them are quite complicated. 
+According to ADR [Use Ports and Adapters architecture](ars/0003-TCH-RES-use-ports-and-adapters-architecture.md)It will be implemented in architecture Ports
+ and Adapters (Hexagonal Architecture).
 
 ### Ports and Adapters (Hexagonal Architecture)
 
@@ -649,16 +655,25 @@ The heart of the system is the domain model whose task is to implement core busi
 The application communicates with other parts of the system using the input ports (primary ports) and output ports (secondary ports).
 Each port has a dedicated adapter whose task is to translate the model.
 
+**In the real world, ports are interfaces. Their implementation is provided by the infrastructure layer.** 
 
 ![](img/hexagonal_architecture.jpg)
 
 ### Application testing
 
-The module will be tested using three types of tests:
+The module will be tested using three types of tests: 
 
-- Unit tests - will be used to test business logic
-- Acceptance tests - they will check the correctness of the business process
-- Web API Tests - will be used to check communication through REST services
+- Unit Tests - Will be used to test business logic.  They will be made without access to the web layer and database.
+- Acceptance Tests - Integration tests, they will check the correctness of the business process. Require access to the database but
+ are separated from the REST API layer. 
+- Web API Tests - They will be used to check the REST API. They will be performed without access to the database and without interacting with the module
+ application layer.
+
+According to notes:
+- [Use relational database as a aggregate data repository](ars/0004-TCH-RES-use-relational-database-as-a-aggregate-data-repository.md)
+- [Use Spring Repository](ars/0005-TCH-RES-use-spring-repository.md)
+
+As a data storage relational database will be used.  Access to data will be provided by Spring Repository Library.  
 
 ### Spring Boot Configuration
 
