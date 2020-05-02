@@ -635,7 +635,20 @@ class RescheduleServiceTest {
 ```
 ## Implementation (Reservation module)
 
+The Reservation module is an example of a deep module. It has a large number of business rules. 
+Some of them are quite complicated. It will be implemented in architecture Ports and Adapters (Hexagonal Architecture).
+
 ### Ports and Adapters (Hexagonal Architecture)
+
+This type of architecture is dedicated for modules with high business complexity. 
+It gives the opportunity to separate the most important business logic from application and infrastructure logic.  Thanks to this, each type of logic can be
+tested independently.
+
+The heart of the system is the domain model whose task is to implement core business rules. 
+
+The application communicates with other parts of the system using the input ports (primary ports) and output ports (secondary ports).
+Each port has a dedicated adapter whose task is to translate the model.
+
 
 ![](img/hexagonal_architecture.jpg)
 
