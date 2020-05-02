@@ -644,7 +644,7 @@ This type of architecture is dedicated for modules with high business complexity
 It gives the opportunity to separate the most important business logic from application and infrastructure logic.  Thanks to this, each type of logic can be
 tested independently.
 
-The heart of the system is the domain model whose task is to implement core business rules. 
+The heart of the system is the domain model whose task is to implement core business rules. Domain model must be completely independent of the libraries used.
 
 The application communicates with other parts of the system using the input ports (primary ports) and output ports (secondary ports).
 Each port has a dedicated adapter whose task is to translate the model.
@@ -653,6 +653,12 @@ Each port has a dedicated adapter whose task is to translate the model.
 ![](img/hexagonal_architecture.jpg)
 
 ### Application testing
+
+The module will be tested using three types of tests:
+
+- Unit tests - will be used to test business logic
+- Acceptance tests - they will check the correctness of the business process
+- Web API Tests - will be used to check communication through REST services
 
 ### Spring Boot Configuration
 
