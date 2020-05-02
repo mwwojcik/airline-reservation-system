@@ -641,8 +641,8 @@ class RescheduleServiceTest {
 
 The Reservation module is an example of a deep module. It has a large number of business rules. 
 Some of them are quite complicated. 
-According to ADR [Use Ports and Adapters architecture](ars/0003-TCH-RES-use-ports-and-adapters-architecture.md)It will be implemented in architecture Ports
- and Adapters (Hexagonal Architecture).
+According to ADR [Use Ports and Adapters architecture](ars/0003-TCH-RES-use-ports-and-adapters-architecture.md) module will be implemented in architecture
+ Ports and Adapters (Hexagonal Architecture).
 
 ### Ports and Adapters (Hexagonal Architecture)
 
@@ -659,17 +659,18 @@ Each port has a dedicated adapter whose task is to translate the model.
 
 ![](img/hexagonal_architecture.jpg)
 
-### Application testing
+### Non-functional requirements
 
 The module will be tested using three types of tests: 
 
 - Unit Tests - Will be used to test business logic.  They will be made without access to the web layer and database.
 - Acceptance Tests - Integration tests, they will check the correctness of the business process. Require access to the database but
  are separated from the REST API layer. 
-- Web API Tests - They will be used to check the REST API. They will be performed without access to the database and without interacting with the module
- application layer.
+- Web API Tests - They will be used to check the REST API. They will be performed without access to the database and without interacting with the
+  application layer.
 
 According to notes:
+
 - [Use relational database as a aggregate data repository](ars/0004-TCH-RES-use-relational-database-as-a-aggregate-data-repository.md)
 - [Use Spring Repository](ars/0005-TCH-RES-use-spring-repository.md)
 
