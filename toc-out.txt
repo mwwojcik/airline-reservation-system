@@ -23,5 +23,6 @@
       - [Rescheduling](#rescheduling)
 - [Implementation (Reservation module)](#implementation-reservation-module)
   - [Ports and Adapters (Hexagonal Architecture)](#ports-and-adapters-hexagonal-architecture)
-  - [Application testing](#application-testing)
+  - [Non-functional requirements](#non-functional-requirements)
+  - [Application services](#application-services)
   - [Spring Boot Configuration](#spring-boot-configuration)

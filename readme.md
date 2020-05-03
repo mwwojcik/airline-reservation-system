@@ -22,7 +22,8 @@
   - [Airline Reservation System - bounded context exploration - Design Level Event Storming](#airline-reservation-system---bounded-context-exploration---design-level-event-storming)
 - [Implementation (Reservation module)](#implementation-reservation-module)
   - [Ports and Adapters (Hexagonal Architecture)](#ports-and-adapters-hexagonal-architecture)
-  - [Application testing](#application-testing)
+  - [Non-functional requirements](#non-functional-requirements)
+  - [Application services](#application-services)
   - [Spring Boot Configuration](#spring-boot-configuration)
 
 
