@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  * Tested is flow via Fasade
  */
 @SpringBootTest(classes = ReservationInMemoryTestApplication.class)
-@AutoConfigureMockMvc
 class ReservationAcceptanceIT {
 
     @Autowired
