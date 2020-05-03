@@ -1,13 +1,13 @@
 package mw.ars.reservations.reservation.infrastructure;
 
-import mw.ars.reservations.reservation.ReservationFasade;
+import mw.ars.reservations.reservation.ReservationFacade;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 class ReservationController {
-    private ReservationFasade fasade;
+    private ReservationFacade fasade;
 
-    ReservationController(ReservationFasade fasade) {
+    ReservationController(ReservationFacade fasade) {
         this.fasade = fasade;
     }
 }

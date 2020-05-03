@@ -663,10 +663,10 @@ Each port has a dedicated adapter whose task is to translate the model.
 
 The module will be tested using three types of tests: 
 
-- Unit Tests - Will be used to test business logic.  They will be made without access to the web layer and database.
-- Acceptance Tests - Integration tests, they will check the correctness of the business process. Require access to the database but
+- Unit Tests will be used to test business logic.  They will be made without access to the web layer and database.
+- Acceptance Tests (integration tests)  will check the correctness of the business process. Require access to the database but
  are separated from the REST API layer. 
-- Web API Tests - They will be used to check the REST API. They will be performed without access to the database and without interacting with the
+- Web API Tests will be used to check the REST API. They will be performed without access to the database and without interacting with the
   application layer.
 
 According to notes:
@@ -676,17 +676,52 @@ According to notes:
 
 As a data storage relational database will be used.  Access to data will be provided by Spring Repository.  
 
-The module will communicate with external components via the facade interface - *ReservationFasade* . Its implementation will be provided by a spring bean
-.  The interface can be injected into controllers and other application modules via Spring IoC. It will delegate calls to the module's internal services.
+The  Reservation Module will communicate with external components via the facade interface - *ReservationFascade* . Its implementation will be provided by a
+ spring bean.  The interface can be injected into controllers and other application modules via Spring IoC. It will delegate calls to the module's internal services.
 
-**No other interfaces can be used outside the module.**
+**No other interfaces can be used outside the module (and in REST controllers).**
 
-```java
-public interface ReservationFasade {
-//...
+### Application services
+
+Application services are the bridge between domain model (and services) and infrastructure. They do not implement any business logic. Coordinate the
+ invocation of the correct domain objects and provide the appropriate data. 
+ 
+ Main application services are:
+ 
+ - *ReservationFacade* - communicates with other parts of the system . 
+ - *ReservationService* - delegates calls to the domain model .
+ - *ReservationRepository* - acquires and saves data.
+ 
+ Their implementations are spring beans placed in the infrastructure part.
+ 
+ ReservationRepository has two different implementations:
+ 
+ 1. **InMemoryReservationRepository** - provides fast database functionality mainly for testing purposes. It will be be implemented based on a simple HashMap
+ . Its use will allow to save and read data without having to raise real database context. It will be very fast.
+    
+ ```java
+public class InMemoryReservationRepository implements ReservationRepository {
+    Map<ReservationId, Reservation> cache=new HashMap<>();
 }
 ```
 
+2. **DefaultReservationRepository** - provides real access to data via Spring Data Repository. It translates the domain model into an entity model (and vice
+ versa). Should be used in real, production implementation. 
+ 
+```java
+public class DefaultReservationRepository implements ReservationRepository {
+
+    private ReservationRepositoryDB repositoryDB;
+
+    public DefaultReservationRepository(ReservationRepositoryDB repositoryDB) {
+        this.repositoryDB = repositoryDB;
+    }
+}
+```
+  
+  |It should be noted that application services cannot use a model with infrastructure features (e.g. an entity model). This would kill the flexibility and testability of the application.|
+  |:------:|
+ 
 
 ### Spring Boot Configuration
 

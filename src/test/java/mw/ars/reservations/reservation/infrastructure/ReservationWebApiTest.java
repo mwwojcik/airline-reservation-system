@@ -1,6 +1,6 @@
 package mw.ars.reservations.reservation.infrastructure;
 
-import mw.ars.reservations.reservation.ReservationFasade;
+import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.infrastructure.testapp.ReservationInMemoryTestApplication;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 class ReservationWebApiTest {
 
   @Autowired private MockMvc mockMvc;
-  @MockBean private ReservationFasade reservationFasade;
+  @MockBean private ReservationFacade reservationFacade;
 
   @DisplayName("Web Rest API test")
   @Test

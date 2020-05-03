@@ -1,6 +1,6 @@
 package mw.ars.reservations.reservation.infrastructure;
 
-import mw.ars.reservations.reservation.ReservationFasade;
+import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.ReservationService;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
@@ -22,8 +22,8 @@ public class ReservationConfiguration {
   }
 
   @Bean
-  public ReservationFasade createFacade(ReservationService service) {
-    return new DefaultReservationFasade(service);
+  public ReservationFacade createFacade(ReservationService service) {
+    return new DefaultReservationFacade(service);
   }
 
   @Bean

@@ -1,13 +1,13 @@
 package mw.ars.reservations.reservation.infrastructure;
 
-import mw.ars.reservations.reservation.ReservationFasade;
+import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationService;
 
-public class DefaultReservationFasade implements ReservationFasade {
+public class DefaultReservationFacade implements ReservationFacade {
 
     private ReservationService service;
 
-    public DefaultReservationFasade(ReservationService service) {
+    public DefaultReservationFacade(ReservationService service) {
         this.service = service;
     }
 }
