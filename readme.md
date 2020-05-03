@@ -674,7 +674,19 @@ According to notes:
 - [Use relational database as a aggregate data repository](ars/0004-TCH-RES-use-relational-database-as-a-aggregate-data-repository.md)
 - [Use Spring Repository](ars/0005-TCH-RES-use-spring-repository.md)
 
-As a data storage relational database will be used.  Access to data will be provided by Spring Repository Library.  
+As a data storage relational database will be used.  Access to data will be provided by Spring Repository.  
+
+The module will communicate with external components via the facade interface - *ReservationFasade* . Its implementation will be provided by a spring bean
+.  The interface can be injected into controllers and other application modules via Spring IoC. It will delegate calls to the module's internal services.
+
+**No other interfaces can be used outside the module.**
+
+```java
+public interface ReservationFasade {
+//...
+}
+```
+
 
 ### Spring Boot Configuration
 
