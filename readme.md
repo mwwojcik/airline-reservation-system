@@ -813,8 +813,8 @@ After loading it, engine does not try to search for other applications (that is 
 *ReservationInMemoryTestApplication* loads own configuration *ReservationInMemoryTestConfiguration*.
  This changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
 
-Spring Factory provides ReservationRepository interface implementation, but does it differently than in production mode. 
-It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory hashmap database
+Spring Factory provides *ReservationRepository* interface implementation, but does it differently than in production mode. 
+It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory database
  implementation doesn't need it), and there is no datasource configuration.  
  
  At this moment the greatest advantage of hexagonal architecture is revealed. The same application is constructed in a completely different way. It gains new
