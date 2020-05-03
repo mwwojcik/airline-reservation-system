@@ -808,11 +808,13 @@ public class ReservationInMemoryTestConfiguration {
 }
 ```
 
-The @SpringBootTest annotation indicates an application prepared specifically for testing purposes(SpringBootApplication).  After loading it, SpringBoot does
- not try to search for other Spring Applications (that is why there are no conflicts in the definition of beans).  *ReservationInMemoryTestApplication* loads
- own configuration *@Import(ReservationInMemoryTestConfiguration.class)*. This configuration changes the standard SpringBoot behavior. 
- Aspects of data access are excluded from the auto-configuration mechanism. 
- 
- 
+The @SpringBootTest annotation indicates an application prepared specifically for testing purposes(SpringBootApplication).  
+After loading it, SpringBoot does not try to search for other Spring Applications (that is why there are no conflicts in the definition of beans).  
+*ReservationInMemoryTestApplication* loads own configuration *@Import(ReservationInMemoryTestConfiguration.class)*.
+ This configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
+
+Spring Factory provides ReservationRepository interface implementation, but does it differently. 
+It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory hashmap database
+ implementation not need it). There is no datasource configuration.  
   
   
