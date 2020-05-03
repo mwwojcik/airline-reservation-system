@@ -634,6 +634,15 @@ public class DefaultReservationRepository implements ReservationRepository {
 
 ### Spring Boot Configuration
 
+**It is important to follow two rules**
+
+|Beans are only instigated in dedicated factories. Don't use any annotations used by the spring autoscan mechanism *(@Component,@Service)*.|
+|:-------:|
+
+|@Autowired annotation should be used only in tests (or nowhere). Injections should be realized via constructors!|
+|:-------:|
+
+
 The application can run in test and production mode. It is done by using two independent SpringBoot configurations.
 
 1. Production configuration
