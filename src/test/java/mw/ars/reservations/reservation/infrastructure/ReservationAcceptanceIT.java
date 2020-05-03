@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+
+
 
 /**
  * Acceptance test - full infractructure stack - without WEB API.
@@ -21,11 +25,11 @@ class ReservationAcceptanceIT {
     @DisplayName("Simple integration test")
     @Test
     void simpleIntegrationTest() {
-    // given
-    // when
-    // then
-    System.out.println("test");
+        // given
+        // when
+        // then
+        System.out.println("test");
 //        Fail.fail("Write your test");
-     }
+    }
 
 }
