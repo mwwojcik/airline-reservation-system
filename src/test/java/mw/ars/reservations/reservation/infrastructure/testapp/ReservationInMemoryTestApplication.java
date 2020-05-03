@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @Import(ReservationInMemoryTestConfiguration.class)
-
 public class ReservationInMemoryTestApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder()

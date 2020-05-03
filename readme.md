@@ -676,7 +676,7 @@ According to notes:
 
 As a data storage relational database will be used.  Access to data will be provided by Spring Repository.  
 
-The  Reservation Module will communicate with external components via the facade interface - *ReservationFascade* . Its implementation will be provided by a
+The  reservation module will communicate with external components via the facade interface - *ReservationFascade* . Its implementation will be provided by a
  spring bean.  The interface can be injected into controllers and other application modules via Spring IoC. It will delegate calls to the module's internal services.
 
 **No other interfaces can be used outside the module (and in REST controllers).**
@@ -725,4 +725,85 @@ public class DefaultReservationRepository implements ReservationRepository {
 
 ### Spring Boot Configuration
 
+The application can run in test and production mode. It is done by using two independent SpringBoot configurations.
 
+1. Production configuration
+
+```java
+@SpringBootApplication
+@Import(ReservationConfiguration.class)
+public class ArsApplication {
+    //...
+}
+```
+
+```java
+public class ReservationConfiguration {
+  @Bean
+  public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {
+    return new DefaultReservationRepository(repoDB);
+  }
+
+  @Bean
+  public ReservationService createService(ReservationRepository repo) {
+    return new DefaultReservationService(repo);
+  }
+
+  @Bean
+  public ReservationFacade createFacade(ReservationService service) {
+    return new DefaultReservationFacade(service);
+  }
+
+ /*
+   Simplified implementation now.
+ */
+  @Bean
+  DataSource dataSource() {
+    return new EmbeddedDatabaseBuilder()
+        .generateUniqueName(true)
+        .setType(EmbeddedDatabaseType.HSQL)
+        .addScript("reservation_create_schema.sql")
+        .build();
+  }
+}
+```
+
+2. Test configuration
+
+```java
+@SpringBootTest(classes = ReservationInMemoryTestApplication.class)
+class ReservationAcceptanceIT {
+//...
+}
+```
+
+```java
+@SpringBootApplication
+@Import(ReservationInMemoryTestConfiguration.class)
+public class ReservationInMemoryTestApplication {
+ //...
+}
+```
+
+```java
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,
+        DataSourceTransactionManagerAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class,
+        JpaRepositoriesAutoConfiguration.class})
+public class ReservationInMemoryTestConfiguration {
+  @Bean
+  public ReservationRepository createRepository() {
+    return new InMemoryReservationRepository();
+  }
+
+  @Bean
+  public ReservationService createService(ReservationRepository repo) {
+    return new DefaultReservationService(repo);
+  }
+
+  @Bean
+  public ReservationFacade createFacade(ReservationService service) {
+    return new DefaultReservationFacade(service);
+  }
+}
+```

@@ -14,12 +14,9 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @Import(ReservationConfiguration.class)
 public class ArsApplication {
-
 	public static void main(String[] args) {
-		/*SpringApplication.run(ArsApplication.class, args);*/
-		new SpringApplicationBuilder()
+			new SpringApplicationBuilder()
 				.parent(ArsApplication.class)
 				.web(WebApplicationType.SERVLET).run(args);
 	}
-
 }
