@@ -39,3 +39,8 @@ Option no 2 - relational database.
 ## Consequences
 
 This is a more stable solution. This technology is better known by the developer team.
+
+It allows you to extract data from various modules and create Read Models. 
+
+It is much easier than in the case of document databases.
+
