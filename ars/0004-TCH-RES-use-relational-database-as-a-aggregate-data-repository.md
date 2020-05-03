@@ -18,18 +18,24 @@ Accepted
 
 ## Context and Problem Statement
 
+**What kind of database should be used to storage aggregates data ?**
 
 Considered options:
 
+1. Document database (MongoDB)
+
+2. Relational database
 
 Drivers:
+* Simple objects will be saved. 
 
+* There will be no relationship between objects .
+
+* A Read Model combining data from different aggregates is required . 
 
 ## Decision
-
-
+Option no 2 - relational database. 
 
 ## Consequences
 
-
-## Links
+This is a more stable solution. This technology is better known by the developer team.

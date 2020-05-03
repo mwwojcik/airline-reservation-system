@@ -17,19 +17,26 @@ Accepted
 
 ## Context and Problem Statement
 
-
+**What technology is to be used for persistence?**
 
 Considered options:
 
+1. Spring Template
+
+2. JPA + Spring Repositores
 
 Drivers:
 
+1. Technology must be simple and well known
+
+2. Cannot require a lot of code writing
 
 ## Decision
 
-
+Option no 2 - JPA+Spring Repositories.
 
 ## Consequences
 
+It is a library that facilitates the implementation of the persistence layer. It is stable and well - known. There is a lot of documentation for it.
 
 ## Links
