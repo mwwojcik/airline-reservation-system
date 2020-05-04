@@ -371,8 +371,16 @@ public class Reservation {
 //private methods
 }
 
-
 ``` 
+#### Lack of Cohesion
+
+![](img/loc-1.png)
+
+![](img/air-aggregate-reservation-decomposition.jpg)
+
+![](img/loc-2.png)
+
+
 <!-- In this way it revealed itself a simple api that can be tested using unit tests. Unit tests are a carrier of user intentions.  They are based on the rules
  discovered during the Event Storming session. -->
  
