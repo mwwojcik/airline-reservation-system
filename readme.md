@@ -374,7 +374,16 @@ public class Reservation {
 ``` 
 #### Lack of Cohesion
 
+At first glance you can see that the design of this class is not optimal. Class is too long. Has a lot of attributes. Some of them make sense only in a
+ certain state. It's a code smells. 
+  
+Code analysis carried out by CodeMR confirms the problem. It showed a Lack of Cohesion for a Reservation class.  
+
 ![](img/loc-1.png)
+
+|Measure how well the methods of a class are related to each other. High cohesion (low lack of cohesion) tend to be preferable, because high cohesion is associated with several desirable traits of software including robustness, reliability, reusability, and understandability. In contrast, low cohesion is associated with undesirable traits such as being difficult to maintain, test, reuse, or even understand.LCOM (Lack of Cohesion of Methods): Measure how methods of a class are related to each other. Low cohesion means that the class implements more than one responsibility. A change request by either a bug or a new feature, on one of these responsibilities will result change of that class. Lack of cohesion also influences understandability and implies classes should probably be split into two or more subclasses. |
+|:--------:|
+    
 
 ![](img/air-aggregate-reservation-decomposition.jpg)
 
