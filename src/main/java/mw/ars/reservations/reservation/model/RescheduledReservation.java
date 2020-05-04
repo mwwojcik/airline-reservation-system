@@ -14,15 +14,15 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 public class RescheduledReservation {
-  private static int TWO_WEEKS_DAYS = 14;
-  @Getter private ReservationId id;
-  @Getter private Status status;
-  private ReservationId originalReservationId;
-  private SeatNumber seat;
-  private Money price;
-  private LocalDateTime departureDate;
-  private RescheduledSoFar rescheduledSoFar;
-  private FligtId flightId;
+  private static final int TWO_WEEKS_DAYS = 14;
+  @Getter private final ReservationId id;
+  @Getter private final Status status;
+  private final ReservationId originalReservationId;
+  private final SeatNumber seat;
+  private final Money price;
+  private final LocalDateTime departureDate;
+  private final RescheduledSoFar rescheduledSoFar;
+  private final FligtId flightId;
 
   private RescheduledReservation(Builder builder) {
     this.id = ReservationId.of(UUID.randomUUID());

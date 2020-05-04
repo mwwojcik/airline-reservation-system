@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 class InitialReservation implements IdentifiedReservation {
-  @Getter private ReservationId id;
-  private ReservedThisMonth reservedThisMonth;
-  private CustomerId customerId;
-  private FligtId flightId;
-  @Getter private Status status;
+  @Getter private final ReservationId id;
+  private final ReservedThisMonth reservedThisMonth;
+  private final CustomerId customerId;
+  private final FligtId flightId;
+  @Getter private final Status status;
 
   public InitialReservation(
       ReservedThisMonth reservedThisMonth, CustomerId customerId, FligtId flightId) {
@@ -46,7 +46,7 @@ class InitialReservation implements IdentifiedReservation {
 
   @AllArgsConstructor
   public static class ReservedThisMonth {
-    private static int RESERVATIONS_PER_MONTH_LIMIT = 10;
+    private static final int RESERVATIONS_PER_MONTH_LIMIT = 10;
     private int bookedThisMonth;
 
     public static ReservedThisMonth of(int reservedInMonth) {

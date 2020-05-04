@@ -9,11 +9,11 @@ import org.javamoney.moneta.Money;
 import java.time.LocalDateTime;
 
 class RegisteredReservation implements IdentifiedReservation {
-  @Getter private ReservationId id;
-  @Getter private Status status;
-  private SeatNumber seat;
-  private Money price;
-  private LocalDateTime departureDate;
+  @Getter private final ReservationId id;
+  @Getter private final Status status;
+  private final SeatNumber seat;
+  private final Money price;
+  private final LocalDateTime departureDate;
 
   public RegisteredReservation(
       ReservationId initialResId, SeatNumber seat, Money price, LocalDateTime departureDate) {
@@ -34,7 +34,7 @@ class RegisteredReservation implements IdentifiedReservation {
   }
 
   public Result hold(int currentlyHolded) {
-    return HoldedReservation.create(this,this.departureDate,currentlyHolded);
+    return HoldedReservation.create(this, this.departureDate, currentlyHolded);
   }
 
   public Result confirm() {

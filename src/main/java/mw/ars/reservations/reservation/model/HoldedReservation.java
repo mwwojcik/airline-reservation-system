@@ -12,10 +12,10 @@ import java.time.Period;
 @AllArgsConstructor
 @Getter
 public class HoldedReservation {
-  private static int TWO_WEEKS_DAYS = 14;
-  @Getter private ReservationId id;
-  @Getter private Status status;
-  private CurrentlyHolded currentlyHolded;
+  private static final int TWO_WEEKS_DAYS = 14;
+  @Getter private final ReservationId id;
+  @Getter private final Status status;
+  private final CurrentlyHolded currentlyHolded;
 
   private HoldedReservation(ReservationId id, CurrentlyHolded currentlyHolded) {
     this.id = id;
@@ -36,9 +36,8 @@ public class HoldedReservation {
   }
 
   public Result cancel() {
-    return CancelledReservation.create(this) ;
+    return CancelledReservation.create(this);
   }
-
 
   private static boolean lessThanTwoWeeks(LocalDateTime departureDate) {
     return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
@@ -46,7 +45,7 @@ public class HoldedReservation {
 
   @AllArgsConstructor
   public static class CurrentlyHolded {
-    private static int HOLDED_RESERVATION_LIMIT = 3;
+    private static final int HOLDED_RESERVATION_LIMIT = 3;
     private int holdedSoFar;
 
     public static CurrentlyHolded of(int holdedSoFar) {
