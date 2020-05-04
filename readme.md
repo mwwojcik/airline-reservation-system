@@ -388,6 +388,8 @@ I made an attempt to decompose the aggregate. Decomposition is based on the stat
 
 ![](img/air-aggregate-reservation-decomposition.jpg)
 
+Now each object has a set of fields appropriate for a given transition.  
+
 New objects ensure proper transition between states. Each object has methods that allow you to go to the allowed transactions:
 
 ```java
@@ -404,14 +406,10 @@ class RegisteredReservation implements IdentifiedReservation {
 }
 
 ```
-Now each object has a set of fields appropriate for a given transition. 
 
 Re-analysis showed significant improvement:
 
 ![](img/loc-2.png)
-
- 
-
 
 
 ## Implementation (Reservation module)
