@@ -1,16 +1,16 @@
 package mw.ars.commons.model;
 
-public class Result<T> {
+public class Result{
   private boolean res;
   private String message;
-  private T returnObject;
+  private Object returnObject;
 
   public Result(boolean res, String message) {
     this.res = res;
     this.message = message;
   }
 
-  public Result(boolean res, String message,T returnObject) {
+  public Result(boolean res, String message,Object returnObject) {
     this.res = res;
     this.message = message;
     this.returnObject=returnObject;
@@ -20,8 +20,8 @@ public class Result<T> {
     return new Result(true, "ok");
   }
 
-  public static <R> Result successWithReturn(R returned){
-    return new Result<R>(true,"OK",returned);
+  public static Result successWithReturn(Object returned){
+    return new Result(true,"OK",returned);
   }
 
   public static Result failure(String cause) {
@@ -40,5 +40,5 @@ public class Result<T> {
     return res == false;
   }
 
-  public T returned(){return returnObject;}
+  public Object returned(){return returnObject;}
 }

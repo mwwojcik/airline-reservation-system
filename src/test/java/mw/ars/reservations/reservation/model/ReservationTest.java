@@ -1,9 +1,17 @@
 package mw.ars.reservations.reservation.model;
 
 import mw.ars.commons.model.Result;
+import mw.ars.reservations.reservation.common.model.CustomerId;
+import mw.ars.reservations.reservation.common.model.FligtId;
+import mw.ars.reservations.reservation.common.model.SeatNumber;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Fail;
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 class ReservationTest {
 
@@ -11,166 +19,179 @@ class ReservationTest {
   @Test
   void shouldCreateNewReservation() {
     // given
-    var reservation = ReservationFixture.simple();
+    var anyFlight = FligtId.of(UUID.randomUUID());
+    var anyCustomer = CustomerId.of(UUID.randomUUID());
+    var oneReservationSoFar=1;
     // when
-    var res = reservation.activate();
+    var res = InitialReservation.create(oneReservationSoFar,anyFlight,anyCustomer);
     // then
     Assertions.assertThat(res.isSuccess()).isEqualTo(true);
   }
+
 
   @DisplayName("Should not create when reservations limit exceeded")
   @Test
   void shouldNotCreateReservationLimitExceeded() {
     // given
-    var reservation = ReservationFixture.withMaxReservationPerMonth();
+    var anyFlight = FligtId.of(UUID.randomUUID());
+    var anyCustomer = CustomerId.of(UUID.randomUUID());
+    var oneReservationSoFar=15;
     // when
-    var res = reservation.activate();
+    var res = InitialReservation.create(oneReservationSoFar,anyFlight,anyCustomer);
     // then
-    Assertions.assertThat(res.isFailure()).isEqualTo(true);
-    // Fail.fail("Write your test");
+    Assertions.assertThat(res.isSuccess()).isEqualTo(false);
   }
 
-  @DisplayName("Should lock reservation when it is active")
+  @DisplayName("shouldCreateRegisteredReservation")
   @Test
-  void shouldLockActiveReservation() {
-    // given
-    var reservation = ReservationFixture.departureDateMoreThanTwoWeeks();
-    // when
-    var result = reservation.lock();
+  void shouldCreateRegisteredReservation() {
+   // given 
+    var anyInitial = ReservationFixture.initial();
+    var anySeat = SeatNumber.of(10);
+    var anyDepartureDate=LocalDateTime.now();
+    var anyPrice=Money.of(10,"USD");
+    // when 
+    var res = anyInitial.register(anySeat, anyPrice, anyDepartureDate);
     // then
-    Assertions.assertThat(result.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(RegisteredReservation.class);
   }
 
-  @DisplayName("Should not lock when reservation is confirmed")
-  @Test
-  void shouldNotLockConfirmedReservation() {
-    // given
-    var reservation = ReservationFixture.inConfirmedState();
-    // when
-    var res = reservation.lock();
-    // then
-    Assertions.assertThat(res.isFailure()).isEqualTo(true);
-  }
 
-  @DisplayName("Should lock when number of locked reservations equals 2")
+  @DisplayName("Should hold when number of holded reservations equals 2")
   @Test
   void shouldLockWhenNumberOfLockedReservationsEquals2() {
     // given
-    var reservation = ReservationFixture.withTwoLocksWithDateMoreThan2Weeks();
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+    var currentlyHolded = 2;
     // when
-    var result = reservation.lock();
+    var res = registered.hold(currentlyHolded);
     // then
-    Assertions.assertThat(result.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(HoldedReservation.class);
   }
 
-  @DisplayName("Should not lock when number of locked reservations equals 3")
+  @DisplayName("Should not hold when number of holded reservations equals 3")
   @Test
-  void shouldNotLockWhenNumberOfLockedReservationsEquals3() {
+  void shouldLockWhenNumberOfLockedReservationsEquals3() {
     // given
-    var reservation = ReservationFixture.withThreeLocks();
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+    var currentlyHolded = 3;
     // when
-    var result = reservation.lock();
+    var res = registered.hold(currentlyHolded);
     // then
-    Assertions.assertThat(result.isFailure()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(false);
   }
 
   @DisplayName("Should lock when departure date more than 2 weeks")
   @Test
   void shouldLockWhenDepartureDateMoreThan2Weeks() {
     // given
-    var reservation = ReservationFixture.departureDateMoreThanTwoWeeks();
-    //when
-    var result = reservation.lock();
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+    var currentlyHolded = 2;
+    // when
+    var res = registered.hold(currentlyHolded);
     // then
-    Assertions.assertThat(result.isSuccess()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(HoldedReservation.class);
   }
 
   @DisplayName("Should not lock when departure date less than 2 weeks")
   @Test
   void shouldNotLockWhenDepartureDateLessThan2Weeks() {
     // given
-    var reservation = ReservationFixture.departureDateLessThanTwoWeeks();
-    //when
-    var result = reservation.lock();
+    var registered = ReservationFixture.registeredWithDepartureDayForOneWeek();
+    var currentlyHolded = 2;
+    // when
+    var res = registered.hold(currentlyHolded);
     // then
-    Assertions.assertThat(result.isFailure()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(false);
   }
 
-  @DisplayName("Should reschedule reservation when it is confirmed")
+  @DisplayName("Should confirm when departure date more than 2 weeks")
   @Test
-  void shouldRescheduleReservationWhenItIsConfirmed() {
+  void shouldConfirmWhenDepartureDateMoreThan2Weeks() {
     // given
-    var reservation = ReservationFixture.inConfirmedState();
-    //when
-    var result = reservation.reschedule();
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+
+    // when
+    var res = registered.confirm();
     // then
-    Assertions.assertThat(result.isSuccess()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(ConfirmedReservation.class);
   }
 
-  @DisplayName("Should not reschedule reservation when it is locked")
+  @DisplayName("Should confirm when departure date less than 2 weeks")
   @Test
-  void shouldNotRescheduleReservationWhenItIsLocked() {
+  void shouldConfirmWhenDepartureDateLessThan2Weeks() {
     // given
-    var reservation = ReservationFixture.inLockedState();
-    //when
-    var result = reservation.reschedule();
+    var registered = ReservationFixture.registeredWithDepartureDayForOneWeek();
+
+    // when
+    var res = registered.confirm();
     // then
-    Assertions.assertThat(result.isFailure()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(ConfirmedReservation.class);
   }
 
   @DisplayName("Should reschedule reservation when reschedule first time")
   @Test
-  void shouldRescheduleReservationWhenRescheduleFirstTime() {
+  void shouldRescheduleReservationWhenRescheduledFirstTime() {
     // given
-    var reservation = ReservationFixture.inConfirmedState();
-    //when
-    var result = reservation.reschedule();
+    var confirmed = ReservationFixture.confirmed();
+    var anySeat = SeatNumber.of(10);
+    var anyDepartureDate=LocalDateTime.now();
+    var anyPrice=Money.of(10,"USD");
+    var anyFlight=FligtId.of(UUID.randomUUID());
+    // when
+    var res = confirmed.reschedule(confirmed,1,anyFlight,anySeat,anyDepartureDate,anyPrice);
     // then
-    Assertions.assertThat(result.isSuccess()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(RescheduledReservation.class);
   }
 
-  @DisplayName("Should not reschedule when rescheduled three times")
+  @DisplayName("Should not reschedule reservation when rescheduled 3 times")
   @Test
-  void shouldNotRescheduleWhenRescheduledThreeTimes() {
+  void shouldRescheduleReservationWhenRescheduledThirdTime() {
     // given
-    var reservation = ReservationFixture.inConfirmedStateRescheduledThreeTimes();
-    //when
-    var result = reservation.reschedule();
+    var confirmed = ReservationFixture.confirmed();
+    var anySeat = SeatNumber.of(10);
+    var anyDepartureDate=LocalDateTime.now();
+    var anyPrice=Money.of(10,"USD");
+    var anyFlight=FligtId.of(UUID.randomUUID());
+    // when
+    var res = confirmed.reschedule(confirmed,3,anyFlight,anySeat,anyDepartureDate,anyPrice);
     // then
-    Assertions.assertThat(result.isFailure()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(false);
   }
 
-  @DisplayName("Should cancel when reservation is confirmed")
+
+  @DisplayName("Should cancel reservation when it is holded")
   @Test
-  void shouldCancelWhenReservationIsConfirmed() {
+  void shouldCancelReservationWhenItIsHolded() {
     // given
-    var reservation = ReservationFixture.inConfirmedState();
-    //when
-    var result = reservation.cancel();
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+    var currentlyHolded = 2;
+    var resHold = registered.hold(currentlyHolded);
+    var holded=((HoldedReservation)resHold.returned());
+
+    // when
+    var res = holded.cancel();
     // then
-    Assertions.assertThat(result.isSuccess()).isTrue();
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(CancelledReservation.class);
   }
 
-  @DisplayName("Should not cancel when reservation is locked")
+  @DisplayName("Should cancel reservation when it is confirmed")
   @Test
-  void shouldNotCancelWhenReservationIsLocked() {
+  void shouldCancelReservationWhenItIsConfirmed() {
     // given
-    var reservation = ReservationFixture.inLockedState();
-    //when
-    var result = reservation.cancel();
-    // then
-    Assertions.assertThat(result.isFailure()).isTrue();
-  }
+    var confirmed = ReservationFixture.confirmed();
 
-  @DisplayName("Should not cancel when reservation is activated")
-  @Test
-  void shouldNotCancelWhenReservationIsActivated() {
-    // given
-    var reservation = ReservationFixture.inActiveState();
-    //when
-    var result = reservation.cancel();
+    // when
+    var res = confirmed.cancel();
     // then
-    Assertions.assertThat(result.isFailure()).isTrue();
-
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(CancelledReservation.class);
   }
 }

@@ -325,7 +325,7 @@ public class Reservation {
       private LocalDateTime departureDate;
       private Money price;
     
-      private CurrentlyLocked currentlyLocked;
+      private CurrentlyLocked currentlyHolded;
       private ReservedThisMonth reservedThisMonth;
       private RescheduledSoFar rescheduledSoFar;
       private Status currentStatus;
@@ -347,7 +347,7 @@ public class Reservation {
     }
     // BLUE CARD
     public Result lock() {
-      if (!isActive() || departureDateLessThan() || currentlyLocked.limitReached()) {
+      if (!isActive() || departureDateLessThan() || currentlyHolded.limitReached()) {
         return Result.failure();
       }      
       return Result.success();
@@ -373,179 +373,12 @@ public class Reservation {
 
 
 ``` 
-In this way it revealed itself a simple api that can be tested using unit tests. Unit tests are a carrier of user intentions.  They are based on the rules
- discovered during the Event Storming session.
+<!-- In this way it revealed itself a simple api that can be tested using unit tests. Unit tests are a carrier of user intentions.  They are based on the rules
+ discovered during the Event Storming session. -->
  
- 
- ```java
-class ReservationTest {
 
-  @DisplayName("Should create new reservation")
-  @Test
-  void shouldCreateNewReservation() {
-  }
 
-  @DisplayName("Should not create when reservations limit exceeded")
-  @Test
-  void shouldNotCreateReservationLimitExceeded() {
-  }
 
-  @DisplayName("Should lock reservation when it is active")
-  @Test
-  void shouldLockActiveReservation() {
-  }
-
-  @DisplayName("Should not lock when reservation is confirmed")
-  @Test
-  void shouldNotLockConfirmedReservation() {
-  }
-
-  @DisplayName("Should lock when number of locked reservations equals 2")
-  @Test
-  void shouldLockWhenNumberOfLockedReservationsEquals2() {
-  }
-
-  @DisplayName("Should not lock when number of locked reservations equals 3")
-  @Test
-  void shouldNotLockWhenNumberOfLockedReservationsEquals3() {
-  }
-
-  @DisplayName("Should lock when departure date more than 2 weeks")
-  @Test
-  void shouldLockWhenDepartureDateMoreThan2Weeks() {
-  }
-
-  @DisplayName("Should not lock when departure date less than 2 weeks")
-  @Test
-  void shouldNotLockWhenDepartureDateLessThan2Weeks() {
-  }
-
-  @DisplayName("Should reschedule reservation when it is confirmed")
-  @Test
-  void shouldRescheduleReservationWhenItIsConfirmed() {
-  }
-
-  @DisplayName("Should not reschedule reservation when it is locked")
-  @Test
-  void shouldNotRescheduleReservationWhenItIsLocked() {
-  }
-
-  @DisplayName("Should reschedule reservation when reschedule first time")
-  @Test
-  void shouldRescheduleReservationWhenRescheduleFirstTime() {
-  }
-
-  @DisplayName("Should not reschedule when rescheduled three times")
-  @Test
-  void shouldNotRescheduleWhenRescheduledThreeTimes() {
-  }
-
-  @DisplayName("Should cancel when reservation is confirmed")
-  @Test
-  void shouldCancelWhenReservationIsConfirmed() {
-  }
-
-  @DisplayName("Should not cancel when reservation is locked")
-  @Test
-  void shouldNotCancelWhenReservationIsLocked() {
-     }
-
-  @DisplayName("Should not cancel when reservation is activated")
-  @Test
-  void shouldNotCancelWhenReservationIsActivated() {
-  }
-}
-```
-
-##### Rescheduling
-
-The rescheduling functionality requires many changes to the Reservation object. Both the status of the object and a lot of data specifying the flight,  place
- and time are changing.  
- 
-The method Reservation.reschedule() returns not only the status of the operation, but also the ReservationBuilder object. 
-
-```java
-class Reservation{
- //...
-  public Result reschedule() {
-    if (!isConfirmed() || rescheduledSoFar.limitReached()) {
-      return Result.failure();
-    }
-    rescheduledSoFar.add();
-    currentStatus = Status.RESCHEDULED;
-
-    return Result.successWithReturn(
-        new ReservationBuilder()
-            .customerId(customerId)
-            .rescheduledSoFar(rescheduledSoFar)
-            .currentlyLocked(currentlyLocked)
-            .reservedThisMonth(reservedThisMonth)
-            .currentStatus(Status.CONFIRMED)
-            .parentResId(ReservationId.of(id.getId())));
-  }
-//...
-}
-```
-ReservationBuilder object allows the service to set new reservation data:
-
- ```java
-class RescheduleService {
-
-  Reservation reschedule(
-      Reservation original,
-      FligtId newFlightId,
-      SeatNumber newSeatNumber,
-      LocalDateTime newDepartureDate,
-      Money newPrice) {
-
-    var result = original.reschedule();
-
-    if (result.isFailure()) {
-      // throw exception
-    }
-
-    var rescheduled = (Reservation.ReservationBuilder) result.returned();
-
-    return rescheduled
-        .departureDate(newDepartureDate)
-        .flightId(newFlightId)
-        .price(newPrice)
-        .seat(newSeatNumber)
-        .build();
-  }
-}
-```
-
-Finally, this domain service creates a new Reservation object. Some data is copied from the original object and some set in the service.
-
-It should be remembered that both the original and copied object must be saved in the database.
-
-The functionality can be tested via unit test: 
-
-```java
-class RescheduleServiceTest {
-  private RescheduleService service = new RescheduleService();
-
-  @DisplayName("Should reschedule reservation")
-  @Test
-  void shouldRescheduleReservation() {
-    // given
-    var original = ReservationFixture.inConfirmedState();
-    // when
-    var rescheduled =
-        service.reschedule(
-            original,
-            FligtId.of(UUID.randomUUID()),
-            SeatNumber.of(5),
-            LocalDateTime.now().plusDays(5),
-            Money.of(19, "USD"));
-
-    Assertions.assertThat(rescheduled.getId()).isNotEqualTo(original.getId());
-    Assertions.assertThat(rescheduled.getParentResId()).isEqualTo(original.getId());
-
-  }
-}
-```
 ## Implementation (Reservation module)
 
 The Reservation module is an example of a deep module. It has a large number of business rules. 

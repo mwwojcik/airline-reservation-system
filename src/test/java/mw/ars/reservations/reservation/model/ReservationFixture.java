@@ -5,67 +5,109 @@ import mw.ars.reservations.reservation.common.model.FligtId;
 import mw.ars.reservations.reservation.common.model.SeatNumber;
 import org.javamoney.moneta.Money;
 
-import javax.money.Monetary;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 class ReservationFixture {
 
-  public static Reservation simple() { return reservation(0,0,0); }
-
-
-
-  private static Reservation reservation(int lockedSoFar, int reservedThisMonth, int rescheduledSoFar) {
-    return Reservation.of(
-            CustomerId.of(UUID.randomUUID()),
-            FligtId.of(UUID.randomUUID()),
-            LocalDateTime.now(),
-            Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
-            SeatNumber.of(2),
-            Reservation.CurrentlyLocked.of(lockedSoFar),
-            Reservation.ReservedThisMonth.of(reservedThisMonth),
-            Reservation.RescheduledSoFar.of(rescheduledSoFar));
-
+  public static InitialReservation initial() {
+    return (InitialReservation)
+        InitialReservation.create(
+                1, FligtId.of(UUID.randomUUID()), CustomerId.of(UUID.randomUUID()))
+            .returned();
   }
 
-  private static Reservation reservation(int lockedSoFar, int reservedThisMonth, int rescheduledSoFar,LocalDateTime departureDate) {
-    return Reservation.of(
-            CustomerId.of(UUID.randomUUID()),
-            FligtId.of(UUID.randomUUID()),
-           departureDate,
-            Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
-            SeatNumber.of(2),
-            Reservation.CurrentlyLocked.of(lockedSoFar),
-            Reservation.ReservedThisMonth.of(reservedThisMonth),
-            Reservation.RescheduledSoFar.of(rescheduledSoFar));
+  public static RegisteredReservation registeredWithDepartureDayFor3Weeks() {
+    return registered(21);
+  }
 
+  public static RegisteredReservation registeredWithDepartureDayForOneWeek() {
+    return registered(7);
+  }
+
+  private static RegisteredReservation registered(int numberOfDaysFromToday) {
+    var anyInitial = ReservationFixture.initial();
+    var anySeat = SeatNumber.of(10);
+    var anyDepartureDate = LocalDateTime.now().plusDays(numberOfDaysFromToday);
+    var anyPrice = Money.of(10, "USD");
+    // when
+    var res = anyInitial.register(anySeat, anyPrice, anyDepartureDate);
+    return (RegisteredReservation) res.returned();
+  }
+
+
+  public static ConfirmedReservation confirmed() {
+    var registeredReservation = registeredWithDepartureDayForOneWeek();
+    return (ConfirmedReservation)registeredReservation.confirm().returned();
+   }
+
+
+
+  /*public static Reservation simple() {
+    return reservation(simpleInitialReservation(), 0, 0, 0);
+  }
+
+  public static InitialReservation simpleInitialReservation() {
+    return initial(0);
+  }
+
+  public static InitialReservation initialReservationWithMontlhyReservationLimit() {
+    return initial(10);
+  }
+
+  private static InitialReservation initial(int reservedThisMonth) {
+    return InitialReservation.of(
+        InitialReservation.ReservedThisMonth.of(reservedThisMonth),
+        FligtId.of(UUID.randomUUID()),
+        CustomerId.of(UUID.randomUUID()));
+  }
+
+  private static Reservation reservation(
+      InitialReservation initial, int lockedSoFar, int rescheduledSoFar) {
+    return Reservation.from(
+        initial,
+        LocalDateTime.now(),
+        Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
+        SeatNumber.of(2),
+        Reservation.CurrentlyLocked.of(lockedSoFar),
+        Reservation.RescheduledSoFar.of(rescheduledSoFar));
+  }
+
+  private static Reservation reservation(
+      InitialReservation initial,
+      int lockedSoFar,
+      int rescheduledSoFar,
+      LocalDateTime departureDate) {
+    return Reservation.from(
+        initial,
+        departureDate,
+        Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
+        SeatNumber.of(2),
+        Reservation.CurrentlyLocked.of(lockedSoFar),
+        Reservation.RescheduledSoFar.of(rescheduledSoFar));
   }
 
   private static Reservation reservation(LocalDateTime departureDate) {
-    return Reservation.of(
-            CustomerId.of(UUID.randomUUID()),
-            FligtId.of(UUID.randomUUID()),
-            departureDate,
-            Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
-            SeatNumber.of(2),
-            Reservation.CurrentlyLocked.of(0),
-            Reservation.ReservedThisMonth.of(0),
-            Reservation.RescheduledSoFar.of(0));
+    return Reservation.from(
+        initial(0),
+        departureDate,
+        Money.of(new BigDecimal(10), Monetary.getCurrency("USD")),
+        SeatNumber.of(2),
+        Reservation.CurrentlyLocked.of(0),
+        Reservation.RescheduledSoFar.of(0));
+  }*/
 
-  }
+  /*public static Reservation withMaxReservationPerMonth() {
+    return reservation(ini,10, 0);
+  }*/
 
-  public static Reservation withMaxReservationPerMonth() {
-    return reservation(0,10,0);
-  }
-
-  public static Reservation inActiveState() {
+  /*public static Reservation inActiveState() {
     var simple = simple();
     simple.activate();
     return simple;
-  }
+  }*/
 
-  public static Reservation inConfirmedState() {
+  /*public static Reservation inConfirmedState() {
     var confirmed = simple();
     confirmed.activate();
     confirmed.confirm();
@@ -80,11 +122,11 @@ class ReservationFixture {
   }
 
   public static Reservation withTwoLocks() {
-    return reservation(2,0,0);
+    return reservation(2, 0, 0);
   }
 
   public static Reservation withThreeLocks() {
-    return reservation(3,0,0);
+    return reservation(3, 0, 0);
   }
 
   public static Reservation departureDateMoreThanTwoWeeks() {
@@ -97,7 +139,6 @@ class ReservationFixture {
     var reservation = reservation(LocalDateTime.now().plusDays(10));
     reservation.activate();
     return reservation;
-
   }
 
   public static Reservation inConfirmedStateRescheduledThreeTimes() {
@@ -111,5 +152,5 @@ class ReservationFixture {
     var reservation = reservation(2, 0, 2, LocalDateTime.now().plusDays(20));
     reservation.activate();
     return reservation;
-  }
+  }*/
 }
