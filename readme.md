@@ -396,6 +396,7 @@ I made an attempt to decompose the Reservation Entity. Decomposition is based on
 |Many Domain Entities can map to one database entity.|
 |--------|
 
+**Many Domain Entities in the Reservation Aggregate**
 
 ![](img/air-aggregate-reservation-decomposition.jpg)
 
@@ -549,7 +550,7 @@ public class DefaultReservationRepository implements ReservationRepository {
 ```
   
   |It should be noted that application services cannot use a model with infrastructure features (e.g. an entity model). This would kill the flexibility and testability of the application.|
-  |:------:|
+  |------|
  
 
 ### Spring Boot Configuration
