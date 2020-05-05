@@ -20,6 +20,7 @@
     - [C3- Component Perspective](#c3--component-perspective)
 - [Bounded context exploration](#bounded-context-exploration)
   - [Airline Reservation System - bounded context exploration - Design Level Event Storming](#airline-reservation-system---bounded-context-exploration---design-level-event-storming)
+    - [Lack of Cohesion](#lack-of-cohesion)
 - [Implementation (Reservation module)](#implementation-reservation-module)
   - [Ports and Adapters (Hexagonal Architecture)](#ports-and-adapters-hexagonal-architecture)
   - [Non-functional requirements](#non-functional-requirements)
