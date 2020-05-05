@@ -382,16 +382,38 @@ Code analysis carried out by CodeMR confirms the problem. It showed a Lack of Co
 ![](img/loc-1.png)
 
 |_*Measure how well the methods of a class are related to each other. High cohesion (low lack of cohesion) tend to be preferable, because high cohesion is associated with several desirable traits of software including robustness, reliability, reusability, and understandability. In contrast, low cohesion is associated with undesirable traits such as being difficult to maintain, test, reuse, or even understand.LCOM (Lack of Cohesion of Methods): Measure how methods of a class are related to each other. Low cohesion means that the class implements more than one responsibility. A change request by either a bug or a new feature, on one of these responsibilities will result change of that class. Lack of cohesion also influences understandability and implies classes should probably be split into two or more subclasses.*_ |
-|:--------:|
+|--------|
     
-I made an attempt to decompose the aggregate. Decomposition is based on the state of the Reservation object:
+    
+**Domain Entity decomposition**    
+
+I made an attempt to decompose the Reservation Entity. Decomposition is based on the possible entity states. Each state has its own representation. 
+
+|The same Domain Entity can have many class representations.| 
+|--------|
+
+|Many Domain Entities can map to one database entity.|
+|--------|
+
 
 ![](img/air-aggregate-reservation-decomposition.jpg)
 
 Now each object has a set of fields appropriate for a given transition.  
 
-New objects ensure proper transition between states. Each object has methods that allow you to go to the allowed transactions:
+New objects ensure proper transition between states (by providing appropriate methods).
 
+For example: REGISTERED reservation is able to change state to HOLDED or CONFIRMED.
+
+```
+               --> HOLDED
+              |
+REGISTERED -> |
+              |
+               --> CONFIRMED
+```
+
+The RegisteredReservation object provides two methods (*hold()* and *confirm()* respectively) returning Result.
+             
 ```java
 class RegisteredReservation implements IdentifiedReservation {
   //...
@@ -407,7 +429,38 @@ class RegisteredReservation implements IdentifiedReservation {
 
 ```
 
-Re-analysis showed significant improvement:
+When the result is successful, there is possible to get the right one specialization (reservation in new state). 
+
+```
+  @DisplayName("Should hold when number of holded reservations equals 2")
+  @Test
+  void shouldHoldWhenNumberOfLockedReservationsEquals2() {
+    // given
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+    var currentlyHolded = 2;
+    // when
+    var res = registered.hold(currentlyHolded);
+    // then
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(HoldedReservation.class);
+  }
+
+  @DisplayName("Should confirm when departure date more than 2 weeks")
+  @Test
+  void shouldConfirmWhenDepartureDateMoreThan2Weeks() {
+    // given
+    var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
+
+    // when
+    var res = registered.confirm();
+    // then
+    Assertions.assertThat(res.isSuccess()).isEqualTo(true);
+    Assertions.assertThat(res.returned()).isExactlyInstanceOf(ConfirmedReservation.class);
+  }
+```
+Internal state checking methods *(isActive(),isConfirmed(),isHolded()...)* have become unnecessary. State is determined by the type of object.
+
+Re-analysis of reservation model package showed significant improvement:
 
 ![](img/loc-2.png)
 

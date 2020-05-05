@@ -60,7 +60,7 @@ class ReservationTest {
 
   @DisplayName("Should hold when number of holded reservations equals 2")
   @Test
-  void shouldLockWhenNumberOfLockedReservationsEquals2() {
+  void shouldHoldWhenNumberOfLockedReservationsEquals2() {
     // given
     var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
     var currentlyHolded = 2;
@@ -73,7 +73,7 @@ class ReservationTest {
 
   @DisplayName("Should not hold when number of holded reservations equals 3")
   @Test
-  void shouldLockWhenNumberOfLockedReservationsEquals3() {
+  void shouldHoldWhenNumberOfLockedReservationsEquals3() {
     // given
     var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
     var currentlyHolded = 3;
@@ -83,9 +83,9 @@ class ReservationTest {
     Assertions.assertThat(res.isSuccess()).isEqualTo(false);
   }
 
-  @DisplayName("Should lock when departure date more than 2 weeks")
+  @DisplayName("Should hold when departure date more than 2 weeks")
   @Test
-  void shouldLockWhenDepartureDateMoreThan2Weeks() {
+  void shouldHoldWhenDepartureDateMoreThan2Weeks() {
     // given
     var registered = ReservationFixture.registeredWithDepartureDayFor3Weeks();
     var currentlyHolded = 2;
@@ -96,9 +96,9 @@ class ReservationTest {
     Assertions.assertThat(res.returned()).isExactlyInstanceOf(HoldedReservation.class);
   }
 
-  @DisplayName("Should not lock when departure date less than 2 weeks")
+  @DisplayName("Should not hold when departure date less than 2 weeks")
   @Test
-  void shouldNotLockWhenDepartureDateLessThan2Weeks() {
+  void shouldNotHoldWhenDepartureDateLessThan2Weeks() {
     // given
     var registered = ReservationFixture.registeredWithDepartureDayForOneWeek();
     var currentlyHolded = 2;
