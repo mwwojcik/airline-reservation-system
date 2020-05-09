@@ -1,0 +1,70 @@
+'https://github.com/Roemer/plantuml-office'
+'https://stackoverflow.com/questions/48712801/how-to-correct-plantuml-line-path/48735216#48735216
+'https://plantuml.com/stdlib'
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!includeurl https://raw.githubusercontent.com/skleanthous/C4-PlantumlSkin/master/build/output/c4.puml
+skinparam linetype polyline
+skinparam linetype ortho
+
+'AWS SYMBOLS'
+'!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+'!includeurl AWSPuml/AWSCommon.puml
+'!includeurl AWSPuml/General/Users.puml
+' Uncomment the following line to create simplified view
+' !includeurl AWSPuml/AWSSimplified.puml
+
+
+
+skinparam database<<component>> {
+    StereotypeFontColor ELEMENT_FONT_COLOR
+    FontColor #000000
+    BackgroundColor COMPONENT_BG_COLOR
+    BorderColor #78A8D8
+}
+
+
+LAYOUT_TOP_DOWN
+
+title ARS Components
+
+Person_Ext(customer,"Customer","Airline Customer with the ability to manage reservations.")
+Person(sales_department_manager,"Sales Department Manager","Sales Department Manager, with ability to accept Airline Offer.")
+Person(sales_department_emp,"Sales Department Employee","Sales Department Employee, with ability to define Airline Offer.")
+
+
+Container_Boundary(api, "Api Application") {
+    Component(sales,"Sales Management Component","Java Component","Component to managing airline offers")
+    Component(checkin,"Check In Component","Java Component","Component realizing check in process ")
+    Component(surveys,"Surveys Component","Java Component","Component for customer surveys and reviews")
+    Component(reports,"Reports Component","Java Component","Component realizing customer activity reporting")
+    Component(reservations,"Reservations Component","Java Component","Component  performing the ticket booking process")
+}
+
+
+System_Ext(paymentExt,"Payment system","External payment system")
+System_Ext(reportingExt,"Airlines Reporting System","Stores all of user activity")
+System_Ext(emailExt,"E-mail System","The internal e-mail system.")
+
+Rel(sales_department_manager,sales,"Creates offer")
+Rel(sales_department_emp,sales,"Creates offer")
+Rel(customer,checkin,"Carries out the check-in process")
+Rel(customer,surveys,"Completes surveys and reviews")
+Rel(customer,reservations,"Manages the ticket booking process")
+Rel(customer,reports,"Gets an activity report")
+
+Rel(checkin,reports,"reports")
+Rel(surveys,reports,"reports")
+Rel(reservations,reports,"reports")
+Rel(sales,reports,"reports")
+
+Rel(checkin,emailExt,"sends email")
+Rel(surveys,emailExt,"sends email")
+Rel(reservations,emailExt,"sends email")
+Rel(sales,emailExt,"sends email")
+
+Rel(reservations,paymentExt,"payments")
+Rel(reports,reportingExt,"reports")
+
+
+@enduml

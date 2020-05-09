@@ -1,1 +1,0 @@
-var EQ_graphHTMLText = '';
