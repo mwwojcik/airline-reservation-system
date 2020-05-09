@@ -1,0 +1,41 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/skleanthous/C4-PlantumlSkin/master/build/output/c4.puml
+
+skinparam linetype polyline
+skinparam linetype ortho
+
+
+LAYOUT_TOP_DOWN
+
+title ARS Container
+
+Person_Ext(customer,"Customer","Airline Customer with the ability to manage reservations.")
+Person(sales_department_manager,"Sales Department Manager","Sales Department Manager, with ability to accept Airline Offer.")
+Person(sales_department_emp,"Sales Department Employee","Sales Department Employee, with ability to define Airline Offer.")
+
+
+System_Boundary(c1, "Airline Reservation System") {
+    Container(customer_web_portal, "SPA Web App for Customers", "SPA", "Web Application")
+    Container(emp_portal, "SPA Web App for Employee", "SPA", "Web Application")
+    Container(mobile_application, "Mobile app", "Android", "Mobile application")
+    Container(web_server, "Web server", "Apache Tomcat", "Serves web content")
+    Container(api_application, "API Application", "REST API", "Main application API")
+    ContainerDb(database, "Database", "SQL Database", "Stores all customer data")
+}
+Rel(customer,customer_web_portal,"Use web browser","Rest API")
+Rel(customer,mobile_application,"Use tablet/mobile phone","Rest API")
+
+Rel(sales_department_manager,emp_portal,"Use web browser","Rest API")
+Rel(sales_department_emp,emp_portal,"Use web browser","Rest API")
+
+Rel(web_server,customer_web_portal,"serves content")
+Rel(web_server,emp_portal,"serves content")
+
+Rel(customer_web_portal,api_application,"sends communicates via REST")
+Rel(mobile_application,api_application,"sends communicates via REST")
+Rel(emp_portal,api_application,"sends communicates via REST")
+Rel(api_application,database,"read/write data")
+
+
+@enduml

@@ -265,7 +265,7 @@ if(isSingleUserProcess()){
 *The diagram shows the other internal used containers (DB/SPA/WebServer/Mobile App). All of them are part of one system.*
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Containers.png" target="_blank">Show picture</a>
-![](img/architecture/structurizr-52510-Containers.png)
+![](img/architecture/ARS_Containers.png)
 
 #### C3- Component Perspective
 
