@@ -271,7 +271,7 @@ if(isSingleUserProcess()){
 
 *At this level of visualization we can see all modules based on bounded context extracted during the session ES.*
 
-<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-Components.png" target="_blank">Show picture</a>
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/ARS_Components.png" target="_blank">Show picture</a>
 ![](img/architecture/ARS_Components.png)
 
 ## Bounded context exploration
