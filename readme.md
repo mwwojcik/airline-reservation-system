@@ -256,8 +256,8 @@ if(isSingleUserProcess()){
 *The perspective shows the surroundings of the created system . This diagram shows external systems and actors discovered during the session ES.*
 *Internal actors are part of the organization. Externals Actors only use the system.*
 
-<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/structurizr-52510-SystemLandscape-001.png" target="_blank">Show picture</a>
-![](img/architecture/structurizr-52510-SystemLandscape-001.png)
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/ARS_Context.png" target="_blank">Show picture</a>
+![](img/architecture/ARS_Context.png)
 
 #### C2- Container Perspective
 

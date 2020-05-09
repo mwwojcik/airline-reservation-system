@@ -1,0 +1,40 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Context.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Context.puml
+!includeurl https://raw.githubusercontent.com/skleanthous/C4-PlantumlSkin/master/build/output/c4.puml
+skinparam linetype polyline
+skinparam linetype ortho
+
+LAYOUT_TOP_DOWN
+'LAYOUT_AS_SKETCH
+'LAYOUT_WITH_LEGEND
+
+title System Landscape diagram for Big Bank plc
+
+Person_Ext(customer,"Customer","Airline Customer with the ability to manage reservations.")
+
+
+
+Enterprise_Boundary(c0, "Airline") {
+
+   Person(sales_department_manager,"Sales Department Manager","Sales Department Manager, with ability to accept Airline Offer.")
+   Person(sales_department_emp,"Sales Department Employee","Sales Department Employee, with ability to define Airline Offer.")
+
+   System(ars,"Airline Reservation System", "System for managing ticket reservations")
+   }
+
+    System_Ext(paymentExt,"Payment system","External payment system")
+    System_Ext(reportingExt,"Airlines Reporting System","Stores all of user activity")
+    System_Ext(emailExt,"E-mail System","The internal e-mail system.")
+
+    Rel(customer,ars,"View customer profile, with self reservations managing.")
+    Rel(sales_department_manager,ars,"Manages sales, offers.")
+    Rel(sales_department_emp,ars,"Manages sales, offers.")
+
+    Rel(ars,emailExt,"sends emails")
+    Rel(ars,reportingExt,"payments")
+    Rel(ars,paymentExt,"customer activity")
+
+
+@enduml
