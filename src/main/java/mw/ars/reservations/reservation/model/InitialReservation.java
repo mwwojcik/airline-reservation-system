@@ -12,7 +12,7 @@ import org.javamoney.moneta.Money;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-class InitialReservation implements IdentifiedReservation {
+public class InitialReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   private final ReservedThisMonth reservedThisMonth;
   private final CustomerId customerId;

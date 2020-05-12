@@ -8,7 +8,7 @@ import org.javamoney.moneta.Money;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-class ReservationFixture {
+public class ReservationFixture {
 
   public static InitialReservation initial() {
     return (InitialReservation)

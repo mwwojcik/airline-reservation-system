@@ -1,12 +1,21 @@
 package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.reservations.reservation.ReservationFacade;
+import mw.ars.reservations.reservation.common.commands.*;
+import mw.ars.reservations.reservation.common.model.CustomerId;
+import mw.ars.reservations.reservation.common.model.FligtId;
+import mw.ars.reservations.reservation.common.model.SeatNumber;
 import mw.ars.reservations.reservation.infrastructure.testapp.ReservationInMemoryTestApplication;
-import org.assertj.core.api.Fail;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 /** Acceptance test - full infractructure stack - without WEB API. Tested is flow via Fasade */
 @SpringBootTest(classes = ReservationInMemoryTestApplication.class)
@@ -14,5 +23,64 @@ class ReservationAcceptanceIT {
 
   @Autowired private ReservationFacade reservationFacade;
 
+  @Autowired private InMemoryReservationRepository repository;
 
+  @BeforeEach
+  void clearRepository() {
+    repository.clearAll();
+  }
+
+  @DisplayName("Should realizae main reservation process (create/register/hold/confirm/reschedule/cancel).")
+  @Test
+  void shouldRealizeMainReservationProcess() {
+    var customerId = CustomerId.of(UUID.randomUUID());
+    var flightId = FligtId.of(UUID.randomUUID());
+    // given
+    var resId = reservationFacade.create(CreateReservationCommand.of(customerId, flightId));
+    // when
+    var res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isNew()).isTrue();
+
+    res=Optional.empty();
+    reservationFacade.register(RegistrationCommand.of(resId));
+    res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isRegistered()).isTrue();
+
+    var withSeat = SeatNumber.of(10);
+    var withDepartureDate = LocalDateTime.now().plusDays(30);
+    res=Optional.empty();
+    reservationFacade.holdOn(RegisterReservationCommnad.of(resId, withSeat, withDepartureDate));
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isHolded()).isTrue();
+
+    res=Optional.empty();
+    reservationFacade.confirm(ConfirmationCommand.of(resId));
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+
+    var newFlightId = FligtId.of(UUID.randomUUID());
+    var newSeatId = SeatNumber.of(11);
+    var newDepartureTime = LocalDateTime.now().plusDays(15);
+    var resheduledId = reservationFacade.reschedule(RescheduleCommand.of(resId, newFlightId, newSeatId, newDepartureTime));
+
+    res=Optional.empty();
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isRescheduled()).isTrue();
+
+    res=Optional.empty();
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+
+    reservationFacade.cancel(CancelByResrvationId.of(resheduledId));
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isCancelled()).isTrue();
+
+  }
 }
