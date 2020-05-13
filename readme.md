@@ -672,8 +672,9 @@ Unit tests run completely outside the spring context and therefore do not requir
    |:----------------:|
           
 The acceptance test is more expensive than the unit test, it will operate on two elements :
-    * ReservationFacade - module entry point 
-    * Repository - database (injection is needed only to reset the state between tests)
+
+- ReservationFacade - module entry point 
+- Repository - database (injection is needed only to reset the state between tests)
      
 ### From test to implementation
 
