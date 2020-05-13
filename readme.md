@@ -666,17 +666,81 @@ Unit tests run completely outside the spring context and therefore do not requir
  ### Acceptance test
  
  The module implementation begins with creating an acceptance test. It checks the correctness of the module as a whole and tests the entire ticket reservation
- process. It checks if the module correctly handled certain input data.
+ process. 
 
    |There is no need to test business rules at this stage. They have been checked by unit tests.|
    |:----------------:|
           
 The acceptance test is more expensive than the unit test, it will operate on two elements :
     * ReservationFacade - module entry point 
-    * Repository - database (injection is needed only to reset the status between tests)
+    * Repository - database (injection is needed only to reset the state between tests)
      
-    
- ```java
+### From test to implementation
+
+![](img/acceptance-test-imp/imp-1.png)
+
+```java
+public class HoldOnReservationCommand {
+    private ReservationId reservationId;
+    private SeatNumber seat;
+    private LocalDateTime departureDate;
+
+    private HoldOnReservationCommand(ReservationId reservationId, SeatNumber seat, LocalDateTime departureDate){
+        this.reservationId=reservationId;
+        this.seat = seat;
+        this.departureDate = departureDate;
+    }
+
+    public static HoldOnReservationCommand of(ReservationId reservationId, SeatNumber withSeat, LocalDateTime withDepartureDate){
+        return new HoldOnReservationCommand(reservationId,withSeat,withDepartureDate);
+    }
+}
+
+```
+
+```java
+public class FindByReservationIdCommnad {
+    private ReservationId reservationId;
+
+    private FindByReservationIdCommnad(ReservationId reservationId){
+        this.reservationId=reservationId;
+    }
+
+    public static FindByReservationIdCommnad of(ReservationId reservationId){
+        return new FindByReservationIdCommnad(reservationId);
+    }
+}
+```
+
+```java
+public interface ReservationFacade {
+    void holdOn(HoldOnReservationCommand command);
+    Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command);
+}
+```
+
+![](img/acceptance-test-imp/imp-2.png)
+
+```java
+@Value
+public class ReservationDTO {
+    private ReservationId reservationId;
+    private StatusDTO status;
+    private CustomerId customerId;
+    private FligtId fligtId;
+
+    public boolean isHolded() {
+        return status==StatusDTO.HOLDED;
+    }
+
+  
+}
+```
+
+![](img/acceptance-test-imp/imp-3.png)
+
+
+```java
 @SpringBootTest(classes = ReservationInMemoryTestApplication.class)
 class ReservationAcceptanceIT {
 
@@ -745,68 +809,3 @@ class ReservationAcceptanceIT {
 }
 
 ```
-
-### From test to implementation
-
-![](img/acceptance-test-imp/imp-1.png)
-
-```java
-public class HoldOnReservationCommand {
-    private ReservationId reservationId;
-    private SeatNumber seat;
-    private LocalDateTime departureDate;
-
-    private HoldOnReservationCommand(ReservationId reservationId, SeatNumber seat, LocalDateTime departureDate){
-        this.reservationId=reservationId;
-        this.seat = seat;
-        this.departureDate = departureDate;
-    }
-
-    public static HoldOnReservationCommand of(ReservationId reservationId, SeatNumber withSeat, LocalDateTime withDepartureDate){
-        return new HoldOnReservationCommand(reservationId,withSeat,withDepartureDate);
-    }
-}
-
-```
-
-```java
-public class FindByReservationIdCommnad {
-    private ReservationId reservationId;
-
-    private FindByReservationIdCommnad(ReservationId reservationId){
-        this.reservationId=reservationId;
-    }
-
-    public static FindByReservationIdCommnad of(ReservationId reservationId){
-        return new FindByReservationIdCommnad(reservationId);
-    }
-}
-```
-
-```java
-public interface ReservationFacade {
-    void holdOn(HoldOnReservationCommand command);
-    Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command);
-}
-```
-
-![](img/acceptance-test-imp/imp-2.png)
-
-```java
-@Value
-public class ReservationDTO {
-    private ReservationId reservationId;
-    private StatusDTO status;
-    private CustomerId customerId;
-    private FligtId fligtId;
-
-    public boolean isHolded() {
-        return status==StatusDTO.HOLDED;
-    }
-
-  
-}
-```
-
-![](img/acceptance-test-imp/imp-3.png)
-
