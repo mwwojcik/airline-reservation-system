@@ -663,4 +663,150 @@ behavior with no code changes.
 
 Unit tests run completely outside the spring context and therefore do not require any special configuration. 
   
+ ### Acceptance test
+ 
+ The module implementation begins with creating an acceptance test. It checks the correctness of the module as a whole and tests the entire ticket reservation
+ process. It checks if the module correctly handled certain input data.
+
+   |There is no need to test business rules at this stage. They have been checked by unit tests.|
+   |:----------------:|
+          
+The acceptance test is more expensive than the unit test, it will operate on two elements :
+    * ReservationFacade - module entry point 
+    * Repository - database (injection is needed only to reset the status between tests)
+     
+    
+ ```java
+@SpringBootTest(classes = ReservationInMemoryTestApplication.class)
+class ReservationAcceptanceIT {
+
+  @Autowired private ReservationFacade reservationFacade;
+
+  @Autowired private InMemoryReservationRepository repository;
+
+  @BeforeEach
+  void clearRepository() {
+    repository.clearAll();
+  }
+
+  @DisplayName("Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
+  @Test
+  void shouldRealizeMainReservationProcess() {
+    var customerId = CustomerId.of(UUID.randomUUID());
+    var flightId = FligtId.of(UUID.randomUUID());
+    // given
+    var resId = reservationFacade.create(CreateReservationCommand.of(customerId, flightId));
+    // when
+    var res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isNew()).isTrue();
+
+    res=Optional.empty();
+    reservationFacade.register(RegistrationCommand.of(resId));
+    res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isRegistered()).isTrue();
+
+    var withSeat = SeatNumber.of(10);
+    var withDepartureDate = LocalDateTime.now().plusDays(30);
+    res=Optional.empty();
+    reservationFacade.holdOn(RegisterReservationCommnad.of(resId, withSeat, withDepartureDate));
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isHolded()).isTrue();
+
+    res=Optional.empty();
+    reservationFacade.confirm(ConfirmationCommand.of(resId));
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+
+    var newFlightId = FligtId.of(UUID.randomUUID());
+    var newSeatId = SeatNumber.of(11);
+    var newDepartureTime = LocalDateTime.now().plusDays(15);
+    var resheduledId = reservationFacade.reschedule(RescheduleCommand.of(resId, newFlightId, newSeatId, newDepartureTime));
+
+    res=Optional.empty();
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isRescheduled()).isTrue();
+
+    res=Optional.empty();
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+
+    reservationFacade.cancel(CancelByResrvationId.of(resheduledId));
+    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
+    Assertions.assertThat(res.isPresent()).isTrue();
+    Assertions.assertThat(res.get().isCancelled()).isTrue();
+
+  }
+}
+
+```
+
+### From test to implementation
+
+![](img/acceptance-test-imp/imp-1.png)
+
+```java
+public class HoldOnReservationCommand {
+    private ReservationId reservationId;
+    private SeatNumber seat;
+    private LocalDateTime departureDate;
+
+    private HoldOnReservationCommand(ReservationId reservationId, SeatNumber seat, LocalDateTime departureDate){
+        this.reservationId=reservationId;
+        this.seat = seat;
+        this.departureDate = departureDate;
+    }
+
+    public static HoldOnReservationCommand of(ReservationId reservationId, SeatNumber withSeat, LocalDateTime withDepartureDate){
+        return new HoldOnReservationCommand(reservationId,withSeat,withDepartureDate);
+    }
+}
+
+```
+
+```java
+public class FindByReservationIdCommnad {
+    private ReservationId reservationId;
+
+    private FindByReservationIdCommnad(ReservationId reservationId){
+        this.reservationId=reservationId;
+    }
+
+    public static FindByReservationIdCommnad of(ReservationId reservationId){
+        return new FindByReservationIdCommnad(reservationId);
+    }
+}
+```
+
+```java
+public interface ReservationFacade {
+    void holdOn(HoldOnReservationCommand command);
+    Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command);
+}
+```
+
+![](img/acceptance-test-imp/imp-2.png)
+
+```java
+@Value
+public class ReservationDTO {
+    private ReservationId reservationId;
+    private StatusDTO status;
+    private CustomerId customerId;
+    private FligtId fligtId;
+
+    public boolean isHolded() {
+        return status==StatusDTO.HOLDED;
+    }
+
   
+}
+```
+
+![](img/acceptance-test-imp/imp-3.png)
+

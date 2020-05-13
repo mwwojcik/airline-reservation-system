@@ -2,7 +2,7 @@ package mw.ars.reservations.reservation.common.commands;
 
 import mw.ars.reservations.reservation.common.model.ReservationId;
 
-public class FindByReservationIdCommnad{
+public class FindByReservationIdCommnad {
     private ReservationId reservationId;
 
     private FindByReservationIdCommnad(ReservationId reservationId){

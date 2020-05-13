@@ -12,7 +12,7 @@ public interface ReservationFacade {
 
     Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command);
 
-    void holdOn(RegisterReservationCommnad command);
+    void holdOn(HoldOnReservationCommand command);
 
     Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command);
 

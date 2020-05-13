@@ -5,18 +5,18 @@ import mw.ars.reservations.reservation.common.model.SeatNumber;
 
 import java.time.LocalDateTime;
 
-public class RegisterReservationCommnad{
+public class HoldOnReservationCommand {
     private ReservationId reservationId;
     private SeatNumber seat;
     private LocalDateTime departureDate;
 
-    private RegisterReservationCommnad(ReservationId reservationId, SeatNumber seat, LocalDateTime departureDate){
+    private HoldOnReservationCommand(ReservationId reservationId, SeatNumber seat, LocalDateTime departureDate){
         this.reservationId=reservationId;
         this.seat = seat;
         this.departureDate = departureDate;
     }
 
-    public static RegisterReservationCommnad of(ReservationId reservationId,SeatNumber withSeat,LocalDateTime withDepartureDate){
-        return new RegisterReservationCommnad(reservationId,withSeat,withDepartureDate);
+    public static HoldOnReservationCommand of(ReservationId reservationId, SeatNumber withSeat, LocalDateTime withDepartureDate){
+        return new HoldOnReservationCommand(reservationId,withSeat,withDepartureDate);
     }
 }

@@ -30,7 +30,7 @@ class ReservationAcceptanceIT {
     repository.clearAll();
   }
 
-  @DisplayName("Should realizae main reservation process (create/register/hold/confirm/reschedule/cancel).")
+  @DisplayName("Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
   @Test
   void shouldRealizeMainReservationProcess() {
     var customerId = CustomerId.of(UUID.randomUUID());
@@ -48,11 +48,14 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(res.isPresent()).isTrue();
     Assertions.assertThat(res.get().isRegistered()).isTrue();
 
+    //given
     var withSeat = SeatNumber.of(10);
     var withDepartureDate = LocalDateTime.now().plusDays(30);
+    //when
     res=Optional.empty();
-    reservationFacade.holdOn(RegisterReservationCommnad.of(resId, withSeat, withDepartureDate));
+    reservationFacade.holdOn(HoldOnReservationCommand.of(resId, withSeat, withDepartureDate));
     res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
+    //then
     Assertions.assertThat(res.isPresent()).isTrue();
     Assertions.assertThat(res.get().isHolded()).isTrue();
 

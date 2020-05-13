@@ -27,7 +27,7 @@ public class DefaultReservationFacade implements ReservationFacade {
     }
 
     @Override
-    public void holdOn(RegisterReservationCommnad command) {
+    public void holdOn(HoldOnReservationCommand command) {
 
     }
 
