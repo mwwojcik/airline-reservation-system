@@ -675,8 +675,10 @@ The acceptance test is more expensive than the unit test, it will operate on two
 
 - ReservationFacade - module entry point 
 - Repository - database (injection is needed only to reset the state between tests)
+   
+The acceptance test is carried out in the Spring Context. 
      
-### From test to implementation
+#### From test to implementation
 
 ![](img/acceptance-test-imp/imp-1.png)
 
