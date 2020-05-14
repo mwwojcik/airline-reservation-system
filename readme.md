@@ -697,7 +697,7 @@ We do not check the existence of a record directly inside the database. We are e
 
 ![](img/acceptance-test-imp/imp-1.png)
 
-We add missing methods with IDE support:
+Then add the missing implementation elements (with active IDE support).
 
 ```java
 public class HoldOnReservationCommand {
@@ -758,7 +758,7 @@ public class ReservationDTO {
 }
 ```
 
-After adding it, the scenario step is completem, and the facade method contract is established.
+After adding it, the scenario step is completed, and the facade method contract is established.
 
 ![](img/acceptance-test-imp/imp-3.png)
 
