@@ -680,7 +680,24 @@ The acceptance test is carried out in the Spring Context.
      
 #### From test to implementation
 
+The acceptance test can be helpful when determining the module contract. Writing the test can be started when the interface has no methods yet. 
+
+We can create the scenario steps, the IDE indicates the missing implementation elements. We refer to methods and objects that do not currently exist  in
+ implementation.
+ 
+For example, when holding a reservation, we call the *holdOn()* method, specifying its *HoldOnReservationCommand* object. Both the method and the command
+ object do not currently exist. 
+
+The same situation applies to the method of checking whether an object has been saved to the database *findByReservationId()*, and its
+*FindByReservationIdCommnad*.
+
+It should be noted that the persistance is also checked by facade method. If the object saved correctly, it must be found by id.
+We do not check the existence of a record directly inside the database. We are examining the interface of the module and finding reservation is a valid business
+ operation.
+
 ![](img/acceptance-test-imp/imp-1.png)
+
+We add missing methods with IDE support:
 
 ```java
 public class HoldOnReservationCommand {
@@ -721,6 +738,7 @@ public interface ReservationFacade {
     Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command);
 }
 ```
+At the moment, only one method is missing to check the status of the returned object:
 
 ![](img/acceptance-test-imp/imp-2.png)
 
@@ -740,8 +758,13 @@ public class ReservationDTO {
 }
 ```
 
+After adding it, the scenario step is completem, and the facade method contract is established.
+
 ![](img/acceptance-test-imp/imp-3.png)
 
+The same can be done for the other facade operations. 
+
+In this way, a full acceptance test and all methods used in the booking process were created.
 
 ```java
 @SpringBootTest(classes = ReservationInMemoryTestApplication.class)
@@ -812,3 +835,58 @@ class ReservationAcceptanceIT {
 }
 
 ```
+
+Of course, the test will fail because the facade has no implementation.
+
+```java
+public class DefaultReservationFacade implements ReservationFacade {
+
+    private ReservationService service;
+
+    public DefaultReservationFacade(ReservationService service) {
+        this.service = service;
+    }
+
+    @Override
+    public ReservationId create(CreateReservationCommand command) {
+        return null;
+    }
+
+    @Override
+    public Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void holdOn(HoldOnReservationCommand command) {
+
+    }
+
+    @Override
+    public Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void confirm(ConfirmationCommand command) {
+
+    }
+
+    @Override
+    public ReservationId reschedule(RescheduleCommand of) {
+        return null;
+    }
+
+    @Override
+    public void cancel(CancelByResrvationId command) {
+
+    }
+
+    @Override
+    public void register(RegistrationCommand command) {
+
+    }
+}
+```
+
+The test should be successful after implementing the application and domain functions. 
