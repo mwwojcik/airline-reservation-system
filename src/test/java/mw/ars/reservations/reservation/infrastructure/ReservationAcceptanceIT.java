@@ -5,30 +5,39 @@ import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.model.CustomerId;
 import mw.ars.reservations.reservation.common.model.FligtId;
 import mw.ars.reservations.reservation.common.model.SeatNumber;
-import mw.ars.reservations.reservation.infrastructure.testapp.ReservationInMemoryTestApplication;
+import mw.ars.reservations.reservation.infrastructure.db.ReservationEntity;
+import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
+import mw.ars.reservations.reservation.infrastructure.testapp.ReservationTestApplication;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.assertj.core.api.Fail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /** Acceptance test - full infractructure stack - without WEB API. Tested is flow via Fasade */
-@SpringBootTest(classes = ReservationInMemoryTestApplication.class)
+@SpringBootTest(classes = ReservationTestApplication.class)
+//@ActiveProfiles("inmemory")
+@ActiveProfiles("embedded")
 class ReservationAcceptanceIT {
 
   @Autowired private ReservationFacade reservationFacade;
+  @Autowired  ReservationRepositoryDB repoDB;
 
-  @Autowired private InMemoryReservationRepository repository;
+  //@Autowired private InMemoryReservationRepository repository;
 
-  @BeforeEach
+ /* @BeforeEach
   void clearRepository() {
     repository.clearAll();
-  }
+  }*/
+
+
 
   @DisplayName("Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
   @Test

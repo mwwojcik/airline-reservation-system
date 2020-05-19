@@ -1,15 +1,14 @@
 package mw.ars.reservations.reservation.infrastructure.db;
 
 import lombok.Value;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.util.UUID;
 
-@Entity
-@Table(name = "reservations")
+
 @Value
+@Document
+public
 class ReservationEntity {
-    @Id
-    private UUID id;
+    private String id;
 
 }

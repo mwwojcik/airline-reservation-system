@@ -1,7 +1,7 @@
 package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.testapp.ReservationInMemoryTestApplication;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 /** Web Rest API Test - Facade is mocked bean . Tested are only Request/Responses via REST. */
-@SpringBootTest(classes = ReservationInMemoryTestApplication.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 class ReservationWebApiTest {
 
