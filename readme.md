@@ -250,7 +250,7 @@ if(isSingleUserProcess()){
 |:-|:-|:-|:-|
 |0002|TCH-RES|2020-05-02|[Use modular monolith](ars/0002-TCH-RES-use-modular-monolith.md)|
 |0003|TCH-RES|2020-05-02|[Use Ports and Adapters architecture](ars/0003-TCH-RES-use-ports-and-adapters-architecture.md)|
-|0004|TCH-RES|2020-05-02|[Use relational database as a aggregate data repository](ars/0004-TCH-RES-use-relational-database-as-a-aggregate-data-repository.md)|
+|0004|TCH-RES|2020-05-02|[Use document database as a aggregate data repository](ars/0004-TCH-RES-use-document-database-as-a-aggregate-data-repository.md)|
 |0005|TCH-RES|2020-05-02|[Use Spring Repository](ars/0005-TCH-RES-use-spring-repository.md)|
 
 

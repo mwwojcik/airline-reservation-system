@@ -1,11 +1,11 @@
 <!--
 *************Metryka**Nie*Modyfikowac**************
-wfl-adr-title:Use relational database as a aggregate data repository
+wfl-adr-title:Use document database as a aggregate data repository
 wfl-adr-date:2020-05-02
 wfl-adr-author:mw
 ***************************************************
 -->
-# 0004. Use relational database as a aggregate data repository
+# 0004. Use document database as a aggregate data repository
 
 
 Date: 2020-04-19
@@ -34,13 +34,11 @@ Drivers:
 * A Read Model combining data from different aggregates is required . 
 
 ## Decision
-Option no 2 - relational database. 
+Option no 1 - document database - MongoDB. 
 
 ## Consequences
 
-This is a more stable solution. This technology is better known by the developer team.
-
-It allows you to extract data from various modules and create Read Models. 
-
-It is much easier than in the case of document databases.
-
+* the aggregate structure is simple, there is no relations between aggregates
+* aggregate structure resembles a document structure
+* document bases are very modern and attractive to the developer team
+* possible problems with create cross aggregate Read Model
