@@ -91,15 +91,20 @@ The number of bonus points will be increased.
 A initial price is determined for each seat on the plane. It has an auxiliary character and is not presented to the client.The final  ticket price is
  calculated on the basis of many different factors that increase or decrease the initial price.
 
+**Calculations made on the day of rezervation:**
 * if the reservation is made more than 4 months before the departure date, the initial price should be reduced by 60%
 * if the reservation is made between 2-4 months before the departure date, the initial price should be reduced by 40%
-* if the reservation is made two months before the check-in time, the initial price should be reduced by 20%
-* if the reservation is made at most one month before departure, the initial price must be increased by 20%
-* if the reservation day falls on Tuesday or Wednesday, the starting price can be reduced by 20%
-* if 85% of seats have been sold for a given flight, the ticket price may be reduced by 10%
-* if less than 85% of seats have been sold for a given flight, the ticket price must be increased by 20%
+* if the reservation is made two months before the departure date, the initial price should be reduced by 20%
+* if the reservation takes place in the same month as the departure date the initial price should be increased by 10%
 
-Discounts can accumulate but they can be up to 70% initial price.
+
+**Calculations performed on the day of sale (confirm)**
+
+* if the current day falls on Tuesday or Wednesday, the starting price can be reduced by 20%
+* if 85% of seats have been sold for a given flight, the ticket price may be reduced by 10%
+* if less than 85% of seats have been sold for a given flight, the ticket price must be increased by 10%
+
+This type of discounts can accumulate.
 
 **Rescheduling ticket**
 
