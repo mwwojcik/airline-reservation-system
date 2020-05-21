@@ -2,6 +2,7 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.common.commands.*;
+import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.common.model.CustomerId;
 import mw.ars.reservations.reservation.common.model.FligtId;
 import mw.ars.reservations.reservation.common.model.SeatNumber;
@@ -37,7 +38,19 @@ class ReservationAcceptanceIT {
     repository.clearAll();
   }*/
 
+  @DisplayName("test jednego kroku")
+  @Test
+  void testJednegoKroku() {
+    var customerId = CustomerId.of(UUID.randomUUID());
+    var flightId = FligtId.of(UUID.randomUUID());
+    // given
+    var resId = reservationFacade.create(CreateReservationCommand.of(customerId, flightId));
+    // when
+    var res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(res.isEmpty()).isFalse();
+    Assertions.assertThat(res.get(0).isNew()).isTrue();
 
+  }
 
   @DisplayName("Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
   @Test
@@ -47,15 +60,15 @@ class ReservationAcceptanceIT {
     // given
     var resId = reservationFacade.create(CreateReservationCommand.of(customerId, flightId));
     // when
-    var res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isNew()).isTrue();
+    var result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isNew()).isTrue();
 
-    res=Optional.empty();
-    reservationFacade.register(RegistrationCommand.of(resId));
+    Optional<ReservationDTO> res=Optional.empty();
+   /* reservationFacade.register(RegistrationCommand.of(resId));
     res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
     Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isRegistered()).isTrue();
+    Assertions.assertThat(res.get().isRegistered()).isTrue();*/
 
     //given
     var withSeat = SeatNumber.of(10);

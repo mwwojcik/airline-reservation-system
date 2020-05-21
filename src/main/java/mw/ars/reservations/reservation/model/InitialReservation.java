@@ -15,8 +15,8 @@ import java.util.UUID;
 public class InitialReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   private final ReservedThisMonth reservedThisMonth;
-  private final CustomerId customerId;
-  private final FligtId flightId;
+  @Getter private final CustomerId customerId;
+  @Getter private final FligtId flightId;
   @Getter private final Status status;
 
   public InitialReservation(

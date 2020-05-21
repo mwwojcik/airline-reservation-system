@@ -1,7 +1,9 @@
 package mw.ars.reservations.reservation.common.model;
 
-import java.util.UUID;
+import lombok.Value;
 
+import java.util.UUID;
+@Value
 public class CustomerId{
     private UUID id;
 

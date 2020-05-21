@@ -1,8 +1,9 @@
 package mw.ars.reservations.reservation.common.commands;
 
+import lombok.Value;
 import mw.ars.reservations.reservation.common.model.CustomerId;
 import mw.ars.reservations.reservation.common.model.FligtId;
-
+@Value
 public class FindByFlightIdCommand{
     private CustomerId customerId;
     private FligtId fligtId;

@@ -1,7 +1,10 @@
 package mw.ars.reservations.reservation.common.model;
 
+import lombok.Value;
+
 import java.util.UUID;
 
+@Value
 public class FligtId{
     private UUID id;
 

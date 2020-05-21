@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 
 import javax.sql.DataSource;
-
+@EnableMongoRepositories(basePackages = "mw.ars.reservations.reservation.infrastructure.db")
 public class ReservationConfiguration {
   @Bean
   public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {

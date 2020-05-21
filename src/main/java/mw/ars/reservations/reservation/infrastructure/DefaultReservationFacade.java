@@ -6,6 +6,7 @@ import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.common.model.ReservationId;
 
+import java.util.List;
 import java.util.Optional;
 
 public class DefaultReservationFacade implements ReservationFacade {
@@ -18,41 +19,41 @@ public class DefaultReservationFacade implements ReservationFacade {
 
     @Override
     public ReservationId create(CreateReservationCommand command) {
-        return null;
+        return service.create(command);
     }
 
     @Override
-    public Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {
-        return Optional.empty();
+    public List<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {
+        return service.findByFlightId(command);
     }
 
     @Override
     public void holdOn(HoldOnReservationCommand command) {
-
+        service.holdOn(command);
     }
 
     @Override
     public Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command) {
-        return Optional.empty();
+        return service.findByReservationId(command);
     }
 
     @Override
     public void confirm(ConfirmationCommand command) {
-
+        service.confirm(command);
     }
 
     @Override
-    public ReservationId reschedule(RescheduleCommand of) {
-        return null;
+    public ReservationId reschedule(RescheduleCommand command) {
+        return service.reschedule(command);
     }
 
     @Override
     public void cancel(CancelByResrvationId command) {
-
+        service.cancel(command);
     }
 
     @Override
     public void register(RegistrationCommand command) {
-
+        service.register(command);
     }
 }

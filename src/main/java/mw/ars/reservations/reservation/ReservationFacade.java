@@ -4,13 +4,14 @@ import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.model.ReservationId;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ReservationFacade {
 
     ReservationId create(CreateReservationCommand command);
 
-    Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command);
+    List<ReservationDTO> findByFlightId(FindByFlightIdCommand command);
 
     void holdOn(HoldOnReservationCommand command);
 
