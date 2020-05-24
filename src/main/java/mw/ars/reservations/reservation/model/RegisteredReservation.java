@@ -8,14 +8,14 @@ import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
 
-class RegisteredReservation implements IdentifiedReservation {
+public class RegisteredReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   @Getter private final Status status;
   private final SeatNumber seat;
   private final Money price;
   private final LocalDateTime departureDate;
 
-  public RegisteredReservation(
+  private RegisteredReservation(
       ReservationId initialResId, SeatNumber seat, Money price, LocalDateTime departureDate) {
     this.id = ReservationId.of(initialResId.getId());
     this.seat = seat;
@@ -31,6 +31,10 @@ class RegisteredReservation implements IdentifiedReservation {
       LocalDateTime departureDate) {
     return Result.successWithReturn(
         new RegisteredReservation(initialReservation.getId(), seat, price, departureDate));
+  }
+
+  public static RegisteredReservation of(ReservationId reservationId,SeatNumber seat, Money price, LocalDateTime departureDate) {
+    return new RegisteredReservation(reservationId,seat,price,departureDate);
   }
 
   public Result hold(int currentlyHolded) {

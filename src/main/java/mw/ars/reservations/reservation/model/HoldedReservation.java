@@ -11,15 +11,14 @@ import java.time.Period;
 
 @AllArgsConstructor
 @Getter
-public class HoldedReservation {
+public class HoldedReservation implements IdentifiedReservation {
   private static final int TWO_WEEKS_DAYS = 14;
   @Getter private final ReservationId id;
   @Getter private final Status status;
-  private final CurrentlyHolded currentlyHolded;
 
-  private HoldedReservation(ReservationId id, CurrentlyHolded currentlyHolded) {
+
+  private HoldedReservation(ReservationId id) {
     this.id = id;
-    this.currentlyHolded = currentlyHolded;
     this.status = Status.HOLDED;
   }
 
@@ -32,7 +31,7 @@ public class HoldedReservation {
       return Result.failure();
     }
     holded.add();
-    return Result.successWithReturn(new HoldedReservation(registeredReservation.getId(), holded));
+    return Result.successWithReturn(new HoldedReservation(registeredReservation.getId()));
   }
 
   public Result cancel() {
@@ -42,7 +41,6 @@ public class HoldedReservation {
   private static boolean lessThanTwoWeeks(LocalDateTime departureDate) {
     return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
   }
-
   @AllArgsConstructor
   public static class CurrentlyHolded {
     private static final int HOLDED_RESERVATION_LIMIT = 3;
@@ -60,4 +58,5 @@ public class HoldedReservation {
       holdedSoFar++;
     }
   }
+
 }

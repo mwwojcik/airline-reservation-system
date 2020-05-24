@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class ConfirmedReservation {
+public class ConfirmedReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   @Getter private final Status status;
 

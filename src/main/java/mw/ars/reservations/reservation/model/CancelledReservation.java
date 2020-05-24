@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class CancelledReservation {
+public class CancelledReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   @Getter private final Status status;
   private final LocalDateTime cancellationDate;

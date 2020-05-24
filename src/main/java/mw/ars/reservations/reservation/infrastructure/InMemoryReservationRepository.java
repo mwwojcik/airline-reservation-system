@@ -24,10 +24,15 @@ public class InMemoryReservationRepository implements ReservationRepository {
         return List.of();
     }
 
-    /*@Override
-    public Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {
+    @Override
+    public Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId) {
         return Optional.empty();
     }
+
+
+
+
+    /*@Override
 
     @Override
     public void holdOn(HoldOnReservationCommand command) {

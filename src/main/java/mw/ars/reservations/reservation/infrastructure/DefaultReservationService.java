@@ -5,7 +5,7 @@ import mw.ars.reservations.reservation.ReservationService;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.common.model.ReservationId;
-import mw.ars.reservations.reservation.domain.CreateReservationDS;
+import mw.ars.reservations.reservation.domain.CreateReservationDomainService;
 import mw.ars.reservations.reservation.model.InitialReservation;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class DefaultReservationService implements ReservationService {
   public ReservationId create(CreateReservationCommand command) {
     // todo repo.countReservedThisMonth();
     int reservedThisMonth = 0;
-    var result = CreateReservationDS.initialReservation(reservedThisMonth, command);
+    var result = CreateReservationDomainService.initialReservation(reservedThisMonth, command);
     var reservation = (InitialReservation) result.returned();
     repo.save(reservation);
     return reservation.getId();
@@ -32,6 +32,12 @@ public class DefaultReservationService implements ReservationService {
   @Override
   public List<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {
     return repo.findByFlightId(command.getCustomerId(),command.getFligtId());
+  }
+
+  @Override
+  public void register(RegistrationCommand command) {
+    var reservation = repo.findByReservationId(command.getReservationId()).orElseThrow();
+    System.out.println("");
   }
 
   @Override
@@ -52,7 +58,4 @@ public class DefaultReservationService implements ReservationService {
 
   @Override
   public void cancel(CancelByResrvationId command) {}
-
-  @Override
-  public void register(RegistrationCommand command) {}
 }

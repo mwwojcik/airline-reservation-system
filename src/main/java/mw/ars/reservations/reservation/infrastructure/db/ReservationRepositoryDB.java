@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ReservationRepositoryDB  extends MongoRepository<ReservationEntity,String> {
+public interface ReservationRepositoryDB  extends MongoRepository<ReservationEntity,UUID> {
      List<ReservationEntity> findByCustomerIdAndFlightId(UUID CustomerId, UUID flightId);
 }

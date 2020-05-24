@@ -1,5 +1,7 @@
 package mw.ars.reservations.reservation;
 
+import mw.ars.reservations.reservation.common.commands.FindByFlightIdCommand;
+import mw.ars.reservations.reservation.common.commands.RegistrationCommand;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.common.model.CustomerId;
 import mw.ars.reservations.reservation.common.model.FligtId;
@@ -7,18 +9,16 @@ import mw.ars.reservations.reservation.common.model.ReservationId;
 import mw.ars.reservations.reservation.model.IdentifiedReservation;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRepository {
 
     ReservationId save(IdentifiedReservation save);
-
     List<ReservationDTO> findByFlightId(CustomerId customerId, FligtId fligtId);
+    Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId);
 
-    /*Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command);
+    /*void holdOn(HoldOnReservationCommand command);
 
-    void holdOn(HoldOnReservationCommand command);
-
-    Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command);
 
     void confirm(ConfirmationCommand command);
 
@@ -26,5 +26,5 @@ public interface ReservationRepository {
 
     void cancel(CancelByResrvationId command);
 
-    void register(RegistrationCommand command);*/
+    */
 }

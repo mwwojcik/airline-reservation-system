@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
-public class RescheduledReservation {
+public class RescheduledReservation implements IdentifiedReservation {
   private static final int TWO_WEEKS_DAYS = 14;
   @Getter private final ReservationId id;
   @Getter private final Status status;

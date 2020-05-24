@@ -14,18 +14,27 @@ import java.util.UUID;
 
 public class InitialReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
-  private final ReservedThisMonth reservedThisMonth;
   @Getter private final CustomerId customerId;
   @Getter private final FligtId flightId;
   @Getter private final Status status;
 
-  public InitialReservation(
-      ReservedThisMonth reservedThisMonth, CustomerId customerId, FligtId flightId) {
+  private InitialReservation(CustomerId customerId, FligtId flightId) {
     this.id = ReservationId.of(UUID.randomUUID());
-    this.reservedThisMonth = reservedThisMonth;
     this.customerId = customerId;
     this.flightId = flightId;
     this.status = Status.NEW;
+  }
+
+  private InitialReservation(ReservationId reservationId, CustomerId customerId, FligtId flightId) {
+    this.id = reservationId;
+    this.customerId = customerId;
+    this.flightId = flightId;
+    this.status = Status.NEW;
+  }
+
+  public static InitialReservation of(
+      ReservationId reservationId, FligtId flightId, CustomerId customerId) {
+    return new InitialReservation(reservationId, customerId, flightId);
   }
 
   public static Result create(int reservedThisMonth, FligtId flightId, CustomerId customerId) {
@@ -36,7 +45,7 @@ public class InitialReservation implements IdentifiedReservation {
       return Result.failure();
     }
 
-    return Result.successWithReturn(new InitialReservation(reserved, customerId, flightId));
+    return Result.successWithReturn(new InitialReservation(customerId, flightId));
   }
 
   // BLUE CARD

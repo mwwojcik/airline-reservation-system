@@ -1,4 +1,4 @@
 package mw.ars.reservations.reservation.domain;
 
-public class ConfirmReservationDS {
+public class CancelReservationDomainService {
 }

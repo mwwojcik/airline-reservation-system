@@ -4,6 +4,7 @@
 @startuml
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 !includeurl https://raw.githubusercontent.com/skleanthous/C4-PlantumlSkin/master/build/output/c4.puml
+!include https://raw.githubusercontent.com/stawirej/C4-PlantUML/master/C4_Container.puml
 skinparam linetype polyline
 skinparam linetype ortho
 
