@@ -1,11 +1,11 @@
 package mw.ars.reservations.reservation.infrastructure.db;
 
+import mw.ars.commons.model.FlightId;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.common.dto.StatusDTO;
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.ReservationId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.ReservationId;
+import mw.ars.commons.model.SeatNumber;
 import mw.ars.reservations.reservation.model.IdentifiedReservation;
 import mw.ars.reservations.reservation.model.InitialReservation;
 import mw.ars.reservations.reservation.model.RegisteredReservation;
@@ -28,14 +28,17 @@ public class ReservationEntity {
 
   private String status;
 
+  private LocalDateTime createdDate;
+
   private int seat;
 
   private BigDecimal price;
 
   private LocalDateTime departureDate;
 
-  public ReservationEntity(UUID reservationId, UUID customerId, UUID flightId, String status) {
+  public ReservationEntity(UUID reservationId, LocalDateTime createdDate, UUID customerId, UUID flightId, String status) {
     this.reservationId = reservationId;
+    this.createdDate = createdDate;
     this.customerId = customerId;
     this.flightId = flightId;
     this.status = status;
@@ -44,9 +47,17 @@ public class ReservationEntity {
   public static ReservationEntity from(InitialReservation reservation) {
     return new ReservationEntity(
         reservation.getId().getId(),
+        reservation.getCreated(),
         reservation.getCustomerId().getId(),
         reservation.getFlightId().getId(),
         reservation.getStatus().name());
+
+  }
+  public void merge(RegisteredReservation reservation) {
+    this.status=reservation.getStatus().name();
+    this.departureDate=reservation.getDepartureDate();
+    this.price=reservation.getPrice().getNumberStripped();
+    this.seat=reservation.getSeat().getNumber();
   }
 
   public IdentifiedReservation toDomain() {
@@ -54,7 +65,7 @@ public class ReservationEntity {
     switch (status) {
       case NEW:
         return InitialReservation.of(
-            ReservationId.of(reservationId), FligtId.of(flightId), CustomerId.of(customerId));
+            ReservationId.of(reservationId), FlightId.of(flightId), CustomerId.of(customerId));
       case REGISTERED:
         return RegisteredReservation.of(
             ReservationId.of(reservationId),
@@ -76,8 +87,8 @@ public class ReservationEntity {
   public ReservationDTO toDTO() {
     return new ReservationDTO(
         ReservationId.of(reservationId),
-        StatusDTO.NEW,
+        StatusDTO.valueOf(status),
         CustomerId.of(customerId),
-        FligtId.of(flightId));
+        FlightId.of(flightId));
   }
 }

@@ -753,7 +753,7 @@ public class ReservationDTO {
     private ReservationId reservationId;
     private StatusDTO status;
     private CustomerId customerId;
-    private FligtId fligtId;
+    private FligtId flightId;
 
     public boolean isHolded() {
         return status==StatusDTO.HOLDED;

@@ -1,8 +1,7 @@
-package mw.ars.reservations.reservation.common.model;
+package mw.ars.commons.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Value;
 
 import java.util.UUID;
 @EqualsAndHashCode(of = "id")

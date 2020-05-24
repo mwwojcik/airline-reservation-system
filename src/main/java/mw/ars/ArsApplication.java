@@ -1,6 +1,7 @@
 package mw.ars;
 
 import mw.ars.reservations.reservation.infrastructure.ReservationConfiguration;
+import mw.ars.sales.flights.infrastructure.FlightsConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.WebApplicationType;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(ReservationConfiguration.class)
+@Import({ReservationConfiguration.class, FlightsConfiguration.class})
 public class ArsApplication {
 	public static void main(String[] args) {
 			new SpringApplicationBuilder()

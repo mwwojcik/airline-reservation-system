@@ -1,5 +1,8 @@
-package mw.ars.reservations.reservation.common.model;
+package mw.ars.commons.model;
 
+import lombok.Value;
+
+@Value
 public class SeatNumber{
   private int number;
 

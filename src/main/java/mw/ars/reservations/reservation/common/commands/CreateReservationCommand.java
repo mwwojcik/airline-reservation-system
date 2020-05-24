@@ -1,20 +1,20 @@
 package mw.ars.reservations.reservation.common.commands;
 
 import lombok.Value;
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.FlightId;
 
 @Value
 public class CreateReservationCommand{
     private CustomerId customerId;
-    private FligtId fligtId;
+    private FlightId flightId;
 
-    private CreateReservationCommand(CustomerId customerId, FligtId fligtId){
+    private CreateReservationCommand(CustomerId customerId, FlightId flightId){
         this.customerId=customerId;
-        this.fligtId = fligtId;
+        this.flightId = flightId;
     }
 
-    public static CreateReservationCommand of(CustomerId customerId, FligtId flightId){
+    public static CreateReservationCommand of(CustomerId customerId, FlightId flightId){
         return new CreateReservationCommand(customerId,flightId);
     }
 }

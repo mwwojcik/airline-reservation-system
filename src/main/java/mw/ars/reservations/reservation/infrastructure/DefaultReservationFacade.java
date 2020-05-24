@@ -4,10 +4,10 @@ import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationService;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
-import mw.ars.reservations.reservation.common.model.ReservationId;
+import mw.ars.commons.model.ReservationId;
+import mw.ars.sales.flights.FlightsFacade;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DefaultReservationFacade implements ReservationFacade {
 
@@ -30,11 +30,6 @@ public class DefaultReservationFacade implements ReservationFacade {
     @Override
     public void holdOn(HoldOnReservationCommand command) {
         service.holdOn(command);
-    }
-
-    @Override
-    public Optional<ReservationDTO> findByReservationId(FindByReservationIdCommnad command) {
-        return service.findByReservationId(command);
     }
 
     @Override

@@ -1,11 +1,9 @@
 package mw.ars.reservations.reservation.model;
 
-import mw.ars.commons.model.Result;
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.FlightId;
+import mw.ars.commons.model.SeatNumber;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.Fail;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,7 @@ class ReservationTest {
   @Test
   void shouldCreateNewReservation() {
     // given
-    var anyFlight = FligtId.of(UUID.randomUUID());
+    var anyFlight = FlightId.of(UUID.randomUUID());
     var anyCustomer = CustomerId.of(UUID.randomUUID());
     var oneReservationSoFar=1;
     // when
@@ -33,7 +31,7 @@ class ReservationTest {
   @Test
   void shouldNotCreateReservationLimitExceeded() {
     // given
-    var anyFlight = FligtId.of(UUID.randomUUID());
+    var anyFlight = FlightId.of(UUID.randomUUID());
     var anyCustomer = CustomerId.of(UUID.randomUUID());
     var oneReservationSoFar=15;
     // when
@@ -142,7 +140,7 @@ class ReservationTest {
     var anySeat = SeatNumber.of(10);
     var anyDepartureDate=LocalDateTime.now();
     var anyPrice=Money.of(10,"USD");
-    var anyFlight=FligtId.of(UUID.randomUUID());
+    var anyFlight= FlightId.of(UUID.randomUUID());
     // when
     var res = confirmed.reschedule(confirmed,1,anyFlight,anySeat,anyDepartureDate,anyPrice);
     // then
@@ -158,7 +156,7 @@ class ReservationTest {
     var anySeat = SeatNumber.of(10);
     var anyDepartureDate=LocalDateTime.now();
     var anyPrice=Money.of(10,"USD");
-    var anyFlight=FligtId.of(UUID.randomUUID());
+    var anyFlight= FlightId.of(UUID.randomUUID());
     // when
     var res = confirmed.reschedule(confirmed,3,anyFlight,anySeat,anyDepartureDate,anyPrice);
     // then

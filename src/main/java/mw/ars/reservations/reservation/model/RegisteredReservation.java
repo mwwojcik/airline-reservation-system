@@ -1,9 +1,10 @@
 package mw.ars.reservations.reservation.model;
 
 import lombok.Getter;
+import mw.ars.commons.model.FlightId;
 import mw.ars.commons.model.Result;
-import mw.ars.reservations.reservation.common.model.ReservationId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.ReservationId;
+import mw.ars.commons.model.SeatNumber;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
@@ -11,9 +12,9 @@ import java.time.LocalDateTime;
 public class RegisteredReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   @Getter private final Status status;
-  private final SeatNumber seat;
-  private final Money price;
-  private final LocalDateTime departureDate;
+  @Getter private final SeatNumber seat;
+  @Getter  private final Money price;
+  @Getter private final LocalDateTime departureDate;
 
   private RegisteredReservation(
       ReservationId initialResId, SeatNumber seat, Money price, LocalDateTime departureDate) {
@@ -44,4 +45,9 @@ public class RegisteredReservation implements IdentifiedReservation {
   public Result confirm() {
     return ConfirmedReservation.create(this);
   }
+
+    @Override
+    public FlightId getFlightId() {
+        return null;
+    }
 }

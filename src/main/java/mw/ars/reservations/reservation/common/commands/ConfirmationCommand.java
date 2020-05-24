@@ -1,6 +1,6 @@
 package mw.ars.reservations.reservation.common.commands;
 
-import mw.ars.reservations.reservation.common.model.ReservationId;
+import mw.ars.commons.model.ReservationId;
 
 public class ConfirmationCommand{
     private ReservationId reservationId;

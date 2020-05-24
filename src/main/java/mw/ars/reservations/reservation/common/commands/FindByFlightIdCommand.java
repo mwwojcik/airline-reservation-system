@@ -1,19 +1,19 @@
 package mw.ars.reservations.reservation.common.commands;
 
 import lombok.Value;
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.FlightId;
 @Value
 public class FindByFlightIdCommand{
     private CustomerId customerId;
-    private FligtId fligtId;
+    private FlightId flightId;
 
-    private FindByFlightIdCommand(CustomerId customerId, FligtId fligtId){
+    private FindByFlightIdCommand(CustomerId customerId, FlightId flightId){
         this.customerId=customerId;
-        this.fligtId = fligtId;
+        this.flightId = flightId;
     }
 
-    public static FindByFlightIdCommand of(CustomerId customerId, FligtId flightId){
+    public static FindByFlightIdCommand of(CustomerId customerId, FlightId flightId){
         return new FindByFlightIdCommand(customerId,flightId);
     }
 }

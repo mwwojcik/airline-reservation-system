@@ -1,21 +1,24 @@
 package mw.ars.reservations.reservation;
 
-import mw.ars.reservations.reservation.common.commands.FindByFlightIdCommand;
-import mw.ars.reservations.reservation.common.commands.RegistrationCommand;
+import mw.ars.commons.model.FlightId;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.ReservationId;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.model.IdentifiedReservation;
+import mw.ars.reservations.reservation.model.InitialReservation;
+import mw.ars.reservations.reservation.model.RegisteredReservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository {
 
-    ReservationId save(IdentifiedReservation save);
-    List<ReservationDTO> findByFlightId(CustomerId customerId, FligtId fligtId);
+    ReservationId save(InitialReservation reservation);
+    void  save(RegisteredReservation reservation);
+    List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId);
     Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId);
+    int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth);
 
     /*void holdOn(HoldOnReservationCommand command);
 

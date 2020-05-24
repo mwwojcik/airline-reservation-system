@@ -1,11 +1,10 @@
 package mw.ars.reservations.reservation.infrastructure;
 
+import mw.ars.commons.model.SeatNumber;
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.common.commands.*;
-import mw.ars.reservations.reservation.common.dto.ReservationDTO;
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.FlightId;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.reservations.reservation.infrastructure.testapp.ReservationTestApplication;
 import org.assertj.core.api.Assertions;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 /** Acceptance test - full infractructure stack - without WEB API. Tested is flow via Fasade */
@@ -34,7 +31,7 @@ class ReservationAcceptanceIT {
   @Test
   void shouldRealizeMainReservationProcess() {
     var customerId = CustomerId.of(UUID.randomUUID());
-    var flightId = FligtId.of(UUID.randomUUID());
+    var flightId = FlightId.of(UUID.randomUUID());
     // given
     var resId = reservationFacade.create(CreateReservationCommand.of(customerId, flightId));
     // when
@@ -42,14 +39,15 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isNew()).isTrue();
 
-    reservationFacade.register(RegistrationCommand.of(resId));
+    var withSeat = SeatNumber.of(10);
+    reservationFacade.register(RegistrationCommand.of(resId,withSeat));
     result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isRegistered()).isTrue();
 
    /* Optional<ReservationDTO> res = Optional.empty();
     // given
-    var withSeat = SeatNumber.of(10);
+
     var withDepartureDate = LocalDateTime.now().plusDays(30);
     // when
     res = Optional.empty();

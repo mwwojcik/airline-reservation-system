@@ -1,8 +1,8 @@
 package mw.ars.reservations.reservation.model;
 
-import mw.ars.reservations.reservation.common.model.CustomerId;
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.FlightId;
+import mw.ars.commons.model.SeatNumber;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public class ReservationFixture {
   public static InitialReservation initial() {
     return (InitialReservation)
         InitialReservation.create(
-                1, FligtId.of(UUID.randomUUID()), CustomerId.of(UUID.randomUUID()))
+                1, FlightId.of(UUID.randomUUID()), CustomerId.of(UUID.randomUUID()))
             .returned();
   }
 

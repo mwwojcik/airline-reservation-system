@@ -6,6 +6,7 @@ import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.ReservationService;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
+import mw.ars.sales.flights.FlightsFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -22,8 +23,8 @@ public class ReservationConfiguration {
   }
 
   @Bean
-  public ReservationService createService(ReservationRepository repo) {
-    return new DefaultReservationService(repo);
+  public ReservationService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
+    return new DefaultReservationService(repo,flightsFacade);
   }
 
   @Bean

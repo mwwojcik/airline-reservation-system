@@ -2,8 +2,9 @@ package mw.ars.reservations.reservation.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import mw.ars.commons.model.FlightId;
 import mw.ars.commons.model.Result;
-import mw.ars.reservations.reservation.common.model.ReservationId;
+import mw.ars.commons.model.ReservationId;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class HoldedReservation implements IdentifiedReservation {
   private static final int TWO_WEEKS_DAYS = 14;
   @Getter private final ReservationId id;
   @Getter private final Status status;
+  @Getter private FlightId flightId;
 
 
   private HoldedReservation(ReservationId id) {
@@ -41,7 +43,10 @@ public class HoldedReservation implements IdentifiedReservation {
   private static boolean lessThanTwoWeeks(LocalDateTime departureDate) {
     return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
   }
-  @AllArgsConstructor
+
+
+
+    @AllArgsConstructor
   public static class CurrentlyHolded {
     private static final int HOLDED_RESERVATION_LIMIT = 3;
     private int holdedSoFar;

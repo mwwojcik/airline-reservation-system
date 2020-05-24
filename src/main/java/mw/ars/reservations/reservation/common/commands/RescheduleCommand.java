@@ -1,25 +1,25 @@
 package mw.ars.reservations.reservation.common.commands;
 
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.ReservationId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.FlightId;
+import mw.ars.commons.model.ReservationId;
+import mw.ars.commons.model.SeatNumber;
 
 import java.time.LocalDateTime;
 
 public class RescheduleCommand {
   private ReservationId original;
-  private FligtId newFlightId;
+  private FlightId newFlightId;
   private SeatNumber newSeatNumber;
   private LocalDateTime newDepartureTime;
 
-  private RescheduleCommand(ReservationId original, FligtId newFlightId, SeatNumber newSeatNumber, LocalDateTime newDepartureTime) {
+  private RescheduleCommand(ReservationId original, FlightId newFlightId, SeatNumber newSeatNumber, LocalDateTime newDepartureTime) {
     this.original = original;
       this.newFlightId = newFlightId;
       this.newSeatNumber = newSeatNumber;
       this.newDepartureTime = newDepartureTime;
   }
 
-  public static RescheduleCommand of(ReservationId original, FligtId newFlightId, SeatNumber newSeatNumber, LocalDateTime newDepartureTime) {
+  public static RescheduleCommand of(ReservationId original, FlightId newFlightId, SeatNumber newSeatNumber, LocalDateTime newDepartureTime) {
     return new RescheduleCommand(original, newFlightId, newSeatNumber, newDepartureTime);
   }
 }

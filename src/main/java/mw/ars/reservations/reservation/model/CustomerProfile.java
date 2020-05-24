@@ -1,6 +1,6 @@
 package mw.ars.reservations.reservation.model;
 
-import mw.ars.reservations.reservation.common.model.CustomerId;
+import mw.ars.commons.model.CustomerId;
 
 public class CustomerProfile {
 

@@ -1,7 +1,7 @@
 package mw.ars.reservations.reservation.common.commands;
 
-import mw.ars.reservations.reservation.common.model.ReservationId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.ReservationId;
+import mw.ars.commons.model.SeatNumber;
 
 import java.time.LocalDateTime;
 

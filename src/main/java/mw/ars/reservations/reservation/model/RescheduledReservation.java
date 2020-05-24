@@ -2,10 +2,10 @@ package mw.ars.reservations.reservation.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import mw.ars.commons.model.FlightId;
 import mw.ars.commons.model.Result;
-import mw.ars.reservations.reservation.common.model.FligtId;
-import mw.ars.reservations.reservation.common.model.ReservationId;
-import mw.ars.reservations.reservation.common.model.SeatNumber;
+import mw.ars.commons.model.ReservationId;
+import mw.ars.commons.model.SeatNumber;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class RescheduledReservation implements IdentifiedReservation {
   private final Money price;
   private final LocalDateTime departureDate;
   private final RescheduledSoFar rescheduledSoFar;
-  private final FligtId flightId;
+  private final FlightId flightId;
 
   private RescheduledReservation(Builder builder) {
     this.id = ReservationId.of(UUID.randomUUID());
@@ -38,7 +38,7 @@ public class RescheduledReservation implements IdentifiedReservation {
   public static Result create(
       ConfirmedReservation confirmed,
       int rescheduled,
-      FligtId newFlightId,
+      FlightId newFlightId,
       SeatNumber newSeatNumber,
       LocalDateTime newDepartureDate,
       Money newPrice) {
@@ -83,7 +83,7 @@ public class RescheduledReservation implements IdentifiedReservation {
 
   /** Builder for instances of type {@link RescheduledReservation} */
   public static final class Builder {
-    private FligtId flightId;
+    private FlightId flightId;
     private ReservationId originalReservationId;
     private SeatNumber seat;
     private Money price;
@@ -94,7 +94,7 @@ public class RescheduledReservation implements IdentifiedReservation {
      * Set the value of the field status of the target instance of type {@link
      * RescheduledReservation}
      */
-    public Builder flightId(final FligtId flighId) {
+    public Builder flightId(final FlightId flighId) {
       this.flightId = flighId;
       return this;
     }
