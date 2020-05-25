@@ -6,10 +6,7 @@ import mw.ars.reservations.reservation.common.dto.StatusDTO;
 import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.ReservationId;
 import mw.ars.commons.model.SeatNumber;
-import mw.ars.reservations.reservation.model.IdentifiedReservation;
-import mw.ars.reservations.reservation.model.InitialReservation;
-import mw.ars.reservations.reservation.model.RegisteredReservation;
-import mw.ars.reservations.reservation.model.Status;
+import mw.ars.reservations.reservation.model.*;
 import org.javamoney.moneta.Money;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -58,6 +55,10 @@ public class ReservationEntity {
     this.departureDate=reservation.getDepartureDate();
     this.price=reservation.getPrice().getNumberStripped();
     this.seat=reservation.getSeat().getNumber();
+  }
+
+  public void merge(HoldedReservation reservation){
+    this.status=reservation.getStatus().name();
   }
 
   public IdentifiedReservation toDomain() {

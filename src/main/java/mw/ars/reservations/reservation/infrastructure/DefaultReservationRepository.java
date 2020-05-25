@@ -7,9 +7,7 @@ import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationEntity;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
-import mw.ars.reservations.reservation.model.IdentifiedReservation;
-import mw.ars.reservations.reservation.model.InitialReservation;
-import mw.ars.reservations.reservation.model.RegisteredReservation;
+import mw.ars.reservations.reservation.model.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,6 +39,16 @@ public class DefaultReservationRepository implements ReservationRepository {
   }
 
   @Override
+  public void save(HoldedReservation reservation) {
+    var entity =
+            repositoryDB
+                    .findById(reservation.getId().getId())
+                    .orElseThrow(() -> new IllegalStateException("Entity not found!"));
+    entity.merge(reservation);
+    repositoryDB.save(entity);
+  }
+
+  @Override
   public List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId) {
     var res = repositoryDB.findByCustomerIdAndFlightId(customerId.getId(), flightId.getId());
     return res.stream().map(ReservationEntity::toDTO).collect(Collectors.toList());
@@ -59,6 +67,11 @@ public class DefaultReservationRepository implements ReservationRepository {
   public int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth) {
     return repositoryDB.findByCreatedDateGreaterThan(firstDateOfCurrentMonth).size();
   }
+
+    @Override
+    public int countCurrentlyHolded() {
+        return repositoryDB.findByStatusEquals(Status.HOLDED.toString()).size();
+    }
 
   /* @Override
   public Optional<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {

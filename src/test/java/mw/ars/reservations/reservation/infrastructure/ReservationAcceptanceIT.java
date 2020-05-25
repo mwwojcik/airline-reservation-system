@@ -1,10 +1,13 @@
 package mw.ars.reservations.reservation.infrastructure;
 
-import mw.ars.commons.model.SeatNumber;
-import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.FlightId;
+import mw.ars.commons.model.SeatNumber;
+import mw.ars.reservations.reservation.ReservationFacade;
+import mw.ars.reservations.reservation.common.commands.CreateReservationCommand;
+import mw.ars.reservations.reservation.common.commands.FindByFlightIdCommand;
+import mw.ars.reservations.reservation.common.commands.HoldOnReservationCommand;
+import mw.ars.reservations.reservation.common.commands.RegistrationCommand;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.reservations.reservation.infrastructure.testapp.ReservationTestApplication;
 import org.assertj.core.api.Assertions;
@@ -25,7 +28,6 @@ class ReservationAcceptanceIT {
   @Autowired ReservationRepositoryDB repoDB;
   @Autowired private ReservationFacade reservationFacade;
 
-
   @DisplayName(
       "Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
   @Test
@@ -40,24 +42,17 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.get(0).isNew()).isTrue();
 
     var withSeat = SeatNumber.of(10);
-    reservationFacade.register(RegistrationCommand.of(resId,withSeat));
+    reservationFacade.register(RegistrationCommand.of(resId, withSeat));
     result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isRegistered()).isTrue();
 
-   /* Optional<ReservationDTO> res = Optional.empty();
-    // given
+    reservationFacade.holdOn(HoldOnReservationCommand.of(resId));
+    result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isHolded()).isTrue();
 
-    var withDepartureDate = LocalDateTime.now().plusDays(30);
-    // when
-    res = Optional.empty();
-    reservationFacade.holdOn(HoldOnReservationCommand.of(resId, withSeat, withDepartureDate));
-    res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
-    // then
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isHolded()).isTrue();
-
-    res = Optional.empty();
+    /* res = Optional.empty();
     reservationFacade.confirm(ConfirmationCommand.of(resId));
     res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
     Assertions.assertThat(res.isPresent()).isTrue();

@@ -5,6 +5,7 @@ import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.ReservationId;
+import mw.ars.reservations.reservation.model.HoldedReservation;
 import mw.ars.reservations.reservation.model.IdentifiedReservation;
 import mw.ars.reservations.reservation.model.InitialReservation;
 import mw.ars.reservations.reservation.model.RegisteredReservation;
@@ -29,6 +30,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
     }
 
     @Override
+    public void save(HoldedReservation reservation) {
+
+    }
+
+    @Override
     public List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId) {
         return List.of();
     }
@@ -40,6 +46,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     @Override
     public int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth) {
+        return 0;
+    }
+
+    @Override
+    public int countCurrentlyHolded() {
         return 0;
     }
 

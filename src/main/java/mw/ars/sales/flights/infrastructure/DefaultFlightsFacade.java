@@ -12,6 +12,6 @@ import java.util.UUID;
 public class DefaultFlightsFacade implements FlightsFacade {
     @Override
     public Optional<FlightDTO> findByFlightId(FlightId flightId) {
-        return Optional.of(FlightDTO.from(FlightId.of(UUID.randomUUID()), LocalDateTime.now(), Money.of(100,"USD")));
+        return Optional.of(FlightDTO.from(FlightId.of(UUID.randomUUID()), LocalDateTime.now().plusDays(30), Money.of(100,"USD")));
     }
 }

@@ -6,6 +6,7 @@ import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.domain.CreateReservationDomainService;
+import mw.ars.reservations.reservation.domain.HoldOnReservationDomainService;
 import mw.ars.reservations.reservation.domain.RegisterReservationDomainService;
 import mw.ars.reservations.reservation.model.InitialReservation;
 import mw.ars.reservations.reservation.model.RegisteredReservation;
@@ -46,7 +47,12 @@ public class DefaultReservationService implements ReservationService {
   }
 
   @Override
-  public void holdOn(HoldOnReservationCommand command) {}
+  public void holdOn(HoldOnReservationCommand command) {
+    var reservation = repo.findByReservationId(command.getReservationId()).orElseThrow();
+    int currentlyHolded=repo.countCurrentlyHolded();
+    var holded=HoldOnReservationDomainService.hold(reservation,currentlyHolded);
+    repo.save(holded);
+  }
 
   @Override
   public void confirm(ConfirmationCommand command) {}

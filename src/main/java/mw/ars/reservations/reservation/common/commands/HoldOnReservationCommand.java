@@ -1,22 +1,21 @@
 package mw.ars.reservations.reservation.common.commands;
 
+import lombok.Value;
 import mw.ars.commons.model.ReservationId;
 import mw.ars.commons.model.SeatNumber;
 
 import java.time.LocalDateTime;
 
+@Value
 public class HoldOnReservationCommand {
     private ReservationId reservationId;
-    private SeatNumber seat;
-    private LocalDateTime departureDate;
 
-    private HoldOnReservationCommand(ReservationId reservationId, SeatNumber seat, LocalDateTime departureDate){
+
+    private HoldOnReservationCommand(ReservationId reservationId){
         this.reservationId=reservationId;
-        this.seat = seat;
-        this.departureDate = departureDate;
     }
 
-    public static HoldOnReservationCommand of(ReservationId reservationId, SeatNumber withSeat, LocalDateTime withDepartureDate){
-        return new HoldOnReservationCommand(reservationId,withSeat,withDepartureDate);
+    public static HoldOnReservationCommand of(ReservationId reservationId){
+        return new HoldOnReservationCommand(reservationId);
     }
 }
