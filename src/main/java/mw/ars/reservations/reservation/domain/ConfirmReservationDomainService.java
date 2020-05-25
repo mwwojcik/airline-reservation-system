@@ -6,22 +6,18 @@ import mw.ars.reservations.reservation.model.HoldedReservation;
 import mw.ars.reservations.reservation.model.IdentifiedReservation;
 import mw.ars.reservations.reservation.model.RegisteredReservation;
 
-import java.util.Optional;
-
 public class ConfirmReservationDomainService {
   public static ConfirmedReservation confirm(IdentifiedReservation reservation) {
-    Result res=null;
+    Result res = null;
 
     if (reservation instanceof HoldedReservation) {
-      var holded =
-              toHolded(reservation)
-                      .orElseThrow(() -> new IllegalStateException("Reservation should be REGISTERED or HOLDED!"));
+      var holded = toHolded(reservation);
       res = holded.confirm();
     } else if (reservation instanceof RegisteredReservation) {
-      var registered =
-              toRegistered(reservation)
-                      .orElseThrow(() -> new IllegalStateException("Reservation should be REGISTERED or HOLDED!"));
+      var registered = toRegistered(reservation);
       res = registered.confirm();
+    } else {
+      throw new IllegalStateException("Reservation should be REGISTERED or HOLDED!");
     }
 
     if (res.isFailure()) {
@@ -30,15 +26,11 @@ public class ConfirmReservationDomainService {
     return ((ConfirmedReservation) res.returned());
   }
 
-  private static Optional<RegisteredReservation> toRegistered(IdentifiedReservation reservation) {
-    return reservation instanceof RegisteredReservation
-        ? Optional.of((RegisteredReservation) reservation)
-        : Optional.empty();
+  private static RegisteredReservation toRegistered(IdentifiedReservation reservation) {
+    return (RegisteredReservation) reservation;
   }
 
-  private static Optional<HoldedReservation> toHolded(IdentifiedReservation reservation) {
-    return reservation instanceof HoldedReservation
-        ? Optional.of((HoldedReservation) reservation)
-        : Optional.empty();
+  private static HoldedReservation toHolded(IdentifiedReservation reservation) {
+    return (HoldedReservation) reservation;
   }
 }
