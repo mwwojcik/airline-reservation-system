@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class CancelledReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   @Getter private final Status status;
-  @Getter private FlightId flightId;
   private final LocalDateTime cancellationDate;
 
   private CancelledReservation(ReservationId id) {
@@ -31,4 +30,7 @@ public class CancelledReservation implements IdentifiedReservation {
   }
 
 
+  public static CancelledReservation of(ReservationId reservationId) {
+    return new CancelledReservation(reservationId);
+  }
 }

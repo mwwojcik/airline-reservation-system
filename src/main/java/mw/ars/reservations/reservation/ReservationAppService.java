@@ -6,7 +6,7 @@ import mw.ars.commons.model.ReservationId;
 
 import java.util.List;
 
-public interface ReservationService {
+public interface ReservationAppService {
     ReservationId create(CreateReservationCommand command);
 
     List<ReservationDTO> findByFlightId(FindByFlightIdCommand command);

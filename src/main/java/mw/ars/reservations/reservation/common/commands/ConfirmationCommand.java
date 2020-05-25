@@ -1,7 +1,8 @@
 package mw.ars.reservations.reservation.common.commands;
 
+import lombok.Value;
 import mw.ars.commons.model.ReservationId;
-
+@Value
 public class ConfirmationCommand{
     private ReservationId reservationId;
 

@@ -49,6 +49,17 @@ public class DefaultReservationRepository implements ReservationRepository {
   }
 
   @Override
+  public void save(ConfirmedReservation reservation) {
+    var entity =
+            repositoryDB
+                    .findById(reservation.getId().getId())
+                    .orElseThrow(() -> new IllegalStateException("Entity not found!"));
+    entity.merge(reservation);
+    repositoryDB.save(entity);
+
+  }
+
+  @Override
   public List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId) {
     var res = repositoryDB.findByCustomerIdAndFlightId(customerId.getId(), flightId.getId());
     return res.stream().map(ReservationEntity::toDTO).collect(Collectors.toList());

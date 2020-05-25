@@ -2,10 +2,10 @@ package mw.ars.reservations.reservation.infrastructure.testapp;
 
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
-import mw.ars.reservations.reservation.ReservationService;
+import mw.ars.reservations.reservation.ReservationAppService;
 import mw.ars.reservations.reservation.infrastructure.DefaultReservationFacade;
 import mw.ars.reservations.reservation.infrastructure.DefaultReservationRepository;
-import mw.ars.reservations.reservation.infrastructure.DefaultReservationService;
+import mw.ars.reservations.reservation.infrastructure.DefaultReservationAppService;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.sales.flights.FlightsFacade;
 import mw.ars.sales.flights.infrastructure.DefaultFlightsFacade;
@@ -22,12 +22,12 @@ public class ReservationLocalMongoDBConfiguration {
   }
 
   @Bean
-  public ReservationService createService(ReservationRepository repo,FlightsFacade flightsFacade) {
-    return new DefaultReservationService(repo, flightsFacade);
+  public ReservationAppService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
+    return new DefaultReservationAppService(repo, flightsFacade);
   }
 
   @Bean
-  public ReservationFacade createFacade(ReservationService service) {
+  public ReservationFacade createFacade(ReservationAppService service) {
     return new DefaultReservationFacade(service);
   }
 

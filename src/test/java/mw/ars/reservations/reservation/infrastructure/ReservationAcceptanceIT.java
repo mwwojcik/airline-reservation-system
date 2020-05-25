@@ -4,10 +4,7 @@ import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.FlightId;
 import mw.ars.commons.model.SeatNumber;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.common.commands.CreateReservationCommand;
-import mw.ars.reservations.reservation.common.commands.FindByFlightIdCommand;
-import mw.ars.reservations.reservation.common.commands.HoldOnReservationCommand;
-import mw.ars.reservations.reservation.common.commands.RegistrationCommand;
+import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.reservations.reservation.infrastructure.testapp.ReservationTestApplication;
 import org.assertj.core.api.Assertions;
@@ -52,11 +49,13 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isHolded()).isTrue();
 
-    /* res = Optional.empty();
+
     reservationFacade.confirm(ConfirmationCommand.of(resId));
-    res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+    result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
+
+    /*
 
     var newFlightId = FligtId.of(UUID.randomUUID());
     var newSeatId = SeatNumber.of(11);

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class ConfirmedReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
   @Getter private final Status status;
-  @Getter private FlightId flightId;
 
 
   private ConfirmedReservation(ReservationId id) {
@@ -27,7 +26,15 @@ public class ConfirmedReservation implements IdentifiedReservation {
     return Result.successWithReturn(new ConfirmedReservation(registered.getId()));
   }
 
-  public Result reschedule(
+  public static Result create(HoldedReservation registered) {
+    return Result.successWithReturn(new ConfirmedReservation(registered.getId()));
+  }
+
+  public static ConfirmedReservation of(ReservationId reservationId) {
+    return new ConfirmedReservation(reservationId);
+  }
+
+    public Result reschedule(
       ConfirmedReservation confirmed,
       int rescheduled,
       FlightId newFlightId,

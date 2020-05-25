@@ -7,6 +7,4 @@ public interface IdentifiedReservation {
   Status getStatus();
 
   ReservationId getId();
-
-  FlightId getFlightId();
 }

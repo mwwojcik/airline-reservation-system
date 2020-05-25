@@ -46,9 +46,4 @@ public class RegisteredReservation implements IdentifiedReservation {
   public Result confirm() {
     return ConfirmedReservation.create(this);
   }
-
-  @Override
-  public FlightId getFlightId() {
-    return null;
-  }
 }

@@ -61,6 +61,10 @@ public class ReservationEntity {
     this.status=reservation.getStatus().name();
   }
 
+  public void merge(ConfirmedReservation reservation) {
+    this.status=reservation.getStatus().name();
+  }
+
   public IdentifiedReservation toDomain() {
     var status = Status.valueOf(this.status);
     switch (status) {
@@ -74,13 +78,13 @@ public class ReservationEntity {
             Money.of(price, "USD"),
             departureDate);
       case HOLDED:
-        return null;
+        return HoldedReservation.of(ReservationId.of(reservationId));
       case CANCELED:
-        return null;
+        return CancelledReservation.of(ReservationId.of(reservationId));
       case CONFIRMED:
-        return null;
+        return ConfirmedReservation.of(ReservationId.of(reservationId));
       case RESCHEDULED:
-        return null;
+        return null;//RescheduledReservation.of(ReservationId.of(reservationId));
     }
     return null;
   }

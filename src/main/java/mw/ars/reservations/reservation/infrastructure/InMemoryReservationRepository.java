@@ -5,10 +5,7 @@ import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.ReservationId;
-import mw.ars.reservations.reservation.model.HoldedReservation;
-import mw.ars.reservations.reservation.model.IdentifiedReservation;
-import mw.ars.reservations.reservation.model.InitialReservation;
-import mw.ars.reservations.reservation.model.RegisteredReservation;
+import mw.ars.reservations.reservation.model.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +28,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     @Override
     public void save(HoldedReservation reservation) {
+
+    }
+
+    @Override
+    public void save(ConfirmedReservation confirmed) {
 
     }
 

@@ -1,19 +1,18 @@
 package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.ReservationService;
+import mw.ars.reservations.reservation.ReservationAppService;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.commons.model.ReservationId;
-import mw.ars.sales.flights.FlightsFacade;
 
 import java.util.List;
 
 public class DefaultReservationFacade implements ReservationFacade {
 
-    private ReservationService service;
+    private ReservationAppService service;
 
-    public DefaultReservationFacade(ReservationService service) {
+    public DefaultReservationFacade(ReservationAppService service) {
         this.service = service;
     }
 

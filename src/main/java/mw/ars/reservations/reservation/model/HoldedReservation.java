@@ -16,7 +16,7 @@ public class HoldedReservation implements IdentifiedReservation {
   private static final int TWO_WEEKS_DAYS = 14;
   @Getter private final ReservationId id;
   @Getter private final Status status;
-  @Getter private FlightId flightId;
+
 
 
   private HoldedReservation(ReservationId id) {
@@ -36,9 +36,19 @@ public class HoldedReservation implements IdentifiedReservation {
     return Result.successWithReturn(new HoldedReservation(registeredReservation.getId()));
   }
 
+  public static HoldedReservation of(ReservationId reservationId) {
+    return new HoldedReservation(reservationId,Status.HOLDED);
+  }
+
   public Result cancel() {
     return CancelledReservation.create(this);
   }
+
+
+  public Result confirm() {
+    return ConfirmedReservation.create(this);
+  }
+
 
   private static boolean lessThanTwoWeeks(LocalDateTime departureDate) {
     return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
