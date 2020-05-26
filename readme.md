@@ -899,4 +899,4 @@ The test should be successful after implementing the application and domain func
 
 ### DDD building blocks
 
-![](img/ddd-building-blocs.png) 
+![](img/ddd-building-blocks.png) 
