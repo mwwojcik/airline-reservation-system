@@ -16,11 +16,15 @@ public interface ReservationRepository {
     void  save(RegisteredReservation reservation);
     void  save(HoldedReservation reservation);
     void save(ConfirmedReservation confirmed);
+    void save(ConfirmedAfterRescheduling confirmed);
     List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId);
     Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId);
+
     int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth);
 
     int countCurrentlyHolded();
+
+    void save(RescheduledReservation rescheduled);
 
     /*void holdOn(HoldOnReservationCommand command);
 

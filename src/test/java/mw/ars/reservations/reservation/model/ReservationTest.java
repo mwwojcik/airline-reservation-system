@@ -142,7 +142,7 @@ class ReservationTest {
     var anyPrice=Money.of(10,"USD");
     var anyFlight= FlightId.of(UUID.randomUUID());
     // when
-    var res = confirmed.reschedule(confirmed,1,anyFlight,anySeat,anyDepartureDate,anyPrice);
+    var res = confirmed.reschedule(1);
     // then
     Assertions.assertThat(res.isSuccess()).isEqualTo(true);
     Assertions.assertThat(res.returned()).isExactlyInstanceOf(RescheduledReservation.class);
@@ -158,7 +158,7 @@ class ReservationTest {
     var anyPrice=Money.of(10,"USD");
     var anyFlight= FlightId.of(UUID.randomUUID());
     // when
-    var res = confirmed.reschedule(confirmed,3,anyFlight,anySeat,anyDepartureDate,anyPrice);
+    var res = confirmed.reschedule(3);
     // then
     Assertions.assertThat(res.isSuccess()).isEqualTo(false);
   }

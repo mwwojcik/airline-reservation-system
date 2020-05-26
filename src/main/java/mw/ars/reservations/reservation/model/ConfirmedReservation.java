@@ -3,10 +3,9 @@ package mw.ars.reservations.reservation.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import mw.ars.commons.model.FlightId;
-import mw.ars.commons.model.Result;
 import mw.ars.commons.model.ReservationId;
+import mw.ars.commons.model.Result;
 import mw.ars.commons.model.SeatNumber;
-import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
 
@@ -14,8 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ConfirmedReservation implements IdentifiedReservation {
   @Getter private final ReservationId id;
-  @Getter private final Status status;
-
+  @Getter private Status status;
 
   private ConfirmedReservation(ReservationId id) {
     this.id = id;
@@ -34,21 +32,11 @@ public class ConfirmedReservation implements IdentifiedReservation {
     return new ConfirmedReservation(reservationId);
   }
 
-    public Result reschedule(
-      ConfirmedReservation confirmed,
-      int rescheduled,
-      FlightId newFlightId,
-      SeatNumber newSeatNumber,
-      LocalDateTime newDepartureDate,
-      Money newPrice) {
-
-    return RescheduledReservation.create(
-        this, rescheduled, newFlightId, newSeatNumber, newDepartureDate, newPrice);
+ public Result reschedule(int rescheduledSoFar) {
+    return RescheduledReservation.create(this,rescheduledSoFar);
   }
 
   public Result cancel() {
     return CancelledReservation.create(this);
   }
-
-
 }

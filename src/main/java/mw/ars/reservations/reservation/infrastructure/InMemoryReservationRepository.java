@@ -37,6 +37,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
     }
 
     @Override
+    public void save(ConfirmedAfterRescheduling confirmed) {
+
+    }
+
+    @Override
     public List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId) {
         return List.of();
     }
@@ -54,6 +59,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
     @Override
     public int countCurrentlyHolded() {
         return 0;
+    }
+
+    @Override
+    public void save(RescheduledReservation rescheduled) {
+
     }
 
 

@@ -1,5 +1,6 @@
 package mw.ars.reservations.reservation.common.dto;
 
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.FlightId;
@@ -7,6 +8,7 @@ import mw.ars.commons.model.ReservationId;
 
 
 @Value
+
 public class ReservationDTO {
     private ReservationId reservationId;
     private StatusDTO status;

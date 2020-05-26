@@ -2,14 +2,8 @@ package mw.ars.reservations.reservation.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import mw.ars.commons.model.FlightId;
-import mw.ars.commons.model.Result;
 import mw.ars.commons.model.ReservationId;
-import mw.ars.commons.model.SeatNumber;
-import org.javamoney.moneta.Money;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
+import mw.ars.commons.model.Result;
 
 @AllArgsConstructor
 @Getter
@@ -17,50 +11,25 @@ public class RescheduledReservation implements IdentifiedReservation {
   private static final int TWO_WEEKS_DAYS = 14;
   @Getter private final ReservationId id;
   @Getter private final Status status;
-  private final ReservationId originalReservationId;
-  private final SeatNumber seat;
-  private final Money price;
-  private final LocalDateTime departureDate;
-  private final RescheduledSoFar rescheduledSoFar;
-  private final FlightId flightId;
 
-  private RescheduledReservation(Builder builder) {
-    this.id = ReservationId.of(UUID.randomUUID());
-    this.status = Status.CONFIRMED;
-    this.originalReservationId = builder.originalReservationId;
-    this.seat = builder.seat;
-    this.price = builder.price;
-    this.departureDate = builder.departureDate;
-    this.rescheduledSoFar = builder.rescheduledSoFar;
-    this.flightId = builder.flightId;
+  private RescheduledReservation(ReservationId id) {
+    this.id = id;
+    this.status = Status.RESCHEDULED;
   }
 
-  public static Result create(
-      ConfirmedReservation confirmed,
-      int rescheduled,
-      FlightId newFlightId,
-      SeatNumber newSeatNumber,
-      LocalDateTime newDepartureDate,
-      Money newPrice) {
+  public static Result create(ConfirmedReservation confirmed, int rescheduled) {
 
     var rescheduledSoFar = RescheduledSoFar.of(rescheduled);
 
     if (rescheduledSoFar.limitReached()) {
       return Result.failure();
     }
-
-    rescheduledSoFar.add();
-
-    return Result.successWithReturn(
-        new Builder()
-            .departureDate(newDepartureDate)
-            .originalReservationId(confirmed.getId())
-            .seat(newSeatNumber)
-            .flightId(newFlightId)
-            .price(newPrice)
-            .build());
+    return Result.successWithReturn(new RescheduledReservation(confirmed.getId()));
   }
-  // BLUE CARD
+
+  public static RescheduledReservation of(ReservationId reservationId) {
+    return new RescheduledReservation(reservationId);
+  }
 
   @AllArgsConstructor
   public static class RescheduledSoFar {
@@ -74,78 +43,6 @@ public class RescheduledReservation implements IdentifiedReservation {
 
     boolean limitReached() {
       return rescheduledSoFar == RESCHEDULING_LIMIT;
-    }
-
-    void add() {
-      rescheduledSoFar++;
-    }
-  }
-
-  /** Builder for instances of type {@link RescheduledReservation} */
-  public static final class Builder {
-    private FlightId flightId;
-    private ReservationId originalReservationId;
-    private SeatNumber seat;
-    private Money price;
-    private LocalDateTime departureDate;
-    private RescheduledSoFar rescheduledSoFar;
-
-    /**
-     * Set the value of the field status of the target instance of type {@link
-     * RescheduledReservation}
-     */
-    public Builder flightId(final FlightId flighId) {
-      this.flightId = flighId;
-      return this;
-    }
-
-    /**
-     * Set the value of the field originalReservationId of the target instance of type {@link
-     * RescheduledReservation}
-     */
-    public Builder originalReservationId(final ReservationId originalReservationId) {
-      this.originalReservationId = originalReservationId;
-      return this;
-    }
-
-    /**
-     * Set the value of the field seat of the target instance of type {@link RescheduledReservation}
-     */
-    public Builder seat(final SeatNumber seat) {
-      this.seat = seat;
-      return this;
-    }
-
-    /**
-     * Set the value of the field price of the target instance of type {@link
-     * RescheduledReservation}
-     */
-    public Builder price(final Money price) {
-      this.price = price;
-      return this;
-    }
-
-    /**
-     * Set the value of the field departureDate of the target instance of type {@link
-     * RescheduledReservation}
-     */
-    public Builder departureDate(final LocalDateTime departureDate) {
-      this.departureDate = departureDate;
-      return this;
-    }
-
-    /**
-     * Set the value of the field rescheduledSoFar of the target instance of type {@link
-     * RescheduledReservation}
-     */
-    public Builder rescheduledSoFar(final RescheduledSoFar rescheduledSoFar) {
-      this.rescheduledSoFar = rescheduledSoFar;
-      return this;
-    }
-
-    /** Create a new instance of type {@link RescheduledReservation} */
-    public RescheduledReservation build() {
-      return new RescheduledReservation(this);
     }
   }
 }

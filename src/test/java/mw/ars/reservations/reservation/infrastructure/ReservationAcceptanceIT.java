@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /** Acceptance test - full infractructure stack - without WEB API. Tested is flow via Fasade */
@@ -55,24 +56,29 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
 
-    /*
 
-    var newFlightId = FligtId.of(UUID.randomUUID());
+    var newFlightId = FlightId.of(UUID.randomUUID());
     var newSeatId = SeatNumber.of(11);
     var newDepartureTime = LocalDateTime.now().plusDays(15);
-    var resheduledId =
-        reservationFacade.reschedule(
-            RescheduleCommand.of(resId, newFlightId, newSeatId, newDepartureTime));
+    var newConfirmedAfterRescheduling =
+            reservationFacade.reschedule(
+                    RescheduleCommand.of(resId,customerId, newFlightId, newSeatId, newDepartureTime));
 
-    res = Optional.empty();
-    res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isRescheduled()).isTrue();
+    result.clear();
+    result=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, flightId)));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isRescheduled()).isTrue();
 
-    res = Optional.empty();
-    res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+    result.clear();
+    result=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
+    Assertions.assertThat(result.get(0).getReservationId().equals(newConfirmedAfterRescheduling));
+
+
+    /*
+
+
 
     reservationFacade.cancel(CancelByResrvationId.of(resheduledId));
     res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
