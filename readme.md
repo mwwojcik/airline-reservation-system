@@ -894,4 +894,9 @@ public class DefaultReservationFacade implements ReservationFacade {
 }
 ```
 
-The test should be successful after implementing the application and domain functions. 
+The test should be successful after implementing the application and domain functions.
+
+
+### DDD building blocks
+
+![](img/ddd-building-blocs.png) 
