@@ -899,4 +899,10 @@ The test should be successful after implementing the application and domain func
 
 ### DDD building blocks
 
-![](img/ddd-building-blocks.png) 
+![](img/ddd-building-blocks.png)
+
+
+
+<a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/building-blocks-flow.png" target="_blank">Show picture
+</a>
+![](img/building-blocks-flow.png)  
