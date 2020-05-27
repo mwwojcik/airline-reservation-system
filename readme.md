@@ -927,3 +927,4 @@ Next to each block is a snippet showing an example of how to implement it.
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/building-blocks-flow.png" target="_blank">Show picture
 </a>
 ![](img/building-blocks-flow.png)  
+
