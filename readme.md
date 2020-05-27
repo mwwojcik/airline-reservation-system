@@ -922,6 +922,8 @@ Each of the building blocks has a their own specific responsibility. It performs
 The next graphic shows how the main building blocks cooperate together to realize an example use case - reservation holding. 
 Shows typical data flow - from the REST controller to the database. 
 
+Next to each block is a snippet showing an example of how to implement it.
+
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/building-blocks-flow.png" target="_blank">Show picture
 </a>
 ![](img/building-blocks-flow.png)  
