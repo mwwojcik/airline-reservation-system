@@ -903,7 +903,13 @@ The test should be successful after implementing the application and domain func
 
 ### DDD building blocks
 
-TBD...
+Structural elements used in the context of DDD can be divided into three groups : 
+
+* **Behavioral** - these are the basic elements that define ubiquitous language such as commands, events, aggregates. Their main task is to determine what
+ the system does and how it communicates with the environment . 
+* **Structural** - these are the elements that make up the model of our system. These elements have precisely defined semantic meaning. They are an important
+ part of the ubiquitous language.
+* **Lifecycle** - these are technical elements that are not part of the ubiquitous language. Support the creation and management of structural elements. 
 
 ![](img/ddd-building-blocks.png)
 
