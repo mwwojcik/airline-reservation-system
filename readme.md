@@ -901,7 +901,7 @@ public class DefaultReservationFacade implements ReservationFacade {
 The test should be successful after implementing the application and domain functions.
 
 
-### DDD building blocks
+### DDD Building Blocks
 
 Structural elements used in the context of DDD can be divided into three groups : 
 
@@ -913,8 +913,10 @@ Structural elements used in the context of DDD can be divided into three groups 
 
 ![](img/ddd-building-blocks.png)
 
+Each of the building blocks has a their own specific responsibility. It performs its tasks and cooperates with other elements in a strictly defined manner. 
 
-TBD...
+The next graphic shows how the main building blocks cooperate together to realize an example use case - reservation holding. 
+Shows typical data flow - from the REST controller to the database. Next to each block there are references to its representation in the code.
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/building-blocks-flow.png" target="_blank">Show picture
 </a>
