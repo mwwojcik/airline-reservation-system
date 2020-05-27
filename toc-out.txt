@@ -26,3 +26,5 @@
   - [Non-functional requirements](#non-functional-requirements)
   - [Application services](#application-services)
   - [Spring Boot Configuration](#spring-boot-configuration)
+    - [From test to implementation](#from-test-to-implementation)
+  - [DDD building blocks](#ddd-building-blocks)

@@ -1,4 +1,6 @@
 ## Table of contents
+
+
 - [Intro](#intro)
 - [Domain description](#domain-description)
 - [Domain exploration](#domain-exploration)
@@ -26,6 +28,8 @@
   - [Non-functional requirements](#non-functional-requirements)
   - [Application services](#application-services)
   - [Spring Boot Configuration](#spring-boot-configuration)
+    - [From test to implementation](#from-test-to-implementation)
+  - [DDD building blocks](#ddd-building-blocks)
 
 
 ## Intro
@@ -899,9 +903,12 @@ The test should be successful after implementing the application and domain func
 
 ### DDD building blocks
 
+TBD...
+
 ![](img/ddd-building-blocks.png)
 
 
+TBD...
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/building-blocks-flow.png" target="_blank">Show picture
 </a>
