@@ -913,10 +913,14 @@ Structural elements used in the context of DDD can be divided into three groups 
 
 ![](img/ddd-building-blocks.png)
 
+DDD Building Blocks do not have technical characteristics, they can be used in communication between business and technical teams. They are a tool enabling
+ quick feedback from business. Allow you to postpone architectural decisions, because they are an abstraction, and can be mapped in code in many
+  ways.
+
 Each of the building blocks has a their own specific responsibility. It performs its tasks and cooperates with other elements in a strictly defined manner. 
 
 The next graphic shows how the main building blocks cooperate together to realize an example use case - reservation holding. 
-Shows typical data flow - from the REST controller to the database. Next to each block there are references to its representation in the code.
+Shows typical data flow - from the REST controller to the database. 
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/building-blocks-flow.png" target="_blank">Show picture
 </a>
