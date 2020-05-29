@@ -75,6 +75,15 @@ public class DefaultReservationRepository implements ReservationRepository {
     repositoryDB.save(entity);
   }
 
+  @Override
+  public void save(CancelledReservation reservation) {
+    var entity =
+            repositoryDB
+                    .findById(reservation.getId().getId())
+                    .orElseThrow(() -> new IllegalStateException("Entity not found!"));
+    entity.merge(reservation);
+    repositoryDB.save(entity);
+  }
 
 
   @Override

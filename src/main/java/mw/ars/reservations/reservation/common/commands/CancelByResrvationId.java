@@ -1,7 +1,9 @@
 package mw.ars.reservations.reservation.common.commands;
 
+import lombok.Value;
 import mw.ars.commons.model.ReservationId;
 
+@Value
 public class CancelByResrvationId{
     private ReservationId reservationId;
 

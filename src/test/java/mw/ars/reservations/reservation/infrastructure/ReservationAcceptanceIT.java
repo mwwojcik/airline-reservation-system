@@ -75,14 +75,11 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
     Assertions.assertThat(result.get(0).getReservationId().equals(newConfirmedAfterRescheduling));
 
-
-    /*
-
-
-
-    reservationFacade.cancel(CancelByResrvationId.of(resheduledId));
-    res = reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isCancelled()).isTrue();*/
+    result.clear();
+    result=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    reservationFacade.cancel(CancelByResrvationId.of(result.get(0).getReservationId()));
+    var cancelled=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    Assertions.assertThat(cancelled.isEmpty()).isFalse();
+    Assertions.assertThat(cancelled.get(0).isCancelled()).isTrue();
   }
 }

@@ -37,6 +37,21 @@ public class HoldedReservation implements IdentifiedReservation {
     return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
   }
 
+  public static HoldedReservation of(ReservationId reservationId) {
+    return new HoldedReservation(reservationId,Status.HOLDED);
+  }
+
+  public Result cancel() {
+    return CancelledReservation.create(this);
+  }
+
+
+  public Result confirm() {
+    return ConfirmedReservation.create(this);
+  }
+
+
+
   @AllArgsConstructor
   public static class CurrentlyHolded {
     private static final int HOLDED_RESERVATION_LIMIT = 3;

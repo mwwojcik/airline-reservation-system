@@ -112,8 +112,14 @@ public class ReservationEntity {
     this.status = reservation.getStatus().name();
   }
 
+
+
   public void merge(RescheduledReservation reservation) {
     this.status = reservation.getStatus().name();
+  }
+
+  public void merge(CancelledReservation reservation) {
+    this.status=reservation.getStatus().name();
   }
 
   public IdentifiedReservation toDomain() {

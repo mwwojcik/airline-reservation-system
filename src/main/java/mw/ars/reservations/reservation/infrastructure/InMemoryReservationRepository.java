@@ -66,6 +66,11 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     }
 
+    @Override
+    public void save(CancelledReservation reservation) {
+
+    }
+
 
 
 

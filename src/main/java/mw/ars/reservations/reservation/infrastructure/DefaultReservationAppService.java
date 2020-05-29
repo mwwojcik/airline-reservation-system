@@ -87,5 +87,10 @@ public class DefaultReservationAppService implements ReservationAppService {
   }
 
   @Override
-  public void cancel(CancelByResrvationId command) {}
+  public void cancel(CancelByResrvationId command) {
+    var reservation = repo.findByReservationId(command.getReservationId()).orElseThrow();
+    var res=CancelReservationDomainService.cancel(reservation);
+    repo.save(res);
+
+  }
 }

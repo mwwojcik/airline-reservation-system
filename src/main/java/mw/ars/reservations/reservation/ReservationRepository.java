@@ -26,6 +26,10 @@ public interface ReservationRepository {
 
     void save(RescheduledReservation rescheduled);
 
+    void save(CancelledReservation reservation);
+
+
+
     /*void holdOn(HoldOnReservationCommand command);
 
 
