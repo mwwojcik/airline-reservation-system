@@ -40,7 +40,7 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.get(0).isNew()).isTrue();
 
     var withSeat = SeatNumber.of(10);
-    reservationFacade.register(RegistrationCommand.of(resId, withSeat));
+    reservationFacade.register(RegistrationCommand.of(resId,flightId,LocalDateTime.now().plusDays(30),withSeat));
     result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isRegistered()).isTrue();
