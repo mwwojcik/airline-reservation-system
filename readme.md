@@ -936,6 +936,8 @@ There are five basic HTTP methods:
 * *PUT* - modifies the resource
 * *OPTIONS* - gets additional informations about resource
 
+___
+
 #### *GET* - It's save and idempotent method. 
 
 * GET requests can be cached
@@ -975,6 +977,8 @@ ___
 #### *DELETE* - It's unsave but idempotent method. 
 
 **Standard RESPONSE: No Content (204)** 
+
+___
 
 #### HTTP codes
 
