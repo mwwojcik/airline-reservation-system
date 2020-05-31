@@ -928,3 +928,22 @@ Next to each block is a snippet showing an example of how to implement it.
 </a>
 ![](img/building-blocks-flow.png)  
 
+### Rest API
+
+There are five basic HTTP methods:
+* *GET* - returns resource
+* *POST* - creates resource
+* *PUT* - modifies the resource
+* *OPTIONS* - gets additional informations about resource
+
+#### *GET* - It's save and idempotent method. 
+
+* GET requests can be cached
+* GET requests remain in the browser history
+* GET requests can be bookmarked
+* GET requests should never be used when dealing with sensitive data
+* GET requests have length restrictions
+* GET requests are only used to request data (not modify)
+[source](https://www.w3schools.com/tags/ref_httpmethods.asp)
+
+**Standard RESPONSE: OK(200) + Body**
