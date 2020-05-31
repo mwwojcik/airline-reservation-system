@@ -22,25 +22,32 @@ class ReservationController {
   }
 
   @GetMapping
-  public List<ReservationDTO> findByFlightId() {
+  public List<ReservationDTO> findByFlightId(UUID customerId, UUID flightId) {
     // FindByFlightIdCommand command;
+    var command = FindByFlightIdCommand.of(CustomerId.of(customerId), FlightId.of(flightId));
+
+    fasade.findByFlightId(command);
+
     return null;
   }
 
   @PostMapping("/{id}/create")
   public ReservationId create(UUID customerId, UUID flightId) {
     var command = CreateReservationCommand.of(CustomerId.of(customerId), FlightId.of(flightId));
+    fasade.create(command);
     return null;
   }
 
   @PutMapping("/{id}/hold")
   public void holdOn(UUID reservationId) {
     var command = HoldOnReservationCommand.of(ReservationId.of(reservationId));
+    fasade.holdOn(command);
   }
 
   @PutMapping("/{id}/confirm")
   public void confirm(UUID reservationId) {
     var command = ConfirmationCommand.of(ReservationId.of(reservationId));
+    fasade.confirm(command);
   }
 
   @PutMapping("/{id}/register")
@@ -52,6 +59,7 @@ class ReservationController {
             FlightId.of(flightId),
             departureTime,
             SeatNumber.of(withSeat));
+    fasade.register(command);
   }
 
   @PostMapping("/{id}/reschedule")
@@ -68,11 +76,15 @@ class ReservationController {
             FlightId.of(newFlightId),
             SeatNumber.of(newSeatNumber),
             newDepartureTime);
+
+    fasade.reschedule(command);
     return null;
   }
 
   @DeleteMapping("/{id}/cancel")
   public void cancel(UUID reservationId) {
     var command = CancelByResrvationId.of(ReservationId.of(reservationId));
+    fasade.cancel(command);
+    
   }
 }
