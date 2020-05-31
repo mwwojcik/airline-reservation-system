@@ -944,6 +944,27 @@ There are five basic HTTP methods:
 * GET requests should never be used when dealing with sensitive data
 * GET requests have length restrictions
 * GET requests are only used to request data (not modify)
-[source](https://www.w3schools.com/tags/ref_httpmethods.asp)
+
+[Source: HTTP Request Methods](https://www.w3schools.com/tags/ref_httpmethods.asp)
 
 **Standard RESPONSE: OK(200) + Body**
+
+#### *POST* - It's unsave and not idempotent method. 
+
+* POST requests are never cached
+* POST requests do not remain in the browser history
+* POST requests cannot be bookmarked
+* POST requests have no restrictions on data length
+
+[Source: HTTP Request Methods](https://www.w3schools.com/tags/ref_httpmethods.asp)
+
+**Standard RESPONSE: CREATED(201) + New Resource Location (Header)+Body with resource (opt)**
+
+#### *PUT* - It's unsave but idempotent method. 
+
+**Standard RESPONSE: Accepted(202) or No Content (204)** 
+
+#### *DELETE* - It's unsave but idempotent method. 
+
+**Standard RESPONSE: No Content (204)** 
+
