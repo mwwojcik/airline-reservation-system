@@ -949,6 +949,8 @@ There are five basic HTTP methods:
 
 **Standard RESPONSE: OK(200) + Body**
 
+___
+
 #### *POST* - It's unsave and not idempotent method. 
 
 * POST requests are never cached
@@ -960,17 +962,21 @@ There are five basic HTTP methods:
 
 **Standard RESPONSE: CREATED(201) + New Resource Location (Header)+Body with resource (opt)**
 
+___
+
 #### *PUT* - It's unsave but idempotent method. 
 
 **Standard RESPONSE: Accepted(202) or No Content (204)** 
 
 *No Content 204 - resource found, changed, but not returned!*
 
+___
+
 #### *DELETE* - It's unsave but idempotent method. 
 
 **Standard RESPONSE: No Content (204)** 
 
-#### HTTP codes:
+#### HTTP codes
 
 1. 2xx – success
 2. 3xx – I don't know, ask someone else ...
