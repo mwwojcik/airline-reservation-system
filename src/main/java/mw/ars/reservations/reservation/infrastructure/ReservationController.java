@@ -7,8 +7,11 @@ import mw.ars.commons.model.SeatNumber;
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -21,38 +24,54 @@ class ReservationController {
     this.fasade = fasade;
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<ReservationDTO> findDetailsByReservationId(
+      @PathVariable("id") UUID reservationId) {
+    return fasade
+        .findDetailsByReservationId(ReservationId.of(reservationId))
+        .map(it -> ResponseEntity.status(HttpStatus.OK).body(it))
+        .orElse(ResponseEntity.notFound().build());
+  }
+
   @GetMapping
-  public List<ReservationDTO> findByFlightId(UUID customerId, UUID flightId) {
+  public ResponseEntity<List<ReservationDTO>> findByFlightId(
+      @RequestParam("customerId") UUID customerId, @RequestParam("flightId") UUID flightId) {
     // FindByFlightIdCommand command;
     var command = FindByFlightIdCommand.of(CustomerId.of(customerId), FlightId.of(flightId));
-
-    fasade.findByFlightId(command);
-
-    return null;
+    var result = fasade.findByFlightId(command);
+    // status OK with result
+    return ResponseEntity.status(HttpStatus.OK).body(result);
   }
 
   @PostMapping("/{id}/create")
-  public ReservationId create(UUID customerId, UUID flightId) {
+  public ResponseEntity<?> create(
+      @RequestParam("customerId") UUID customerId, @RequestParam("flightId") UUID flightId) {
     var command = CreateReservationCommand.of(CustomerId.of(customerId), FlightId.of(flightId));
-    fasade.create(command);
-    return null;
+    var reservationId = fasade.create(command);
+    var uri = "/api/reservations/%s".format(reservationId.getId().toString());
+    return ResponseEntity.created(URI.create(uri)).build();
   }
 
   @PutMapping("/{id}/hold")
-  public void holdOn(UUID reservationId) {
+  public ResponseEntity holdOn(@PathVariable("id") UUID reservationId) {
     var command = HoldOnReservationCommand.of(ReservationId.of(reservationId));
     fasade.holdOn(command);
+    return ResponseEntity.ok().build();
   }
 
   @PutMapping("/{id}/confirm")
-  public void confirm(UUID reservationId) {
+  public ResponseEntity confirm(@PathVariable("id") UUID reservationId) {
     var command = ConfirmationCommand.of(ReservationId.of(reservationId));
     fasade.confirm(command);
+    return ResponseEntity.ok().build();
   }
 
   @PutMapping("/{id}/register")
-  public void register(
-      UUID reservationId, int withSeat, UUID flightId, LocalDateTime departureTime) {
+  public ResponseEntity register(
+      @PathVariable("id") UUID reservationId,
+      @RequestParam("withSeat") int withSeat,
+      @RequestParam("flightId") UUID flightId,
+      @RequestParam("departureTime") LocalDateTime departureTime) {
     var command =
         RegistrationCommand.of(
             ReservationId.of(reservationId),
@@ -60,15 +79,16 @@ class ReservationController {
             departureTime,
             SeatNumber.of(withSeat));
     fasade.register(command);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/{id}/reschedule")
-  public ReservationId reschedule(
-      UUID originalReservationId,
-      UUID customerId,
-      UUID newFlightId,
-      int newSeatNumber,
-      LocalDateTime newDepartureTime) {
+  public ResponseEntity<?> reschedule(
+      @PathVariable("id") UUID originalReservationId,
+      @RequestParam("customerId") UUID customerId,
+      @RequestParam("newFlightId") UUID newFlightId,
+      @RequestParam("newSeatNumber") int newSeatNumber,
+      @RequestParam("newDepartureTime") LocalDateTime newDepartureTime) {
     var command =
         RescheduleCommand.of(
             ReservationId.of(originalReservationId),
@@ -77,14 +97,15 @@ class ReservationController {
             SeatNumber.of(newSeatNumber),
             newDepartureTime);
 
-    fasade.reschedule(command);
-    return null;
+    var result = fasade.reschedule(command);
+    var uri = "/api/reservations/%s".format(result.getId().toString());
+    return ResponseEntity.created(URI.create(uri)).build();
   }
 
   @DeleteMapping("/{id}/cancel")
-  public void cancel(UUID reservationId) {
+  public ResponseEntity cancel(@PathVariable("id") UUID reservationId) {
     var command = CancelByResrvationId.of(ReservationId.of(reservationId));
     fasade.cancel(command);
-    
+    return ResponseEntity.ok().build();
   }
 }

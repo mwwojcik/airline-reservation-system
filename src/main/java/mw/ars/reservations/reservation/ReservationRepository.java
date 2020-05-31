@@ -20,6 +20,8 @@ public interface ReservationRepository {
     List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId);
     Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId);
 
+    Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId);
+
     int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth);
 
     int countCurrentlyHolded();

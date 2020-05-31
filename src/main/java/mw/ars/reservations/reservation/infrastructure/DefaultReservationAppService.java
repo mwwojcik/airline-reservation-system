@@ -11,6 +11,7 @@ import mw.ars.sales.flights.FlightsFacade;
 import org.javamoney.moneta.Money;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DefaultReservationAppService implements ReservationAppService {
 
@@ -25,6 +26,11 @@ public class DefaultReservationAppService implements ReservationAppService {
   @Override
   public List<ReservationDTO> findByFlightId(FindByFlightIdCommand command) {
     return repo.findByFlightId(command.getCustomerId(), command.getFlightId());
+  }
+
+  @Override
+  public Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId){
+    return repo.findDetailsByReservationId(reservationId);
   }
 
   @Override

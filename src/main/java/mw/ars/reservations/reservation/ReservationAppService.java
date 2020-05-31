@@ -5,8 +5,11 @@ import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.commons.model.ReservationId;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationAppService {
+    Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId);
+
     ReservationId create(CreateReservationCommand command);
 
     List<ReservationDTO> findByFlightId(FindByFlightIdCommand command);

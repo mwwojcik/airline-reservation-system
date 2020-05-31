@@ -102,6 +102,15 @@ public class DefaultReservationRepository implements ReservationRepository {
   }
 
   @Override
+  public Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId) {
+    var result = repositoryDB.findById(reservationId.getId());
+    if (result.isEmpty()) {
+      return Optional.empty();
+    }
+    return result.map(ReservationEntity::toDTO);
+  }
+
+  @Override
   public int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth) {
     return repositoryDB.findByCreatedDateGreaterThan(firstDateOfCurrentMonth).size();
   }
