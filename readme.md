@@ -928,7 +928,7 @@ Next to each block is a snippet showing an example of how to implement it.
 </a>
 ![](img/building-blocks-flow.png)  
 
-### Rest API
+### Rest API Methods
 
 There are five basic HTTP methods:
 * *GET* - returns resource
@@ -964,7 +964,37 @@ There are five basic HTTP methods:
 
 **Standard RESPONSE: Accepted(202) or No Content (204)** 
 
+*No Content 204 - resource found, changed, but not returned!*
+
 #### *DELETE* - It's unsave but idempotent method. 
 
 **Standard RESPONSE: No Content (204)** 
 
+#### HTTP codes:
+
+1. 2xx – success
+2. 3xx – I don't know, ask someone else ...
+3. 4xx – client error
+4. 5xx - server error
+
+* 200 OK - full success - response must have Response Body
+* 201 Created - resource was created
+* 202 Accepted - accepted for processing, the result is not yet available
+* 204 No Content - everything is OK, but there is no content returned, there is no Response Body
+
+* 301 Moved Permanently - this response may be CACHED!
+* 304 Not Modified – cache standard response
+* 307 Temporary Redirect – adress was changed - your resource can be found here...  
+
+* 400 Bad Request
+* 401 Unauthorized – the user must resend the authorization data
+* 403 Forbidden 
+* 404 Not Found 
+* 405 Method Not Allowed 
+* 409 Conflict 
+* 410 Gone
+* 415 Unsupported Media Type 
+
+* 500 Internal Server Error
+* 503 Service Unavailable 
+* 504 Gateway Timeout 
