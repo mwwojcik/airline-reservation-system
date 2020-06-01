@@ -2,7 +2,9 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.testapp.ReservationTestApplication;
+import mw.ars.reservations.reservation.infrastructure.inmemorydb.ReservationInMemoryTestApplication;
+import mw.ars.reservations.reservation.model.ReservationFixture;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,18 +13,55 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = {ReservationTestApplication.class, ReservationController.class})
+@SpringBootTest(classes = {ReservationInMemoryTestApplication.class, ReservationController.class})
 @AutoConfigureMockMvc
 class ReservationControllerTest {
   @Autowired private MockMvc mockMvc;
   @MockBean private ReservationFacade reservationFacade;
+
+  @DisplayName("GET on /api/reservations/{Id} then reservation is returned")
+  @Test
+  void getOnApiReservationsIdThenReservationIsReturned() throws Exception {
+    // given
+    Mockito.when(reservationFacade.findDetailsByReservationId(Mockito.any()))
+        .thenReturn(Optional.of(ReservationFixture.dto()));
+    // when
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.get(String.format("/api/reservations/%s", UUID.randomUUID()))
+            // then
+            )
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.reservationId", Matchers.notNullValue()));
+  }
+
+  @DisplayName("GET on /api/reservations with given customerId and flightId")
+  @Test
+  void getOnApiReservationsWithGivenCustomerIdAndFlightId() throws Exception {
+    // given
+    Mockito.when(reservationFacade.findByFlightId(Mockito.any()))
+        .thenReturn(List.of(ReservationFixture.dto(), ReservationFixture.dto()));
+    // when
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.get("/api/reservations")
+                .param("customerId", UUID.randomUUID().toString())
+                .param("flightId", UUID.randomUUID().toString())
+            // then
+            )
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)));
+  }
 
   @DisplayName("POST on /api/reservations then Reservation is created")
   @Test
@@ -32,19 +71,25 @@ class ReservationControllerTest {
     // when
     mockMvc
         .perform(
-            post("/api/reservations/create")
+            MockMvcRequestBuilders.post("/api/reservations/create")
                 .param("customerId", UUID.randomUUID().toString())
                 .param("flightId", UUID.randomUUID().toString()))
-        .andExpect(status().isCreated());
+        .andExpect(MockMvcResultMatchers.status().isCreated());
+  }
+
+  @DisplayName("PUT on /api/reservations/{id}/hold should hold the Reservation")
+  @Test
+  void putOnApiReservationsIdHoldShouldHoldTheReservation() throws Exception {
+    // given
+    Mockito.doNothing().when(reservationFacade).holdOn(Mockito.any());
+    // when
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(
+                String.format("/api/reservations/%s/hold", UUID.randomUUID().toString())))
+        .andExpect(MockMvcResultMatchers.status().isAccepted());
   }
 }
-
-
-
-
-
-
-
 
 /*
 package it.stacja.springworkshop;

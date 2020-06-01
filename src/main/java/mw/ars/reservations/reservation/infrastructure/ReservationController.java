@@ -9,6 +9,7 @@ import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,44 +31,44 @@ public class ReservationController {
 
  @GetMapping("/{id}")
   public ResponseEntity<ReservationDTO> findDetailsByReservationId(
-      @PathVariable("id") String reservationId) {
+      @PathVariable("id") UUID reservationId) {
     return fasade
-        .findDetailsByReservationId(ReservationId.of(UUID.fromString(reservationId)))
-        .map(it -> ResponseEntity.status(HttpStatus.OK).body(it))
+        .findDetailsByReservationId(ReservationId.of(reservationId))
+        .map(it -> ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(it))
         .orElse(ResponseEntity.notFound().build());
   }
 
   @GetMapping
   public ResponseEntity<List<ReservationDTO>> findByFlightId(
-      @RequestParam("customerId") String customerId, @RequestParam("flightId") String flightId) {
+      @RequestParam("customerId") UUID customerId, @RequestParam("flightId") UUID flightId) {
     // FindByFlightIdCommand command;
-    var command = FindByFlightIdCommand.of(CustomerId.of(UUID.fromString(customerId)), FlightId.of(UUID.fromString(flightId)));
+    var command = FindByFlightIdCommand.of(CustomerId.of(customerId), FlightId.of(flightId));
     var result = fasade.findByFlightId(command);
     // status OK with result
-    return ResponseEntity.status(HttpStatus.OK).body(result);
+    return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(result);
   }
 
   @PostMapping("/create")
   public ResponseEntity<?> create(
-      @RequestParam("customerId") String customerId, @RequestParam("flightId") String flightId) {
-    var command = CreateReservationCommand.of(CustomerId.of(UUID.fromString(customerId)), FlightId.of(UUID.fromString(flightId)));
+      @RequestParam("customerId") UUID customerId, @RequestParam("flightId") UUID flightId) {
+    var command = CreateReservationCommand.of(CustomerId.of(customerId), FlightId.of(flightId));
     var reservationId = fasade.create(command);
     var uri = "/api/reservations/%s".format(reservationId.getId().toString());
     return ResponseEntity.created(URI.create(uri)).build();
   }
 
   @PutMapping("/{id}/hold")
-  public ResponseEntity holdOn(@PathVariable("id") String reservationId) {
-    var command = HoldOnReservationCommand.of(ReservationId.of(UUID.fromString(reservationId)));
+  public ResponseEntity holdOn(@PathVariable("id") UUID reservationId) {
+    var command = HoldOnReservationCommand.of(ReservationId.of(reservationId));
     fasade.holdOn(command);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.accepted().build();
   }
 
   @PutMapping("/{id}/confirm")
   public ResponseEntity confirm(@PathVariable("id") String reservationId) {
     var command = ConfirmationCommand.of(ReservationId.of(UUID.fromString(reservationId)));
     fasade.confirm(command);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.accepted().build();
   }
 
   @PutMapping("/{id}/register")
@@ -83,7 +84,7 @@ public class ReservationController {
             departureTime,
             SeatNumber.of(withSeat));
     fasade.register(command);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.accepted().build();
   }
 
   @PostMapping("/{id}/reschedule")
@@ -110,6 +111,6 @@ public class ReservationController {
   public ResponseEntity cancel(@PathVariable("id") String reservationId) {
     var command = CancelByResrvationId.of(ReservationId.of(UUID.fromString(reservationId)));
     fasade.cancel(command);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }

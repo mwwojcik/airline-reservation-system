@@ -1,4 +1,4 @@
-package mw.ars.reservations.reservation.infrastructure.testapp;
+package mw.ars.reservations.reservation.infrastructure.inmemorydb;
 
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
@@ -16,7 +16,7 @@ import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoCo
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
-@Profile("inmemory")
+
 @EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class,
         MongoRepositoriesAutoConfiguration.class
         , MongoDataAutoConfiguration.class
