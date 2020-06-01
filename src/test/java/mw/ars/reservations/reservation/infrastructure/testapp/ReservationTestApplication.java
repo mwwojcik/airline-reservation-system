@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+
+@SpringBootApplication(scanBasePackages = "mw.ars.reservations.reservation.infrastructure")
 @Import({ReservationLocalMongoDBConfiguration.class,ReservationInMemoryTestConfiguration.class})
 public class ReservationTestApplication {
     public static void main(String[] args) {

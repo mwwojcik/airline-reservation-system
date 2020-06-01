@@ -2,7 +2,10 @@ package mw.ars.reservations.reservation.model;
 
 import mw.ars.commons.model.CustomerId;
 import mw.ars.commons.model.FlightId;
+import mw.ars.commons.model.ReservationId;
 import mw.ars.commons.model.SeatNumber;
+import mw.ars.reservations.reservation.common.dto.ReservationDTO;
+import mw.ars.reservations.reservation.common.dto.StatusDTO;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
@@ -40,6 +43,10 @@ public class ReservationFixture {
     var registeredReservation = registeredWithDepartureDayForOneWeek();
     return (ConfirmedReservation)registeredReservation.confirm().returned();
    }
+
+    public static ReservationDTO dto() {
+      return ReservationDTO.create(ReservationId.of(UUID.randomUUID()), StatusDTO.NEW,CustomerId.of(UUID.randomUUID()),FlightId.of(UUID.randomUUID()));
+    }
 
 
 

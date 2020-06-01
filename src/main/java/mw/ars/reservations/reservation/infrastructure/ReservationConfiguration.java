@@ -2,9 +2,9 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import mw.ars.reservations.reservation.ReservationAppService;
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
-import mw.ars.reservations.reservation.ReservationAppService;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.sales.flights.FlightsFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,15 @@ public class ReservationConfiguration {
   }
 
   @Bean
-  public ReservationAppService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
-    return new DefaultReservationAppService(repo,flightsFacade);
+  public ReservationAppService createService(
+      ReservationRepository repo, FlightsFacade flightsFacade) {
+    return new DefaultReservationAppService(repo, flightsFacade);
   }
+
+ /* @Bean
+  public ReservationController controller(ReservationFacade facade) {
+    return new ReservationController(facade);
+  }*/
 
   @Bean
   public ReservationFacade createFacade(ReservationAppService service) {
@@ -36,8 +42,7 @@ public class ReservationConfiguration {
     return MongoClients.create("mongodb://localhost:28017");
   }
 
-  public @Bean
-  MongoDbFactory mongoDbFactory(@Autowired MongoClient client) {
-    return new SimpleMongoClientDbFactory( client, "reservations");
+  public @Bean MongoDbFactory mongoDbFactory(@Autowired MongoClient client) {
+    return new SimpleMongoClientDbFactory(client, "reservations");
   }
 }

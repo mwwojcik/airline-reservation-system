@@ -17,6 +17,12 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
 
     @Override
+    public Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId) {
+        return Optional.empty();
+    }
+
+
+    @Override
     public ReservationId save(InitialReservation reservation) {
         return null;
     }

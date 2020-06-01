@@ -147,7 +147,7 @@ public class ReservationEntity {
   }
 
   public ReservationDTO toDTO() {
-    return new ReservationDTO(
+    return ReservationDTO.create(
         ReservationId.of(reservationId),
         StatusDTO.valueOf(status),
         CustomerId.of(customerId),

@@ -1,6 +1,5 @@
 ## Table of contents
 
-
 - [Intro](#intro)
 - [Domain description](#domain-description)
 - [Domain exploration](#domain-exploration)
@@ -29,7 +28,12 @@
   - [Application services](#application-services)
   - [Spring Boot Configuration](#spring-boot-configuration)
     - [From test to implementation](#from-test-to-implementation)
-  - [DDD building blocks](#ddd-building-blocks)
+  - [DDD Building Blocks](#ddd-building-blocks)
+  - [Rest API standards](#rest-api-standards)
+    - [REST Archetypes](#rest-archetypes)
+    - [REST methods](#rest-methods)
+    - [HTTP codes](#http-codes)
+
 
 
 ## Intro
@@ -928,17 +932,31 @@ Next to each block is a snippet showing an example of how to implement it.
 </a>
 ![](img/building-blocks-flow.png)  
 
-### Rest API Methods
+### Rest API standards 
 
+//Intro ... TBD...
+
+#### REST Archetypes 
+The API distinguishes between four different resource archetypes:
+
+* Document
+* Collection
+* Store
+* Controller
+
+//TBD.. description of each type
+
+#### REST methods
 There are five basic HTTP methods:
 * *GET* - returns resource
 * *POST* - creates resource
 * *PUT* - modifies the resource
 * *OPTIONS* - gets additional informations about resource
+* *DELETE* - removes the resource
 
 ___
 
-#### *GET* - It's save and idempotent method. 
+1. *GET* - It's save and idempotent method. 
 
 * GET requests can be cached
 * GET requests remain in the browser history
@@ -953,7 +971,7 @@ ___
 
 ___
 
-#### *POST* - It's unsave and not idempotent method. 
+2. *POST* - It's unsave and not idempotent method. 
 
 * POST requests are never cached
 * POST requests do not remain in the browser history
@@ -966,7 +984,7 @@ ___
 
 ___
 
-#### *PUT* - It's unsave but idempotent method. 
+3. *PUT* - It's unsave but idempotent method. 
 
 **Standard RESPONSE: Accepted(202) or No Content (204)** 
 
@@ -974,7 +992,7 @@ ___
 
 ___
 
-#### *DELETE* - It's unsave but idempotent method. 
+4. *DELETE* - It's unsave but idempotent method. 
 
 **Standard RESPONSE: No Content (204)** 
 
