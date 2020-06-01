@@ -18,7 +18,7 @@ public class ArsApplication {
 	public static void main(String[] args) {
 			/*new SpringApplicationBuilder()
 				.parent(ArsApplication.class)
-				.web(WebApplicationType.SERVLET).run(args);*/
+				.web(WebApplicationType.SERVLET).run(args); */
 		SpringApplication.run(ArsApplication.class,args);
 	}
 }
