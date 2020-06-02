@@ -1034,3 +1034,51 @@ ___
 * 500 Internal Server Error
 * 503 Service Unavailable 
 * 504 Gateway Timeout 
+
+### REST API tests
+Testing REST controllers is carried out in complete isolation from the rest of the application. The test consists of sending a specially prepared REST
+request,  receiving a response and checking whether the answer contains the expected result. Data is not saved to the database nor application and domain
+logic is performed.  These parts of the application have already been tested by unit testing and acceptance test.
+
+#### Configuration of test infrastructure elements
+
+
+
+* **@AutoConfigureMockMvc**- prepares a web container for REST testing. Builds web context with holders,filters
+* **MockMvc** - client specialized for REST tests. As an alternative you can use the regular RestTemplate client, but MockMvc is much more usefull. 
+    MockMvc simulates network communication (in fact, it does not take place and it cannot be observed).
+* **@MockBean** - register mock object in Spring Context. If a bean of this type is already registered in the context it will be replaced . 
+
+```java
+@SpringBootTest(classes = {ReservationInMemoryTestApplication.class})
+@AutoConfigureMockMvc
+class ReservationControllerTest {
+  @Autowired private MockMvc mockMvc;
+  @MockBean private ReservationFacade reservationFacade;
+ //...
+}
+```
+
+
+
+```java
+@SpringBootApplication(scanBasePackages = "mw.ars.reservations.reservation.infrastructure")
+@Import({ReservationInMemoryTestConfiguration.class})
+public class ReservationInMemoryTestApplication {
+    public static void main(String[] args) {
+        new SpringApplicationBuilder()
+                .parent(ReservationInMemoryTestApplication.class)
+                .web(WebApplicationType.SERVLET).run(args);
+    }
+}
+```
+
+```java
+@EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class,
+        MongoRepositoriesAutoConfiguration.class
+        , MongoDataAutoConfiguration.class
+        , EmbeddedMongoAutoConfiguration.class})
+public class ReservationInMemoryTestConfiguration {
+    //...
+}
+```

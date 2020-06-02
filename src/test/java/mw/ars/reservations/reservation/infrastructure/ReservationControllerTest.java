@@ -2,7 +2,7 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.inmemorydb.ReservationInMemoryTestApplication;
+import mw.ars.reservations.reservation.infrastructure.testapp.ReservationInMemoryTestApplication;
 import mw.ars.reservations.reservation.model.ReservationFixture;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {ReservationInMemoryTestApplication.class, ReservationController.class})
+@SpringBootTest(classes = {ReservationInMemoryTestApplication.class})
 @AutoConfigureMockMvc
 class ReservationControllerTest {
   @Autowired private MockMvc mockMvc;

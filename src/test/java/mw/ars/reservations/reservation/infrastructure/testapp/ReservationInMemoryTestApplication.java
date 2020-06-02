@@ -1,4 +1,4 @@
-package mw.ars.reservations.reservation.infrastructure.inmemorydb;
+package mw.ars.reservations.reservation.infrastructure.testapp;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

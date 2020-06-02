@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@Profile("embedded")
+
 @EnableMongoRepositories(basePackages = "mw.ars.reservations.reservation.infrastructure.db")
 public class ReservationLocalMongoDBConfiguration {
   @Bean
