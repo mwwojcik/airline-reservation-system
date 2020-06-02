@@ -1058,27 +1058,3 @@ class ReservationControllerTest {
  //...
 }
 ```
-
-
-
-```java
-@SpringBootApplication(scanBasePackages = "mw.ars.reservations.reservation.infrastructure")
-@Import({ReservationInMemoryTestConfiguration.class})
-public class ReservationInMemoryTestApplication {
-    public static void main(String[] args) {
-        new SpringApplicationBuilder()
-                .parent(ReservationInMemoryTestApplication.class)
-                .web(WebApplicationType.SERVLET).run(args);
-    }
-}
-```
-
-```java
-@EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class
-        , MongoDataAutoConfiguration.class
-        , EmbeddedMongoAutoConfiguration.class})
-public class ReservationInMemoryTestConfiguration {
-    //...
-}
-```
