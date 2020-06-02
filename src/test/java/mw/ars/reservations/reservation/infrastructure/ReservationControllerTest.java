@@ -2,7 +2,7 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.testapp.ReservationInMemoryTestApplication;
+import mw.ars.reservations.reservation.infrastructure.inmemorydb.ReservationInMemoryTestApplication;
 import mw.ars.reservations.reservation.model.ReservationFixture;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;

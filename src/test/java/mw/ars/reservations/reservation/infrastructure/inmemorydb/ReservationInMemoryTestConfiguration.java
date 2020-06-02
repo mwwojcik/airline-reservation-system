@@ -1,4 +1,4 @@
-package mw.ars.reservations.reservation.infrastructure.testapp;
+package mw.ars.reservations.reservation.infrastructure.inmemorydb;
 
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
