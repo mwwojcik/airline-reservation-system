@@ -6,20 +6,21 @@ import mw.ars.commons.model.SeatNumber;
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
-import mw.ars.reservations.reservation.infrastructure.testapp.ReservationTestApplication;
+import mw.ars.reservations.reservation.infrastructure.testapp.LocalMongoDBTestConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 /** Acceptance test - full infractructure stack - without WEB API. Tested is flow via Fasade */
-@SpringBootTest(classes = ReservationTestApplication.class)
-// @ActiveProfiles("inmemory")
+@SpringBootTest
+@Import(LocalMongoDBTestConfiguration.class)
 @ActiveProfiles("embedded")
 class ReservationAcceptanceIT {
 
@@ -40,7 +41,8 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.get(0).isNew()).isTrue();
 
     var withSeat = SeatNumber.of(10);
-    reservationFacade.register(RegistrationCommand.of(resId,flightId,LocalDateTime.now().plusDays(30),withSeat));
+    reservationFacade.register(
+        RegistrationCommand.of(resId, flightId, LocalDateTime.now().plusDays(30), withSeat));
     result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isRegistered()).isTrue();
@@ -50,35 +52,34 @@ class ReservationAcceptanceIT {
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isHolded()).isTrue();
 
-
     reservationFacade.confirm(ConfirmationCommand.of(resId));
     result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
 
-
     var newFlightId = FlightId.of(UUID.randomUUID());
     var newSeatId = SeatNumber.of(11);
     var newDepartureTime = LocalDateTime.now().plusDays(15);
     var newConfirmedAfterRescheduling =
-            reservationFacade.reschedule(
-                    RescheduleCommand.of(resId,customerId, newFlightId, newSeatId, newDepartureTime));
+        reservationFacade.reschedule(
+            RescheduleCommand.of(resId, customerId, newFlightId, newSeatId, newDepartureTime));
 
     result.clear();
-    result=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, flightId)));
+    result = reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, flightId)));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isRescheduled()).isTrue();
 
     result.clear();
-    result=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    result = reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
     Assertions.assertThat(result.isEmpty()).isFalse();
     Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
     Assertions.assertThat(result.get(0).getReservationId().equals(newConfirmedAfterRescheduling));
 
     result.clear();
-    result=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    result = reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
     reservationFacade.cancel(CancelByResrvationId.of(result.get(0).getReservationId()));
-    var cancelled=reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    var cancelled =
+        reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
     Assertions.assertThat(cancelled.isEmpty()).isFalse();
     Assertions.assertThat(cancelled.get(0).isCancelled()).isTrue();
   }

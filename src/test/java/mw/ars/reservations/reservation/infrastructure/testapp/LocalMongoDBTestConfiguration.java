@@ -9,13 +9,15 @@ import mw.ars.reservations.reservation.infrastructure.DefaultReservationAppServi
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.sales.flights.FlightsFacade;
 import mw.ars.sales.flights.infrastructure.DefaultFlightsFacade;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@Profile("embedded")
+@TestConfiguration
 @EnableMongoRepositories(basePackages = "mw.ars.reservations.reservation.infrastructure.db")
-public class ReservationLocalMongoDBConfiguration {
+public class LocalMongoDBTestConfiguration {
   @Bean
   public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {
     return new DefaultReservationRepository(repoDB);

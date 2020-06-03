@@ -2,7 +2,8 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.inmemorydb.ReservationInMemoryTestApplication;
+import mw.ars.reservations.reservation.infrastructure.testapp.SimplifiedTestConfiguration;
+import mw.ars.reservations.reservation.infrastructure.testapp.InMemoryTestConfiguration;
 import mw.ars.reservations.reservation.model.ReservationFixture;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -23,7 +26,10 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {ReservationInMemoryTestApplication.class})
+@ContextConfiguration()
+
+@SpringBootTest(classes= SimplifiedTestConfiguration.class)
+@Import({InMemoryTestConfiguration.class,ReservationController.class})
 @AutoConfigureMockMvc
 class ReservationControllerTest {
   @Autowired private MockMvc mockMvc;

@@ -591,6 +591,7 @@ public class ArsApplication {
 ```
 
 ```java
+@EnableMongoRepositories(basePackages = "mw.ars.reservations.reservation.infrastructure.db")
 public class ReservationConfiguration {
   @Bean
   public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {
@@ -598,25 +599,24 @@ public class ReservationConfiguration {
   }
 
   @Bean
-  public ReservationService createService(ReservationRepository repo) {
-    return new DefaultReservationService(repo);
+  public ReservationAppService createService(
+      ReservationRepository repo, FlightsFacade flightsFacade) {
+    return new DefaultReservationAppService(repo, flightsFacade);
   }
 
   @Bean
-  public ReservationFacade createFacade(ReservationService service) {
+  public ReservationFacade createFacade(ReservationAppService service) {
     return new DefaultReservationFacade(service);
   }
+  /*
+   * Use the standard Mongo driver API to create a com.mongodb.MongoClient instance.
+   */
+  public @Bean MongoClient mongoClient() {
+    return MongoClients.create("mongodb://localhost:28017");
+  }
 
- /*
-   Simplified implementation now.
- */
-  @Bean
-  DataSource dataSource() {
-    return new EmbeddedDatabaseBuilder()
-        .generateUniqueName(true)
-        .setType(EmbeddedDatabaseType.HSQL)
-        .addScript("reservation_create_schema.sql")
-        .build();
+  public @Bean MongoDbFactory mongoDbFactory(@Autowired MongoClient client) {
+    return new SimpleMongoClientDbFactory(client, "reservations");
   }
 }
 ```
@@ -624,48 +624,59 @@ public class ReservationConfiguration {
 2. Test configuration
 
 ```java
-@SpringBootTest(classes = ReservationInMemoryTestApplication.class)
-class ReservationAcceptanceIT {
-//...
-}
+@SpringBootTest(classes= SimplifiedTestConfiguration.class)
+@Import({InMemoryTestConfiguration.class,ReservationController.class})
+@AutoConfigureMockMvc
+class ReservationControllerTest {}
 ```
 
 ```java
-@SpringBootApplication
-@Import(ReservationInMemoryTestConfiguration.class)
-public class ReservationInMemoryTestApplication {
- //...
-}
+@Configuration
+public class SimplifiedTestConfiguration {}
 ```
 
 ```java
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,
-        DataSourceTransactionManagerAutoConfiguration.class,
-        HibernateJpaAutoConfiguration.class,
-        JpaRepositoriesAutoConfiguration.class})
-public class ReservationInMemoryTestConfiguration {
+@TestConfiguration
+@EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class,
+        MongoRepositoriesAutoConfiguration.class
+        , MongoDataAutoConfiguration.class
+        , EmbeddedMongoAutoConfiguration.class})
+public class InMemoryTestConfiguration {
   @Bean
   public ReservationRepository createRepository() {
     return new InMemoryReservationRepository();
   }
 
   @Bean
-  public ReservationService createService(ReservationRepository repo) {
-    return new DefaultReservationService(repo);
+  public ReservationAppService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
+    return new DefaultReservationAppService(repo, flightsFacade);
   }
 
   @Bean
-  public ReservationFacade createFacade(ReservationService service) {
+  public ReservationFacade createFacade(ReservationAppService service) {
     return new DefaultReservationFacade(service);
+  }
+
+  @Bean
+  FlightsFacade createFlightFacade(){
+    return new DefaultFlightsFacade() ;
   }
 }
 ```
 
-The *@SpringBootTest* annotation indicates an application prepared specifically for testing purposes *SpringBootApplication*.  
-After loading it, engine does not try to search for other applications (that is why there are no conflicts in the definition of beans).  
+The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *SimplifiedTestConfiguration*. It this case it is almost
+ empty. Spring loads this configuration and **not search another ones**.
+ 
+In the next step the real test configuration is loaded *(@Import({InMemoryTestConfiguration.class}))*. It is marked with the *@TestConfiguration* annotation. 
 
-*ReservationInMemoryTestApplication* loads own configuration *ReservationInMemoryTestConfiguration*.
-This changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
+
+|If you want to customize the primary configuration, you can use a nested @TestConfiguration class. Unlike a nested @Configuration class, which would be used instead of your application’s primary configuration, a nested @TestConfiguration class is used in addition to your application’s primary configuration.|
+|:------|
+
+*from [Spring Boot Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-testing-spring-boot-applications-detecting-config)*
+
+ 
+This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
 
 Spring Factory provides *ReservationRepository* interface implementation, but does it differently than in production mode. 
 It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory database

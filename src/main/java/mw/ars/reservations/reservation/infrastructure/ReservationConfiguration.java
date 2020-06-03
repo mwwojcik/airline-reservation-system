@@ -26,11 +26,6 @@ public class ReservationConfiguration {
     return new DefaultReservationAppService(repo, flightsFacade);
   }
 
- /* @Bean
-  public ReservationController controller(ReservationFacade facade) {
-    return new ReservationController(facade);
-  }*/
-
   @Bean
   public ReservationFacade createFacade(ReservationAppService service) {
     return new DefaultReservationFacade(service);
