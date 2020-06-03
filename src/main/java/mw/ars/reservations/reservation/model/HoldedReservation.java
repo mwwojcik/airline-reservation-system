@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 @AllArgsConstructor
 @Getter
 public class HoldedReservation implements IdentifiedReservation {
@@ -34,7 +36,7 @@ public class HoldedReservation implements IdentifiedReservation {
   }
 
   private static boolean lessThanTwoWeeks(LocalDateTime departureDate) {
-    return Period.between(LocalDate.now(), departureDate.toLocalDate()).getDays() < TWO_WEEKS_DAYS;
+    return DAYS.between(LocalDate.now(), departureDate.toLocalDate()) < TWO_WEEKS_DAYS;
   }
 
   public static HoldedReservation of(ReservationId reservationId) {

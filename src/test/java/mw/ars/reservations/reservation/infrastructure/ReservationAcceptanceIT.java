@@ -7,24 +7,26 @@ import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
 import mw.ars.reservations.reservation.infrastructure.testapp.LocalMongoDBTestConfiguration;
+import mw.ars.reservations.reservation.infrastructure.testapp.LocalMongoDbTestApplication;
+import mw.ars.reservations.reservation.infrastructure.testapp.SimplifiedTestConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 /** Acceptance test - full infractructure stack - without WEB API. Tested is flow via Fasade */
-@SpringBootTest
-@Import(LocalMongoDBTestConfiguration.class)
-@ActiveProfiles("embedded")
+@SpringBootTest(classes = {LocalMongoDbTestApplication.class})
 class ReservationAcceptanceIT {
 
-  @Autowired ReservationRepositoryDB repoDB;
   @Autowired private ReservationFacade reservationFacade;
 
   @DisplayName(
