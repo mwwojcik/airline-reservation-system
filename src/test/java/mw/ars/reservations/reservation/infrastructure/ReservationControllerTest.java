@@ -2,7 +2,7 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.testapp.InMemoryTestConfiguration;
+import mw.ars.reservations.reservation.infrastructure.testapp.WebLayerTestConfiguration;
 import mw.ars.reservations.reservation.model.ReservationFixture;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,7 +25,7 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = InMemoryTestConfiguration.class)
+@SpringBootTest(classes = WebLayerTestConfiguration.class)
 @Import({ReservationController.class})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)

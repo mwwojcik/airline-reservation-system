@@ -640,13 +640,13 @@ Test configuration depends on the performance of the test being performed.
 
 **1. Configuration for web layer test**
 
-The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *InMemoryTestConfiguration*. 
+The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *WebLayerTestConfiguration*. 
 Spring loads this configuration and **not search another ones**.  
 
 **The directly indicated configuration does not need to have the @Configuration annotation. It allows to control the loading process!**
 
 ```java
-@SpringBootTest(classes = InMemoryTestConfiguration.class)
+@SpringBootTest(classes = WebLayerTestConfiguration.class)
 @Import({ReservationController.class})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -657,34 +657,11 @@ Spring loads this configuration and **not search another ones**.
         MongoRepositoriesAutoConfiguration.class
         , MongoDataAutoConfiguration.class
         , EmbeddedMongoAutoConfiguration.class})
-public class InMemoryTestConfiguration {
-  @Bean
-  public ReservationRepository createRepository() {
-    return new InMemoryReservationRepository();
-  }
-
-  @Bean
-  public ReservationAppService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
-    return new DefaultReservationAppService(repo, flightsFacade);
-  }
-
-  @Bean
-  public ReservationFacade createFacade(ReservationAppService service) {
-    return new DefaultReservationFacade(service);
-  }
-
-  @Bean
-  FlightsFacade createFlightFacade(){
-    return new DefaultFlightsFacade() ;
-  }
+public class WebLayerTestConfiguration {
 }
 
 ```
 This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism.
-
-Spring Factory provides *ReservationRepository* interface implementation, but does it differently than in production mode. 
-It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory database
-implementation doesn't need it), and there is no datasource configuration.   
 
 **2. Configuration for the acceptance test** 
 
@@ -872,70 +849,67 @@ The same can be done for the other facade operations.
 In this way, a full acceptance test and all methods used in the booking process were created.
 
 ```java
-@SpringBootTest(classes = ReservationInMemoryTestApplication.class)
-class ReservationAcceptanceIT {
+@SpringBootTest(classes = {LocalMongoDBTestConfiguration.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+class ReservationAcceptanceTest {
 
   @Autowired private ReservationFacade reservationFacade;
 
-  @Autowired private InMemoryReservationRepository repository;
-
-  @BeforeEach
-  void clearRepository() {
-    repository.clearAll();
-  }
-
-  @DisplayName("Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
+  @DisplayName(
+      "Should realize main ticket reservation process (create/register/hold/confirm/reschedule/cancel).")
   @Test
   void shouldRealizeMainReservationProcess() {
     var customerId = CustomerId.of(UUID.randomUUID());
-    var flightId = FligtId.of(UUID.randomUUID());
+    var flightId = FlightId.of(UUID.randomUUID());
     // given
     var resId = reservationFacade.create(CreateReservationCommand.of(customerId, flightId));
     // when
-    var res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isNew()).isTrue();
-
-    res=Optional.empty();
-    reservationFacade.register(RegistrationCommand.of(resId));
-    res = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isRegistered()).isTrue();
+    var result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isNew()).isTrue();
 
     var withSeat = SeatNumber.of(10);
-    var withDepartureDate = LocalDateTime.now().plusDays(30);
-    res=Optional.empty();
-    reservationFacade.holdOn(RegisterReservationCommnad.of(resId, withSeat, withDepartureDate));
-    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isHolded()).isTrue();
+    reservationFacade.register(
+        RegistrationCommand.of(resId, flightId, LocalDateTime.now().plusDays(30), withSeat));
+    result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isRegistered()).isTrue();
 
-    res=Optional.empty();
+    reservationFacade.holdOn(HoldOnReservationCommand.of(resId));
+    result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isHolded()).isTrue();
+
     reservationFacade.confirm(ConfirmationCommand.of(resId));
-    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+    result = reservationFacade.findByFlightId(FindByFlightIdCommand.of(customerId, flightId));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
 
-    var newFlightId = FligtId.of(UUID.randomUUID());
+    var newFlightId = FlightId.of(UUID.randomUUID());
     var newSeatId = SeatNumber.of(11);
     var newDepartureTime = LocalDateTime.now().plusDays(15);
-    var resheduledId = reservationFacade.reschedule(RescheduleCommand.of(resId, newFlightId, newSeatId, newDepartureTime));
+    var newConfirmedAfterRescheduling =
+        reservationFacade.reschedule(
+            RescheduleCommand.of(resId, customerId, newFlightId, newSeatId, newDepartureTime));
 
-    res=Optional.empty();
-    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isRescheduled()).isTrue();
+    result.clear();
+    result = reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, flightId)));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isRescheduled()).isTrue();
 
-    res=Optional.empty();
-    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isConfirmed()).isTrue();
+    result.clear();
+    result = reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    Assertions.assertThat(result.isEmpty()).isFalse();
+    Assertions.assertThat(result.get(0).isConfirmed()).isTrue();
+    Assertions.assertThat(result.get(0).getReservationId().equals(newConfirmedAfterRescheduling));
 
-    reservationFacade.cancel(CancelByResrvationId.of(resheduledId));
-    res=reservationFacade.findByReservationId(FindByReservationIdCommnad.of(resheduledId));
-    Assertions.assertThat(res.isPresent()).isTrue();
-    Assertions.assertThat(res.get().isCancelled()).isTrue();
-
+    result.clear();
+    result = reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    reservationFacade.cancel(CancelByResrvationId.of(result.get(0).getReservationId()));
+    var cancelled =
+        reservationFacade.findByFlightId((FindByFlightIdCommand.of(customerId, newFlightId)));
+    Assertions.assertThat(cancelled.isEmpty()).isFalse();
+    Assertions.assertThat(cancelled.get(0).isCancelled()).isTrue();
   }
 }
 

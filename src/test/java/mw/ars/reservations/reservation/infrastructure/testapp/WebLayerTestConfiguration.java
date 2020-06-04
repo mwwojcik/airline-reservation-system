@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoCo
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,24 +25,5 @@ import org.springframework.context.annotation.Profile;
         MongoRepositoriesAutoConfiguration.class
         , MongoDataAutoConfiguration.class
         , EmbeddedMongoAutoConfiguration.class})
-public class InMemoryTestConfiguration {
-  @Bean
-  public ReservationRepository createRepository() {
-    return new InMemoryReservationRepository();
-  }
-
-  @Bean
-  public ReservationAppService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
-    return new DefaultReservationAppService(repo, flightsFacade);
-  }
-
-  @Bean
-  public ReservationFacade createFacade(ReservationAppService service) {
-    return new DefaultReservationFacade(service);
-  }
-
-  @Bean
-  FlightsFacade createFlightFacade(){
-    return new DefaultFlightsFacade() ;
-  }
+public class WebLayerTestConfiguration {
 }
