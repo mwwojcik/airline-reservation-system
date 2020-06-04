@@ -629,6 +629,11 @@ public class ReservationConfiguration {
 
 #### 2. Preparing  test configuration
 
+The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *InMemoryTestConfiguration*. 
+Spring loads this configuration and **not search another ones**.  
+
+**The directly indicated configuration does not need to have the @Configuration annotation. It allows to control the loading process!**
+
 ```java
 @SpringBootTest(classes = InMemoryTestConfiguration.class)
 @Import({ReservationController.class})
@@ -664,9 +669,6 @@ public class InMemoryTestConfiguration {
 }
 
 ```
-
-The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *InMemoryTestConfiguration*. 
-Spring loads this configuration and **not search another ones**.  
 
 This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
 
@@ -708,21 +710,46 @@ public class LocalMongoDBTestConfiguration {
 }
 ```
 
-|If the tests require a different set of configurations, it should be ensured to proper context isolation. An annotation is used for this *@DirtiesContext*|
-|:----:|
- 
 At this moment the greatest advantage of hexagonal architecture is revealed. The same application is constructed in a completely different way. It gains new
 behavior with no code changes.
 
+|If the tests require a different set of configurations, it should be ensured to proper context isolation. An annotation is used for this *@DirtiesContext*|
+|:----:|
 
 #### Multiple configurations - Tips & Tricks
 
-|If you want to customize the primary configuration, you can use a nested @TestConfiguration class. Unlike a nested @Configuration class, which would be used instead of your application’s primary configuration, a nested @TestConfiguration class is used in addition to your application’s primary configuration.|
-|:------|
+1. Customizing primary configuration
 
-*from [Spring Boot Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-testing-spring-boot-applications-detecting-config)*
+A lot of interesting configuration information can be found directly in the [Spring Boot documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/).
 
+The following sections are particularly interesting:
+
+* [Detecting Test Configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-testing-spring-boot-applications-detecting-config)
+
+* [Excluding Test Configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-testing-spring-boot-applications-excluding-config)
+
+
+**It should be remembered that if you want to customize the primary configuration, you can use a nested @TestConfiguration class. Unlike a nested
+@Configuration class, which would be used instead of your application’s primary configuration, a nested @TestConfiguration class is used in addition to
+your application’s primary configuration.**
+
+The @TestConfiguration mechanism is particularly useful if we agree to overwrite beans. We can do this by setting the *spring.main.allow-bean
+-definition-overriding=true* property in the test *application.property*. In this case, we agree that the bean defined in the main configuration will  be
+ overwritten by the definition from the test configuration. For the test it can be created in a completely different way. 
  
+ **Beans overwriting should be turned off in production mode (main application.properties)!**
+ 
+ 2. Spring Boot autoconfiguration debugging
+ 
+ SpringBoot provides a very useful configuration debugging mechanism. it can be enabled by setting the *debug* property:
+ 
+ ```
+debug=true
+```
+
+More inormations more information in the [Display Auto-Configuration Report in Spring Boot](https://www.baeldung.com/spring-boot-auto-configuration-report) article
+
+
 ### Unit tests
 
 Unit tests run completely outside the spring context and therefore do not require any special configuration. 
