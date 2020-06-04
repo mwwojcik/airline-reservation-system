@@ -580,7 +580,7 @@ public class DefaultReservationRepository implements ReservationRepository {
 
 The application can run in test and production mode. It is done by using two independent SpringBoot configurations.
 
-1. Production configuration
+#### 1. Preparing main, production configuration
 
 ```java
 @SpringBootApplication
@@ -621,22 +621,16 @@ public class ReservationConfiguration {
 }
 ```
 
-2. Test configuration
+#### 2. Preparing  test configuration
 
 ```java
-@SpringBootTest(classes= SimplifiedTestConfiguration.class)
-@Import({InMemoryTestConfiguration.class,ReservationController.class})
+@SpringBootTest(classes = InMemoryTestConfiguration.class)
+@Import({ReservationController.class})
 @AutoConfigureMockMvc
-class ReservationControllerTest {}
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 ```
 
 ```java
-@Configuration
-public class SimplifiedTestConfiguration {}
-```
-
-```java
-@TestConfiguration
 @EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class,
         MongoRepositoriesAutoConfiguration.class
         , MongoDataAutoConfiguration.class
@@ -662,13 +656,60 @@ public class InMemoryTestConfiguration {
     return new DefaultFlightsFacade() ;
   }
 }
+
 ```
 
-The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *SimplifiedTestConfiguration*. It this case it is almost
- empty. Spring loads this configuration and **not search another ones**.
- 
-In the next step the real test configuration is loaded *(@Import({InMemoryTestConfiguration.class}))*. It is marked with the *@TestConfiguration* annotation. 
+The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *InMemoryTestConfiguration*. 
+Spring loads this configuration and **not search another ones**.  
 
+This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
+
+Spring Factory provides *ReservationRepository* interface implementation, but does it differently than in production mode. 
+It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory database
+implementation doesn't need it), and there is no datasource configuration.  
+
+The acceptance test requires access to the database, therefore it must load its own configuration:
+
+```java
+@SpringBootTest(classes = {LocalMongoDBTestConfiguration.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+class ReservationAcceptanceTest {}    
+```
+
+```java
+@EnableAutoConfiguration
+@EnableMongoRepositories(basePackages = "mw.ars.reservations.reservation.infrastructure.db")
+public class LocalMongoDBTestConfiguration {
+  @Bean
+  public ReservationRepository createRepository(ReservationRepositoryDB repoDB) {
+    return new DefaultReservationRepository(repoDB);
+  }
+
+  @Bean
+  public ReservationAppService createService(ReservationRepository repo, FlightsFacade flightsFacade) {
+    return new DefaultReservationAppService(repo, flightsFacade);
+  }
+
+  @Bean
+  public ReservationFacade createFacade(ReservationAppService service) {
+    return new DefaultReservationFacade(service);
+  }
+
+  @Bean
+  FlightsFacade createFlightFacade(){
+    return new DefaultFlightsFacade() ;
+  }
+}
+```
+
+|If the tests require a different set of configurations, it should be ensured to proper context isolation. An annotation is used for this *@DirtiesContext*|
+|:----:|
+ 
+At this moment the greatest advantage of hexagonal architecture is revealed. The same application is constructed in a completely different way. It gains new
+behavior with no code changes.
+
+
+#### Multiple configurations - Tips & Tricks
 
 |If you want to customize the primary configuration, you can use a nested @TestConfiguration class. Unlike a nested @Configuration class, which would be used instead of your application’s primary configuration, a nested @TestConfiguration class is used in addition to your application’s primary configuration.|
 |:------|
@@ -676,14 +717,7 @@ In the next step the real test configuration is loaded *(@Import({InMemoryTestCo
 *from [Spring Boot Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-testing-spring-boot-applications-detecting-config)*
 
  
-This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
-
-Spring Factory provides *ReservationRepository* interface implementation, but does it differently than in production mode. 
-It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory database
-implementation doesn't need it), and there is no datasource configuration.  
- 
-At this moment the greatest advantage of hexagonal architecture is revealed. The same application is constructed in a completely different way. It gains new
-behavior with no code changes.
+### Unit tests
 
 Unit tests run completely outside the spring context and therefore do not require any special configuration. 
   

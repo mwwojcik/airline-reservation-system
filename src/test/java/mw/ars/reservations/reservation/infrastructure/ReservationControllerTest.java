@@ -2,7 +2,6 @@ package mw.ars.reservations.reservation.infrastructure;
 
 import mw.ars.commons.model.ReservationId;
 import mw.ars.reservations.reservation.ReservationFacade;
-import mw.ars.reservations.reservation.infrastructure.testapp.SimplifiedTestConfiguration;
 import mw.ars.reservations.reservation.infrastructure.testapp.InMemoryTestConfiguration;
 import mw.ars.reservations.reservation.model.ReservationFixture;
 import org.hamcrest.Matchers;
@@ -14,7 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,12 +26,11 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration()
-
-@SpringBootTest(classes= SimplifiedTestConfiguration.class)
-@Import({InMemoryTestConfiguration.class,ReservationController.class})
+@SpringBootTest(classes = InMemoryTestConfiguration.class)
+@Import({ReservationController.class})
 @AutoConfigureMockMvc
-class ReservationControllerTest {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+public class ReservationControllerTest {
   @Autowired private MockMvc mockMvc;
   @MockBean private ReservationFacade reservationFacade;
 
