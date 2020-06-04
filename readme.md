@@ -633,6 +633,11 @@ public class ReservationConfiguration {
 
 #### 2. Preparing  test configuration
 
+Test configuration depends on the performance of the test being performed. 
+
+|If the tests require a different set of configurations, it should be ensured to proper context isolation. An annotation is used for this *@DirtiesContext*|
+|:----:|
+
 **1. Configuration for web layer test**
 
 The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *InMemoryTestConfiguration*. 
@@ -675,14 +680,13 @@ public class InMemoryTestConfiguration {
 }
 
 ```
-
-**2. Configuration for the Acceptance test** 
-
-This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
+This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism.
 
 Spring Factory provides *ReservationRepository* interface implementation, but does it differently than in production mode. 
 It creates an instance and returns an object *InMemoryReservationRepository*. It does not inject spring data interface (in memory database
-implementation doesn't need it), and there is no datasource configuration.  
+implementation doesn't need it), and there is no datasource configuration.   
+
+**2. Configuration for the acceptance test** 
 
 The acceptance test requires access to the database, therefore it must load its own configuration:
 
@@ -718,11 +722,12 @@ public class LocalMongoDBTestConfiguration {
 }
 ```
 
+In this case there is no MongoDB datasource configuration beacuse *@EnableAutoConfiguration* is activated. Spring runs this test in standard embedded mode.
+
 At this moment the greatest advantage of hexagonal architecture is revealed. The same application is constructed in a completely different way. It gains new
 behavior with no code changes.
 
-|If the tests require a different set of configurations, it should be ensured to proper context isolation. An annotation is used for this *@DirtiesContext*|
-|:----:|
+
 
 #### Multiple configurations - Tips & Tricks
 
