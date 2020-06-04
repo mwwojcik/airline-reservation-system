@@ -27,11 +27,13 @@
   - [Non-functional requirements](#non-functional-requirements)
   - [Application services](#application-services)
   - [Spring Boot Configuration](#spring-boot-configuration)
-    - [1. Preparing main, production configuration](#1-preparing-main-production-configuration)
+    - [1. Preparing main configuration](#1-preparing-main-configuration)
     - [2. Preparing  test configuration](#2-preparing--test-configuration)
     - [Multiple configurations - Tips & Tricks](#multiple-configurations---tips--tricks)
-  - [Unit tests](#unit-tests)
-    - [From test to implementation](#from-test-to-implementation)
+  - [Testing](#testing)
+    - [Unit tests](#unit-tests)
+    - [Acceptance test](#acceptance-test)
+      - [From test to implementation](#from-test-to-implementation)
   - [DDD Building Blocks](#ddd-building-blocks)
   - [Rest API standards](#rest-api-standards)
     - [REST Archetypes](#rest-archetypes)
@@ -586,7 +588,9 @@ public class DefaultReservationRepository implements ReservationRepository {
 
 The application can run in test and production mode. It is done by using two independent SpringBoot configurations.
 
-#### 1. Preparing main, production configuration
+#### 1. Preparing main configuration
+
+In production mode, application should use remote MongoDB database.
 
 ```java
 @SpringBootApplication
@@ -629,6 +633,8 @@ public class ReservationConfiguration {
 
 #### 2. Preparing  test configuration
 
+**1. Configuration for web layer test**
+
 The *@SpringBootTest* annotation indicates a configuration prepared specifically for testing purposes *InMemoryTestConfiguration*. 
 Spring loads this configuration and **not search another ones**.  
 
@@ -669,6 +675,8 @@ public class InMemoryTestConfiguration {
 }
 
 ```
+
+**2. Configuration for the Acceptance test** 
 
 This test configuration changes the standard SpringBoot behavior. Aspects of data access are excluded from the auto-configuration mechanism. 
 
@@ -749,12 +757,13 @@ debug=true
 
 More inormations more information in the [Display Auto-Configuration Report in Spring Boot](https://www.baeldung.com/spring-boot-auto-configuration-report) article
 
+### Testing
 
-### Unit tests
+#### Unit tests
 
 Unit tests run completely outside the spring context and therefore do not require any special configuration. 
   
- ### Acceptance test
+#### Acceptance test
  
  The module implementation begins with creating an acceptance test. It checks the correctness of the module as a whole and tests the entire ticket reservation
  process. 
@@ -769,7 +778,7 @@ The acceptance test is more expensive than the unit test, it will operate on two
    
 The acceptance test is carried out in the Spring Context. 
      
-#### From test to implementation
+##### From test to implementation
 
 The acceptance test can be helpful when determining the module contract. Writing the test can be started when the interface has no methods yet. 
 
