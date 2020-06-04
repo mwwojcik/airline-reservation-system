@@ -981,6 +981,9 @@ public class DefaultReservationFacade implements ReservationFacade {
 
 The test should be successful after implementing the application and domain functions.
 
+#### Web layer test
+
+Web layer tests will be described in separate section dedicated to Rest API.
 
 ### DDD Building Blocks
 
@@ -1117,21 +1120,46 @@ Testing REST controllers is carried out in complete isolation from the rest of t
 request,  receiving a response and checking whether the answer contains the expected result. Data is not saved to the database nor application and domain
 logic is performed.  These parts of the application have already been tested by unit testing and acceptance test.
 
-#### Configuration of test infrastructure elements
+#### Configuration of test's infrastructure elements
 
+This type of testing requires the use of several special infrastructure components:
 
-
-* **@AutoConfigureMockMvc**- prepares a web container for REST testing. Builds web context with holders,filters
-* **MockMvc** - client specialized for REST tests. As an alternative you can use the regular RestTemplate client, but MockMvc is much more usefull. 
+* **@SpringBootTest** - test performed in the context of Spring with indicated configuration
+* **@AutoConfigureMockMvc**- prepares a web container for REST testing. Builds web context with holders,filters,etc... 
+* **MockMvc** - Main entry point for server-side Spring MVC test support. It's a client specialized for REST tests. 
     MockMvc simulates network communication (in fact, it does not take place and it cannot be observed).
 * **@MockBean** - register mock object in Spring Context. If a bean of this type is already registered in the context it will be replaced . 
 
 ```java
-@SpringBootTest(classes = {ReservationInMemoryTestApplication.class})
-@AutoConfigureMockMvc
-class ReservationControllerTest {
-  @Autowired private MockMvc mockMvc;
-  @MockBean private ReservationFacade reservationFacade;
- //...
+    @SpringBootTest(classes = WebLayerTestConfiguration.class)
+    @Import({ReservationController.class})
+       @AutoConfigureMockMvc
+       @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+       public class ReservationControllerTest {
+         @Autowired private MockMvc mockMvc;
+         @MockBean private ReservationFacade reservationFacade;
 }
 ```
+
+#### Web test elements
+
+![](img/test_web_api.png)
+
+1. In this line we can observe the mock behavior configuration. When the application code (inside the controller) calls the facade method 
+*findByFlightId*  with any type, then this method should return list with two objects of ReservationDTO class. 
+
+2. MockMvc performs a request and return a type that allows chaining further actions, such as asserting expectations, on the result.
+
+```
+ResultActions 	perform(RequestBuilder requestBuilder);
+``` 
+
+3. RequestBuilder creates mocked implementation of the HttpServletRequest interface. In this case  *get* method request is builded. It will be sent on URI with 
+two url parameters.
+
+4. Asserting expectations, on the result.
+
+5. A ResultMatcher matches the result of an executed request against some expectation. In this line we can see expected HTTP status checking.
+
+6. Checking if the returned list has the expected size. 
+                                                                     
