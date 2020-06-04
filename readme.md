@@ -732,12 +732,23 @@ The @TestConfiguration mechanism is particularly useful if we agree to overwrite
  2. Spring Boot autoconfiguration debugging
  
  SpringBoot provides a very useful configuration debugging mechanism. it can be enabled by setting the *debug* property:
- 
+  
  ```
 debug=true
 ```
 
 More inormations more information in the [Display Auto-Configuration Report in Spring Boot](https://www.baeldung.com/spring-boot-auto-configuration-report) article
+
+
+3. Sharing context configuration  
+
+|Spring’s test framework caches application contexts between tests. Therefore, as long as your tests share the same configuration (no matter how it is discovered), the potentially time-consuming process of loading the context happens only once. |
+|----|
+
+4.  @Configuration annotation
+
+**The directly indicated configuration (via classes attribute) does not need to have the @Configuration annotation. It allows to control the loading process!**
+
 
 ### Testing
 
