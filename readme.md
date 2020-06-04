@@ -586,7 +586,7 @@ public class DefaultReservationRepository implements ReservationRepository {
 |:-------:|
 
 
-The application can run in test and production mode. It is done by using two independent SpringBoot configurations.
+The application can run in test and production mode. It is done by using few independent SpringBoot configurations.
 
 #### 1. Preparing main configuration
 
