@@ -93,7 +93,67 @@ public class ReservationControllerTest {
                 String.format("/api/reservations/%s/hold", UUID.randomUUID().toString())))
         .andExpect(MockMvcResultMatchers.status().isAccepted());
   }
+
+  @DisplayName("PUT on /api/reservations/{id}/register should register the Reservation.")
+  @Test
+  void putOnApiReservationsIdRegisterShouldRegisterTheReservation() throws Exception {
+    // given
+    Mockito.doNothing().when(reservationFacade).register(Mockito.any());
+    // when
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(
+                String.format("/api/reservations/%s/register", UUID.randomUUID().toString())))
+        // then
+        .andExpect(MockMvcResultMatchers.status().isAccepted());
+  }
+
+  // given
+  // when
+  // then
+  @DisplayName("PUT on /api/reservations/{id}/confirm should confirm the Reservation.")
+  @Test
+  void putOnApiReservationsIdConfirmShouldConfirmTheReservation() throws Exception{
+    Mockito.doNothing().when(reservationFacade).confirm(Mockito.any());
+
+    mockMvc.perform(
+            MockMvcRequestBuilders.put(String.format("/api/reservations/%s/confirm", UUID.randomUUID().toString()))
+    ).andExpect(
+        MockMvcResultMatchers.status().isAccepted()
+    );
+
+  }
+
+  @DisplayName("POST on /api/reservations/{id}/reschedule should reschedule the Reservation")
+  @Test
+  void postOnApiReservationsIdRescheduleShouldRescheduleTheReservation() throws Exception{
+    when(reservationFacade.reschedule(Mockito.any())).thenReturn(ReservationId.of(UUID.randomUUID()));
+
+    mockMvc.perform(
+            MockMvcRequestBuilders.post(String.format("/api/reservations/%s/reschedule", UUID.randomUUID().toString()))
+    ).andExpect(
+            MockMvcResultMatchers.status().isCreated()
+    );
+
+  }
+
+  @DisplayName("DELETE on /api/reservations/{id}/cancel should cancel the Reservation.")
+  @Test
+  void deleteOnApiReservationsIdCancelShouldCancelTheReservation() throws Exception{
+    Mockito.doNothing().when(reservationFacade).cancel(Mockito.any());
+
+    mockMvc.perform(
+            MockMvcRequestBuilders.delete(String.format("/api/reservations/%s/cancel", UUID.randomUUID().toString()))
+    ).andExpect(
+            MockMvcResultMatchers.status().isNoContent()
+    );
+  }
 }
+
+// @PutMapping("/{id}/register")
+// @PutMapping("/{id}/confirm")
+// @PostMapping("/{id}/reschedule")
+// @DeleteMapping("/{id}/cancel")
 
 /*
 package it.stacja.springworkshop;
