@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -103,50 +105,60 @@ public class ReservationControllerTest {
     mockMvc
         .perform(
             MockMvcRequestBuilders.put(
-                String.format("/api/reservations/%s/register", UUID.randomUUID().toString())))
+                    String.format("/api/reservations/%s/register", UUID.randomUUID().toString()))
+                .param("withSeat", "10")
+                .param("flightId", UUID.randomUUID().toString())
+                .param(
+                    "departureTime", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)))
         // then
         .andExpect(MockMvcResultMatchers.status().isAccepted());
   }
 
-  // given
-  // when
-  // then
   @DisplayName("PUT on /api/reservations/{id}/confirm should confirm the Reservation.")
   @Test
-  void putOnApiReservationsIdConfirmShouldConfirmTheReservation() throws Exception{
+  void putOnApiReservationsIdConfirmShouldConfirmTheReservation() throws Exception {
     Mockito.doNothing().when(reservationFacade).confirm(Mockito.any());
 
-    mockMvc.perform(
-            MockMvcRequestBuilders.put(String.format("/api/reservations/%s/confirm", UUID.randomUUID().toString()))
-    ).andExpect(
-        MockMvcResultMatchers.status().isAccepted()
-    );
-
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(
+                String.format("/api/reservations/%s/confirm", UUID.randomUUID().toString())))
+        .andExpect(MockMvcResultMatchers.status().isAccepted());
   }
 
   @DisplayName("POST on /api/reservations/{id}/reschedule should reschedule the Reservation")
   @Test
-  void postOnApiReservationsIdRescheduleShouldRescheduleTheReservation() throws Exception{
-    when(reservationFacade.reschedule(Mockito.any())).thenReturn(ReservationId.of(UUID.randomUUID()));
+  void postOnApiReservationsIdRescheduleShouldRescheduleTheReservation() throws Exception {
+    when(reservationFacade.reschedule(Mockito.any()))
+        .thenReturn(ReservationId.of(UUID.randomUUID()));
 
-    mockMvc.perform(
-            MockMvcRequestBuilders.post(String.format("/api/reservations/%s/reschedule", UUID.randomUUID().toString()))
-    ).andExpect(
-            MockMvcResultMatchers.status().isCreated()
-    );
-
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(
+                    String.format("/api/reservations/%s/reschedule", UUID.randomUUID().toString()))
+                .param("customerId", UUID.randomUUID().toString())
+                .param("newFlightId", UUID.randomUUID().toString())
+                .param("newSeatNumber", "17")
+                .param(
+                    "newDepartureTime",
+                    LocalDateTime.now()
+                        .plusDays(18)
+                        .format(DateTimeFormatter.ISO_DATE_TIME)
+                        .toString()))
+        .andExpect(MockMvcResultMatchers.status().isCreated());
   }
+  
 
   @DisplayName("DELETE on /api/reservations/{id}/cancel should cancel the Reservation.")
   @Test
-  void deleteOnApiReservationsIdCancelShouldCancelTheReservation() throws Exception{
+  void deleteOnApiReservationsIdCancelShouldCancelTheReservation() throws Exception {
     Mockito.doNothing().when(reservationFacade).cancel(Mockito.any());
 
-    mockMvc.perform(
-            MockMvcRequestBuilders.delete(String.format("/api/reservations/%s/cancel", UUID.randomUUID().toString()))
-    ).andExpect(
-            MockMvcResultMatchers.status().isNoContent()
-    );
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.delete(
+                String.format("/api/reservations/%s/cancel", UUID.randomUUID().toString())))
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
   }
 }
 

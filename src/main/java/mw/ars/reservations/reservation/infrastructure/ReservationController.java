@@ -7,6 +7,7 @@ import mw.ars.commons.model.SeatNumber;
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -80,12 +81,12 @@ public class ReservationController {
       @PathVariable("id") UUID reservationId,
       @RequestParam("withSeat") int withSeat,
       @RequestParam("flightId") UUID flightId,
-      @RequestParam("departureTime") LocalDateTime departureTime) {
+      @RequestParam("departureTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureTime) {
     var command =
         RegistrationCommand.of(
             ReservationId.of(reservationId),
             FlightId.of(flightId),
-            departureTime,
+            LocalDateTime.now(),
             SeatNumber.of(withSeat));
     fasade.register(command);
     return ResponseEntity.accepted().build();
@@ -97,7 +98,7 @@ public class ReservationController {
       @RequestParam("customerId") UUID customerId,
       @RequestParam("newFlightId") UUID newFlightId,
       @RequestParam("newSeatNumber") int newSeatNumber,
-      @RequestParam("newDepartureTime") LocalDateTime newDepartureTime) {
+      @RequestParam("newDepartureTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime newDepartureTime) {
     var command =
         RescheduleCommand.of(
             ReservationId.of(originalReservationId),
@@ -111,7 +112,7 @@ public class ReservationController {
     return ResponseEntity.created(URI.create(uri)).build();
   }
 
-  @DeleteMapping("/api/reservations/{id}/cancel")
+  @DeleteMapping("/{id}/cancel")
   public ResponseEntity cancel(@PathVariable("id") UUID reservationId) {
     var command = CancelByResrvationId.of(ReservationId.of(reservationId));
     fasade.cancel(command);
