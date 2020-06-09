@@ -147,7 +147,7 @@ public class ReservationControllerTest {
                         .toString()))
         .andExpect(MockMvcResultMatchers.status().isCreated());
   }
-  
+
 
   @DisplayName("DELETE on /api/reservations/{id}/cancel should cancel the Reservation.")
   @Test
