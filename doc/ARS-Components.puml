@@ -32,10 +32,12 @@ title ARS Components
 Person_Ext(customer,"Customer","Airline Customer with the ability to manage reservations.")
 Person(sales_department_manager,"Sales Department Manager","Sales Department Manager, with ability to accept Airline Offer.")
 Person(sales_department_emp,"Sales Department Employee","Sales Department Employee, with ability to define Airline Offer.")
+Person(fligth_planning_specialist, "Flight Planning Specialist", "Flight Planning Specialist, with rights to define the flight plan and the distribution of seats")
 
 
 Container_Boundary(api, "Api Application") {
     Component(sales,"Sales Management Component","Java Component","Component to managing airline offers")
+    Component(flights,"Flight Catalog Component","Java Component","Component to managing flight plan")
     Component(checkin,"Check In Component","Java Component","Component realizing check in process ")
     Component(surveys,"Surveys Component","Java Component","Component for customer surveys and reviews")
     Component(reports,"Reports Component","Java Component","Component realizing customer activity reporting")

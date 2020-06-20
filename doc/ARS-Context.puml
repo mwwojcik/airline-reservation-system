@@ -20,7 +20,7 @@ Enterprise_Boundary(c0, "Airline") {
 
    Person(sales_department_manager,"Sales Department Manager","Sales Department Manager, with ability to accept Airline Offer.")
    Person(sales_department_emp,"Sales Department Employee","Sales Department Employee, with ability to define Airline Offer.")
-
+   Person(fligth_planning_specialist, "Flight Planning Specialist", "Flight Planning Specialist, with rights to define the flight plan and the distribution of seats")
    System(ars,"Airline Reservation System", "System for managing ticket reservations")
    }
 
@@ -31,6 +31,7 @@ Enterprise_Boundary(c0, "Airline") {
     Rel(customer,ars,"View customer profile, with self reservations managing.")
     Rel(sales_department_manager,ars,"Manages sales, offers.")
     Rel(sales_department_emp,ars,"Manages sales, offers.")
+    Rel(fligth_planning_specialist, ars, "Manages flight plan")
 
     Rel(ars,emailExt,"sends emails")
     Rel(ars,reportingExt,"payments")

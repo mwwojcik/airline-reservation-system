@@ -13,6 +13,7 @@ title ARS Container
 Person_Ext(customer,"Customer","Airline Customer with the ability to manage reservations.")
 Person(sales_department_manager,"Sales Department Manager","Sales Department Manager, with ability to accept Airline Offer.")
 Person(sales_department_emp,"Sales Department Employee","Sales Department Employee, with ability to define Airline Offer.")
+Person(fligth_planning_specialist, "Flight Planning Specialist", "Flight Planning Specialist, with rights to define the flight plan and the distribution of seats")
 
 
 System_Boundary(c1, "Airline Reservation System") {
@@ -27,7 +28,8 @@ Rel(customer,customer_web_portal,"Use web browser","Rest API")
 Rel(customer,mobile_application,"Use tablet/mobile phone","Rest API")
 
 Rel(sales_department_manager,emp_portal,"Use web browser","Rest API")
-Rel(sales_department_emp,emp_portal,"Use web browser","Rest API")
+Rel(sales_department_manager,emp_portal,"Use web browser","Rest API")
+Rel(fligth_planning_specialist,emp_portal,"Use web browser","Rest API")
 
 Rel(web_server,customer_web_portal,"serves content")
 Rel(web_server,emp_portal,"serves content")
