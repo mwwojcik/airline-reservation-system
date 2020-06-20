@@ -28,7 +28,7 @@ Rel(customer,customer_web_portal,"Use web browser","Rest API")
 Rel(customer,mobile_application,"Use tablet/mobile phone","Rest API")
 
 Rel(sales_department_manager,emp_portal,"Use web browser","Rest API")
-Rel(sales_department_manager,emp_portal,"Use web browser","Rest API")
+Rel(sales_department_emp,emp_portal,"Use web browser","Rest API")
 Rel(fligth_planning_specialist,emp_portal,"Use web browser","Rest API")
 
 Rel(web_server,customer_web_portal,"serves content")

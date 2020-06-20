@@ -37,7 +37,7 @@ Person(fligth_planning_specialist, "Flight Planning Specialist", "Flight Plannin
 
 Container_Boundary(api, "Api Application") {
     Component(sales,"Sales Management Component","Java Component","Component to managing airline offers")
-    Component(flights,"Flight Catalog Component","Java Component","Component to managing flight plan")
+    Component(flights,"Flight Catalog Component","Java Component","Component to managing flight plans")
     Component(checkin,"Check In Component","Java Component","Component realizing check in process ")
     Component(surveys,"Surveys Component","Java Component","Component for customer surveys and reviews")
     Component(reports,"Reports Component","Java Component","Component realizing customer activity reporting")
@@ -51,6 +51,8 @@ System_Ext(emailExt,"E-mail System","The internal e-mail system.")
 
 Rel(sales_department_manager,sales,"Creates offer")
 Rel(sales_department_emp,sales,"Creates offer")
+Rel(fligth_planning_specialist,flights,"Creates flight plans")
+
 Rel(customer,checkin,"Carries out the check-in process")
 Rel(customer,surveys,"Completes surveys and reviews")
 Rel(customer,reservations,"Manages the ticket booking process")
