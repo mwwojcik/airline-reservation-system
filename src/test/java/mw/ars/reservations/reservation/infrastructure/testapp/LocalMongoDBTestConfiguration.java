@@ -7,13 +7,10 @@ import mw.ars.reservations.reservation.infrastructure.DefaultReservationFacade;
 import mw.ars.reservations.reservation.infrastructure.DefaultReservationRepository;
 import mw.ars.reservations.reservation.infrastructure.DefaultReservationAppService;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
-import mw.ars.sales.flights.FlightsFacade;
-import mw.ars.sales.flights.infrastructure.DefaultFlightsFacade;
+import mw.ars.flights.FlightsFacade;
+import mw.ars.flights.infrastructure.DefaultFlightsFacade;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 

@@ -1,8 +1,8 @@
-package mw.ars.sales.flights.infrastructure;
+package mw.ars.flights.infrastructure;
 
 import mw.ars.commons.model.FlightId;
-import mw.ars.sales.flights.FlightsFacade;
-import mw.ars.sales.flights.common.dto.FlightDTO;
+import mw.ars.flights.FlightsFacade;
+import mw.ars.flights.common.dto.FlightDTO;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;

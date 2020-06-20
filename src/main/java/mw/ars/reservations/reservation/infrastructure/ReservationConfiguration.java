@@ -6,7 +6,7 @@ import mw.ars.reservations.reservation.ReservationAppService;
 import mw.ars.reservations.reservation.ReservationFacade;
 import mw.ars.reservations.reservation.ReservationRepository;
 import mw.ars.reservations.reservation.infrastructure.db.ReservationRepositoryDB;
-import mw.ars.sales.flights.FlightsFacade;
+import mw.ars.flights.FlightsFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDbFactory;

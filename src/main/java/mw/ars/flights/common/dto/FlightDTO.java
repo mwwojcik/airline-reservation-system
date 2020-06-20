@@ -1,8 +1,7 @@
-package mw.ars.sales.flights.common.dto;
+package mw.ars.flights.common.dto;
 
 import lombok.Value;
 import mw.ars.commons.model.FlightId;
-import mw.ars.sales.flights.FlightsFacade;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;

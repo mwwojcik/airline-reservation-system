@@ -1,6 +1,6 @@
-package mw.ars.sales.flights.infrastructure;
+package mw.ars.flights.infrastructure;
 
-import mw.ars.sales.flights.FlightsFacade;
+import mw.ars.flights.FlightsFacade;
 import org.springframework.context.annotation.Bean;
 
 public class FlightsConfiguration {

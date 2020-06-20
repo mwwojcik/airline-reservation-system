@@ -1,11 +1,10 @@
 package mw.ars.reservations.reservation.domain;
 
-import mw.ars.commons.model.Result;
 import mw.ars.reservations.reservation.common.commands.RegistrationCommand;
 import mw.ars.reservations.reservation.model.IdentifiedReservation;
 import mw.ars.reservations.reservation.model.InitialReservation;
 import mw.ars.reservations.reservation.model.RegisteredReservation;
-import mw.ars.sales.flights.common.dto.FlightDTO;
+import mw.ars.flights.common.dto.FlightDTO;
 import org.javamoney.moneta.Money;
 
 import java.util.Optional;

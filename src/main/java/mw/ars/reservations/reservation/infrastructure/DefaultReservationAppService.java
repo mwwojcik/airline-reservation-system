@@ -7,7 +7,7 @@ import mw.ars.reservations.reservation.common.commands.*;
 import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.domain.*;
 import mw.ars.reservations.reservation.model.InitialReservation;
-import mw.ars.sales.flights.FlightsFacade;
+import mw.ars.flights.FlightsFacade;
 import org.javamoney.moneta.Money;
 
 import java.util.List;

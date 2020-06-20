@@ -1,7 +1,7 @@
-package mw.ars.sales.flights;
+package mw.ars.flights;
 
 import mw.ars.commons.model.FlightId;
-import mw.ars.sales.flights.common.dto.FlightDTO;
+import mw.ars.flights.common.dto.FlightDTO;
 
 import java.util.Optional;
 
