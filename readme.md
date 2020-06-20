@@ -250,7 +250,16 @@ if(isSingleUserProcess()){
 ![](img/ars-big-picture-subdomains-bc-poster.jpg)
 
 
-#### Commands / Read Model
+Previously it was planned that the flights information would be stored in the SALES module (as a part of
+ the airline offer). However, it turned out that the airline offer is something other than a flight catalog. The specific nature of this functionality makes
+  it reasonable to place it in a separate Bounded Context. It will be simple CRUD module - without business logic. It will store information about planned
+   flights and passenger seats . We don't have much information about it right now, so we only signal its existence:
+   
+![](img/fligth-catalog.png)  
+
+
+
+#### Bounded Contexts - with Commands / Read Model
 
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/ars-process-level-finish-1.jpg" target="_blank">Show picture
 </a>
@@ -260,13 +269,7 @@ if(isSingleUserProcess()){
 </a>
 ![](img/ars-process-level-finish-2.jpg)
 
-
-Previously it was planned that the flights information would be stored in the SALES module (as a part of
- the airline offer). However, it turned out that the airline offer is something other than a flight catalog. The specific nature of this functionality makes
-  it reasonable to place it in a separate module. It will be simple CRUD module - without business logic. It will store information about planned flights and
-   passenger seats
-   
-![](img/fligth-catalog.png)   
+ 
 
 ## Architecture
 
