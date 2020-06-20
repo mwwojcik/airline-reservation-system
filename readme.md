@@ -260,6 +260,14 @@ if(isSingleUserProcess()){
 </a>
 ![](img/ars-process-level-finish-2.jpg)
 
+
+Previously it was planned that the flights information would be stored in the SALES module (as a part of
+ the airline offer). However, it turned out that the airline offer is something other than a flight catalog. The specific nature of this functionality makes
+  it reasonable to place it in a separate module. It will be simple CRUD module - without business logic. It will store information about planned flights and
+   passenger seats
+   
+![](img/fligth-catalog.png)   
+
 ## Architecture
 
 ### Architectural Decision Log
@@ -297,6 +305,7 @@ if(isSingleUserProcess()){
 <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/architecture/ARS_Components.png" target="_blank">Show picture</a>
 ![](img/architecture/ARS_Components.png)
 
+
 ## Bounded context exploration
  
 ### Airline Reservation System - bounded context exploration - Design Level Event Storming
@@ -316,10 +325,11 @@ During the session it turned out that it is necessary to redefine Gifts Bounded 
  equivalent must be immediately transferred to the booking module. The equivalent amount must be known at the time the price is calculated. This rule
   enforces a combination of both areas. 
   
+ 
   <a href="https://raw.githubusercontent.com/mwwojcik/airline-reservation-system/master/img/air-design-level-ticket-management-designlevel.jpg" target="_blank">Show
    picture</a>
   ![](img/air-design-level-ticket-management-designlevel.jpg)  
-  
+
  This level of detail is sufficient to start implementation.
  
  #### Aggregates
@@ -1165,3 +1175,4 @@ two url parameters.
 
 6. Checking if the returned list has the expected size. 
                                                                      
+
