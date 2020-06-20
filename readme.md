@@ -115,10 +115,10 @@ The number of bonus points will be increased.
 * if the reservation is made two months before the departure date, the initial price should be reduced by 20%
 * if the reservation takes place in the same month as the departure date the initial price should be increased by 10%
 
+* if the departure date falls on Tuesday or Wednesday, the calculated price can be reduced by a further 20%
 
-**Calculations performed on the confirm day**
+**Calculations performed on the confirmation day:**
 
-* if the current day falls on Tuesday or Wednesday, the starting price can be reduced by 20%
 * if 85% of seats have been sold for a given flight, the ticket price may be reduced by 10%
 * if less than 85% of seats have been sold for a given flight, the ticket price must be increased by 10%
 
