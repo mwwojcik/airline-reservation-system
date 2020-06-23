@@ -1,9 +1,9 @@
 package mw.ars.reservations.reservation;
 
-import mw.ars.commons.model.FlightId;
-import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.commons.model.CustomerId;
+import mw.ars.commons.model.FlightId;
 import mw.ars.commons.model.ReservationId;
+import mw.ars.reservations.reservation.common.dto.ReservationDTO;
 import mw.ars.reservations.reservation.model.*;
 
 import java.time.LocalDateTime;
@@ -12,34 +12,38 @@ import java.util.Optional;
 
 public interface ReservationRepository {
 
-    ReservationId save(InitialReservation reservation);
-    void  save(RegisteredReservation reservation);
-    void  save(HoldedReservation reservation);
-    void save(ConfirmedReservation confirmed);
-    void save(ConfirmedAfterRescheduling confirmed);
-    List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId);
-    Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId);
+  ReservationId save(InitialReservation reservation);
 
-    Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId);
+  void save(RegisteredReservation reservation);
 
-    int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth);
+  void save(HoldedReservation reservation);
 
-    int countCurrentlyHolded();
+  void save(ConfirmedReservation confirmed);
 
-    void save(RescheduledReservation rescheduled);
+  void save(ConfirmedAfterRescheduling confirmed);
 
-    void save(CancelledReservation reservation);
+  List<ReservationDTO> findByFlightId(CustomerId customerId, FlightId flightId);
+
+  Optional<IdentifiedReservation> findByReservationId(ReservationId reservationId);
+
+  Optional<ReservationDTO> findDetailsByReservationId(ReservationId reservationId);
+
+  int countReservationsAfterDate(LocalDateTime firstDateOfCurrentMonth);
+
+  int countCurrentlyHolded();
+
+  void save(RescheduledReservation rescheduled);
+
+  void save(CancelledReservation reservation);
+
+  /*void holdOn(HoldOnReservationCommand command);
 
 
+  void confirm(ConfirmationCommand command);
 
-    /*void holdOn(HoldOnReservationCommand command);
+  ReservationId reschedule(RescheduleCommand of);
 
+  void cancel(CancelByResrvationId command);
 
-    void confirm(ConfirmationCommand command);
-
-    ReservationId reschedule(RescheduleCommand of);
-
-    void cancel(CancelByResrvationId command);
-
-    */
+  */
 }

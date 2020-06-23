@@ -2,6 +2,7 @@ package mw.ars.flights.infrastructure;
 
 import mw.ars.commons.model.FlightId;
 import mw.ars.flights.FlightsFacade;
+import mw.ars.flights.FlightsPlanService;
 import mw.ars.flights.common.dto.FlightDTO;
 import org.javamoney.moneta.Money;
 
@@ -10,8 +11,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class DefaultFlightsFacade implements FlightsFacade {
+
+    private FlightsPlanService flightsPlanService;
+
+    public DefaultFlightsFacade(FlightsPlanService flightsPlanService) {
+
+        this.flightsPlanService = flightsPlanService;
+    }
+
     @Override
     public Optional<FlightDTO> findByFlightId(FlightId flightId) {
-        return Optional.of(FlightDTO.from(FlightId.of(UUID.randomUUID()), LocalDateTime.now().plusDays(30), Money.of(100,"USD")));
+        return flightsPlanService.findByFlightId(flightId);
     }
+
+    @Override
+    public FlightDTO createFlightDefinition(Object param) {
+     return flightsPlanService.createFlightDefinition(null) ;
+     }
+
 }
